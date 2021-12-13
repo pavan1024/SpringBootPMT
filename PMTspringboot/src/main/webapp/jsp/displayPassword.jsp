@@ -5,13 +5,25 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<style>
+body{
+background-color: white;
+}
+.left {
+  margin: left;
+  width: 50%;
+  border: 3px solid #73AD21;
+  padding: 10px;
+}
+</style>
 </head>
 <body>
-<h2>Password</h2>
 
-${password}
-
+<div class="left">
+<h2>Password : ${password}</h2>
 <br>
-<a href="/master/account/menu/" >Menu</a>
+<a href="menu" >Back</a>
+</div>
+
 </body>
 </html>

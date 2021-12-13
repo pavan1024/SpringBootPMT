@@ -8,9 +8,20 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<style>
+body{
+background-color: white;
+}
+.left {
+  margin: left;
+  width: 50%;
+  border: 3px solid #73AD21;
+  padding: 10px;
+}
+</style>
 </head>
 <body>
-
+<div class="left">
 <h2>Group Accounts</h2>
 
 <table border=1>
@@ -32,7 +43,8 @@
 </c:forEach>
 
 </table>
-
-<a href="/master/account/menu/" >Menu</a>
+<br><br>
+<a href="menu" >Back</a>
+</div>
 </body>
 </html>

@@ -1,37 +1,64 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
+<!Doctype html>
 <html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
+<style>
+body{
+ background-color: white;
+}
+.btn-group button {
+  background-color: #04AA6D; /* Green background */
+  border: 1px solid green; /* Green border */
+  color: white; /* White text */
+  padding: 10px 24px; /* Some padding */
+  cursor: pointer; /* Pointer/hand icon */
+  width: 50%; /* Set a width if needed */
+  display: block; /* Make the buttons appear below each other */
+}
+
+.btn-group button:not(:last-child) {
+  border-bottom: none; /* Prevent double borders */
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+  background-color: #3e8e41;
+}
+</style>
 <body>
+
+<h1>Menu</h1>
+
+<div class="btn-group">
 <form name="CreateAccount" action="createAccountForm">
-<input type="submit" value="Create Account">
+<button >Create Account</button>
 </form>
 <form name="DisplayAccountPassword" action="displayPasswordForm">
-<input type="submit" value="Display Account Password">
+<button >Display Account Password</button>
 </form>
 <form name="DisplayAllAccountsbyGroupname" action="displayByGroupForm">
-<input type="submit" value="Display All Accounts by Groupname">
+<button >Display All Accounts by Groupname</button>
 </form>
 <form name="Delete Account" action="deleteAccountForm" >
-<input type="submit" value="Delete Account">
+<button >Delete Account</button>
 </form>
 <form name="UpdateAccountDetails" action="submenu">
-<input type="submit" value="Update Account Details">
+<button >Update Account Details</button>
+
 </form>
 <form name="ModifyGroupname" action="updateGroupnameForm">
-<input type="submit" value="Modify Groupname">
+<button >Modify Groupname</button>
 </form>
 <form name="view All" action="viewAll" >
-<input type="submit" value="View All Accounts">
+<button >View All Accounts</button>
+
 </form>
 <form name="Delete Group" action="deleteGroupForm">
-<input type="submit" value="Delete Group">
+<button >Delete Group</button>
 </form>
 <br>
 <a href="menu" >Back</a>
+</div>
+
 </body>
 </html>

@@ -5,15 +5,29 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<style>
+body{
+background-color: white;
+}
+.left {
+  margin: left;
+  width: 50%;
+  border: 3px solid #73AD21;
+  padding: 10px;
+}
+</style>
 </head>
 <body>
+<div class="left">
 <form name="updatePassword" action="updateAccountPassword" method="post">
 Url : <input type="text" name="url">
+<br><br>
 New Password : <input type="text" name="password">
+<br><br>
 <input type="submit" value="Update Password">
-
-<br>
+<br><br>
 <a href="submenu" >Back</a>
 </form>
+</div>
 </body>
 </html>
