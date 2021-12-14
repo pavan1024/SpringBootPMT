@@ -23,7 +23,7 @@ background-color: white;
 <form name="updateUsername" action="updateAccountUsername" method="post">
 Url : <input type="text" name="url">
 <br><br>
-NewUsername : <input type="text" name="username">
+New Username : <input type="text" name="username">
 <br><br>
 <input type="submit" value="Update Username">
 <br><br>

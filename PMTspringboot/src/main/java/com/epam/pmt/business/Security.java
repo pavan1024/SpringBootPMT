@@ -9,12 +9,12 @@ public class Security {
 	public String encrypt(String plainPwd) {
 		String b64encoded = Base64.getEncoder().encodeToString(plainPwd.getBytes());
 		String reverse = new StringBuilder(b64encoded).reverse().toString();
-		StringBuilder tmp = new StringBuilder();
+		StringBuilder temp = new StringBuilder();
 		final int OFFSET = 4;
 		for (int i = 0; i < reverse.length(); i++) {
-			tmp.append((char) (reverse.charAt(i) + OFFSET));
+			temp.append((char) (reverse.charAt(i) + OFFSET));
 		}
-		return tmp.toString();
+		return temp.toString();
 	}
 
 	public String decrypt(String encryptedPwd) {

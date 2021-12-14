@@ -1,11 +1,13 @@
 package com.epam.pmt.business;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.epam.pmt.entities.Account;
 import com.epam.pmt.entities.Master;
 import com.epam.pmt.repo.MasterRepository;
 
@@ -16,34 +18,22 @@ public class MasterUserService {
 	@Autowired
 	Validation validation;
 
-	public boolean checkIfMasterExists(String username) {
-		boolean status = false;
-		try {
-			if (masterRepository.findById(username)!=null) {
-				status = true;
-			}
-		} catch (Exception e) {
-			e.getStackTrace();
-		}
-		return status;
-	}
-	
 	public boolean registerAccount(String username, String password) {
 		boolean status = false;
 		if (validation.isValidPassword(password)) {
-			createMaster(username, password);
+			this.createMaster(username, password);
 			status = true;
 		}
 		return status;
 	}
-	
+
 	public boolean createMaster(String username, String password) {
 		boolean status = false;
 		Master master = new Master();
 		master.setUsername(username);
 		master.setPassword(password);
 		Master savedMaster = masterRepository.save(master);
-		if(savedMaster!=null) {
+		if (savedMaster != null) {
 			status = true;
 		}
 		return status;
@@ -52,70 +42,17 @@ public class MasterUserService {
 
 	public boolean login(String username, String password) {
 		boolean status = false;
-
-		if (masterRepository.existsById(username)) {
-			MasterProvider.setMaster(username, password);
-			status = true;
+		List<Master> masterAccounts = ((Collection<Master>) masterRepository.findAll()).stream()
+				.filter(i -> i.getUsername().equals(username)).collect(Collectors.toList());
+		try {
+			if (masterAccounts.get(0).getPassword().equals(password)) {
+				MasterProvider.setMaster(username, password);
+				status = true;
+			}
+		} catch (IndexOutOfBoundsException e) {
+			e.getStackTrace();
 		}
 		return status;
 	}
 
-
-
-
 }
-
-//
-//@Autowired
-//SingletonFactory singletonFactory;
-//@Autowired
-//MasterDao masterDao;
-//@Autowired
-//Validation validation;
-//EntityManagerFactory factory;
-//EntityManager manager;
-//
-//public boolean checkIfMasterExists(String username) {
-//	boolean status = false;
-//	factory = singletonFactory.getEntityManagerFactory();
-//	manager = factory.createEntityManager();
-//	try {
-//		Master account = manager.find(Master.class, username);
-//		if (account.getUsername().equals(username)) {
-//			status = true;
-//		}
-//	} catch (Exception e) {
-//		e.getStackTrace();
-//	}
-//	return status;
-//}
-//
-//public boolean registerAccount(String username, String password) {
-//	boolean status = false;
-//	if (validation.isValidPassword(password)) {
-//		createMaster(username, password);
-//		status = true;
-//	}
-//	return status;
-//}
-//
-//public boolean createMaster(String username, String password) {
-//	boolean status = false;
-//	Master master = new Master();
-//	master.setUsername(username);
-//	master.setPassword(password);
-//	status = masterDao.createMaster(master);
-//	return status;
-//
-//}
-//
-//public boolean login(String username, String password) {
-//	boolean status = false;
-//	factory = singletonFactory.getEntityManagerFactory();
-//	manager = factory.createEntityManager();
-//	if (password.equals(manager.find(Master.class, username).getPassword())) {
-//		MasterProvider.setMaster(username, password);
-//		status = true;
-//	}
-//	return status;
-//}

@@ -26,7 +26,7 @@ public class GroupController {
 	public ModelAndView deleteGroup(Account account) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			if(groupService.deleteGroup(account.getGroupname())) {
+			if (groupService.deleteGroup(account.getGroupname())) {
 				mv.setViewName("deleteGroup");
 			}
 		} catch (Exception ex) {
@@ -35,8 +35,7 @@ public class GroupController {
 		}
 		return mv;
 	}
-	
-	
+
 	@GetMapping("displayByGroupForm")
 	public String displayByGroupForm() {
 		return "displayByGroupForm";
@@ -46,36 +45,34 @@ public class GroupController {
 	public ModelAndView displaybyGroup(Account account) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			List<Account> groupAccounts=groupService.groupDetails(account.getGroupname());
+			List<Account> groupAccounts = groupService.groupDetails(account.getGroupname());
 			mv.addObject("accounts", groupAccounts);
 			mv.setViewName("displayByGroup");
-			
+
 		} catch (Exception ex) {
 			mv.addObject("errorMessage", ex.getMessage());
 			mv.setViewName("error");
 		}
 		return mv;
 	}
-	
+
 	@GetMapping("updateGroupnameForm")
 	public String updateGroupnameForm() {
 		return "updateGroupnameForm";
 	}
+
 	@PostMapping("updateGroupname")
-	public ModelAndView displaybyGroup(String currentGroupname,String newGroupname) {
+	public ModelAndView displaybyGroup(String currentGroupname, String newGroupname) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			groupService.updateGroupname(currentGroupname,newGroupname);
+			groupService.updateGroupname(currentGroupname, newGroupname);
 			mv.setViewName("updateGroupname");
-			
+
 		} catch (Exception ex) {
 			mv.addObject("errorMessage", ex.getMessage());
 			mv.setViewName("error");
 		}
 		return mv;
 	}
-	
-	
 
-	
 }

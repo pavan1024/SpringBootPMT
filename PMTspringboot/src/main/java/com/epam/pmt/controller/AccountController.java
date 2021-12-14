@@ -15,21 +15,24 @@ import com.epam.pmt.entities.Account;
 public class AccountController {
 	@Autowired
 	AccountService accountService;
-		
+
 	@GetMapping("createAccountForm")
 	public String createAccountForm() {
 		return "createAccountForm";
 	}
+
 	@GetMapping("menu")
 	public String menu() {
 		return "menu";
 	}
+
 	@PostMapping("createAccount")
 	public ModelAndView accountCreation(Account account) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			boolean status=accountService.createAccount(account.getUrl(), account.getUsername(), account.getPassword(), account.getGroupname());
-			if(status) {
+			boolean status = accountService.createAccount(account.getUrl(), account.getUsername(),
+					account.getPassword(), account.getGroupname());
+			if (status) {
 				mv.setViewName("createAccount");
 			}
 		} catch (Exception ex) {
@@ -38,19 +41,19 @@ public class AccountController {
 		}
 		return mv;
 	}
-	
+
 	@GetMapping("displayPasswordForm")
 	public String displayPasswordForm() {
 		return "displayPasswordForm";
 	}
-	
+
 	@PostMapping("displayPassword")
 	public ModelAndView displayPassword(Account account) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			String password=accountService.readPassword(account.getUrl());
-			if(password!=null) {
-				mv.addObject("password",password);
+			String password = accountService.readPassword(account.getUrl());
+			if (password != null) {
+				mv.addObject("password", password);
 				mv.setViewName("displayPassword");
 			}
 		} catch (Exception ex) {
@@ -59,18 +62,17 @@ public class AccountController {
 		}
 		return mv;
 	}
-	
-	
+
 	@GetMapping("deleteAccountForm")
 	public String deleteAccountForm() {
 		return "deleteAccountForm";
 	}
-	
+
 	@PostMapping("deleteAccount")
 	public ModelAndView deleteAccount(Account account) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			if(accountService.deleteAccount(account.getUrl())) {
+			if (accountService.deleteAccount(account.getUrl())) {
 				mv.setViewName("deleteAccount");
 			}
 		} catch (Exception ex) {
@@ -79,38 +81,37 @@ public class AccountController {
 		}
 		return mv;
 	}
-	
-	
-	
+
 	@GetMapping("viewAll")
 	public ModelAndView viewAll() {
 		ModelAndView mv = new ModelAndView();
 		try {
-				mv.setViewName("viewAll");
-				mv.addObject("accounts",accountService.getAll());
-				
+			mv.setViewName("viewAll");
+			mv.addObject("accounts", accountService.getAll());
+
 		} catch (Exception ex) {
 			mv.addObject("errorMessage", ex.getMessage());
 			mv.setViewName("error");
 		}
 		return mv;
 	}
-	
+
 	@GetMapping("submenu")
 	public String subMenum() {
 		return "submenu";
 	}
-	
+
 	@GetMapping("updateAccountUsernameForm")
 	public String updateAccountUsernameForm() {
 		return "updateAccountUsernameForm";
 	}
-	
+
 	@PostMapping("updateAccountUsername")
 	public ModelAndView updateAccountUsername(Account account) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			if(accountService.checkUrl(account.getUrl()) && accountService.updateUsername(account.getUrl(), account.getUsername())) {
+			if (accountService.checkUrl(account.getUrl())
+					&& accountService.updateUsername(account.getUrl(), account.getUsername())) {
 				mv.setViewName("updateAccountUsername");
 			}
 		} catch (Exception ex) {
@@ -119,18 +120,18 @@ public class AccountController {
 		}
 		return mv;
 	}
-	
-	
+
 	@GetMapping("updateAccountPasswordForm")
 	public String updateAccountPasswordForm() {
 		return "updateAccountPasswordForm";
 	}
-	
+
 	@PostMapping("updateAccountPassword")
 	public ModelAndView updateAccountPassword(Account account) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			if(accountService.checkUrl(account.getUrl()) && accountService.updatePassword(account.getUrl(), account.getPassword())) {
+			if (accountService.checkUrl(account.getUrl())
+					&& accountService.updatePassword(account.getUrl(), account.getPassword())) {
 				mv.setViewName("updateAccountPassword");
 			}
 		} catch (Exception ex) {
@@ -139,10 +140,5 @@ public class AccountController {
 		}
 		return mv;
 	}
-	
-	
-	
+
 }
-
-
-

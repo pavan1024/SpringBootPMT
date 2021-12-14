@@ -23,7 +23,7 @@ background-color: white;
 <form name="updatePassword" action="updateAccountPassword" method="post">
 Url : <input type="text" name="url">
 <br><br>
-New Password : <input type="text" name="password">
+New Password : <input type="password" name="password">
 <br><br>
 <input type="submit" value="Update Password">
 <br><br>

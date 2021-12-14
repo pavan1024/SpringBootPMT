@@ -4,25 +4,25 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
 <style>
 body{
-background-color: "green";
+background-color: white;
 }
-.center {
+.left {
   margin: left;
   width: 50%;
   border: 3px solid #73AD21;
   padding: 10px;
 }
 </style>
+<title>Insert title here</title>
 </head>
 <body>
 <div class="left">
-<h2>Updated Password Successfully...............</h2>
+<h2>Password Updated Successfully...............</h2>
 
 <br>
-<a href="submenu" >Back</a>
+<a href="menu" >Menu</a>
 </div>
 </body>
 </html>

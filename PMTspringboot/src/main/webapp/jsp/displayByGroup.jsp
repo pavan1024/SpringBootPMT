@@ -27,7 +27,7 @@ background-color: white;
 <table border=1>
 <tr>
 <th>URL</th>
- <th>Name </th>
+ <th>Username </th>
  <th>Password</th>
  <th>Groupname</th>
 </tr>
