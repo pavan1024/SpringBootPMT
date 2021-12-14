@@ -8,27 +8,26 @@ import org.springframework.stereotype.Service;
 import com.epam.pmt.entities.Account;
 import com.epam.pmt.entities.Master;
 import com.epam.pmt.repo.AccountRepository;
+import com.epam.pmt.repo.MasterRepository;
 
 @Service
 public class AccountService {
 
 	@Autowired
 	AccountRepository accountRepository;
+	@Autowired
+	MasterRepository masterRepository;
 	Master master = MasterProvider.getMaster();
 
 	public boolean createAccount(String url, String username, String password, String groupname) {
-		boolean status = false;
 		Account account = new Account();
 		account.setUrl(url);
 		account.setUsername(username);
 		account.setPassword(password);
 		account.setGroupname(groupname);
 		account.setMaster(master);
-		Account savedAccount = accountRepository.save(account);
-		if (savedAccount != null) {
-			status = true;
-		}
-		return status;
+		accountRepository.save(account);
+		return true;
 
 	}
 
@@ -36,8 +35,10 @@ public class AccountService {
 		String password = "";
 		List<Account> accounts = ((Collection<Account>) accountRepository.findAll()).stream()
 				.filter(i -> i.getUrl().equals(url)).collect(Collectors.toList());
-		if (!accounts.isEmpty())
+		Account account = accountRepository.findByUrlAndMaster(url, master);
+		if (account!=null && !accounts.isEmpty()) {
 			password = accounts.get(0).getPassword();
+		}
 		return password;
 	}
 
@@ -45,7 +46,8 @@ public class AccountService {
 		boolean status = false;
 		List<Account> accounts = ((Collection<Account>) accountRepository.findAll()).stream()
 				.filter(i -> i.getUrl().equals(url)).collect(Collectors.toList());
-		if (!accounts.isEmpty()) {
+		Account account = accountRepository.findByUrlAndMaster(url, master);
+		if (account!=null && !accounts.isEmpty()) {
 			status = true;
 		}
 		return status;
@@ -55,7 +57,8 @@ public class AccountService {
 		boolean status = false;
 		List<Account> accounts = ((Collection<Account>) accountRepository.findAll()).stream()
 				.filter(i -> i.getUrl().equals(url)).collect(Collectors.toList());
-		if (!accounts.isEmpty()) {
+		Account account = accountRepository.findByUrlAndMaster(url, master);
+		if (account!=null && !accounts.isEmpty()) {
 			accountRepository.delete(accounts.get(0));
 			status = true;
 		}
@@ -66,8 +69,8 @@ public class AccountService {
 		boolean status = false;
 		List<Account> accounts = ((Collection<Account>) accountRepository.findAll()).stream()
 				.filter(i -> i.getUrl().equals(url)).collect(Collectors.toList());
-
-		if (!accounts.isEmpty()) {
+		Account account = accountRepository.findByUrlAndMaster(url, master);
+		if (account != null && !accounts.isEmpty()) {
 			accounts.stream().forEach(i -> i.setUsername(newUsername));
 			accountRepository.save(accounts.get(0));
 			master.setAccounts(accounts);
@@ -81,8 +84,8 @@ public class AccountService {
 		boolean status = false;
 		List<Account> accounts = ((Collection<Account>) accountRepository.findAll()).stream()
 				.filter(i -> i.getUrl().equals(url)).collect(Collectors.toList());
-
-		if (!accounts.isEmpty()) {
+		Account account = accountRepository.findByUrlAndMaster(url, master);
+		if (account != null && !accounts.isEmpty()) {
 			accounts.stream().forEach(i -> i.setPassword(newPassword));
 			accountRepository.save(accounts.get(0));
 			master.setAccounts(accounts);
@@ -93,7 +96,7 @@ public class AccountService {
 	}
 
 	public List<Account> getAll() {
-		return (List<Account>) accountRepository.findAll();
-	}
+		return accountRepository.findByMaster(master);
+	}		
 
 }

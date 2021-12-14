@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <style>
@@ -28,7 +28,7 @@ body {
 	<div class="center">
 		<h2>Password Updated Successfully...............</h2>
 
-		<br> <a href="menu">Menu</a>
+		<br> <a href="updateAccountPasswordForm">Back</a>
 	</div>
 </body>
 </html>

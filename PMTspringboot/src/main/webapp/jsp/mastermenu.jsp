@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!Doctype html>
-<html>
+<html lang="en">
+<head>
+<title>Insert title here</title>
 <style>
 .btn-group button {
 	background-color: #04AA6D; /* Green background */
@@ -39,6 +41,7 @@ body {
 	padding: 50px;
 }
 </style>
+</head>
 <body>
 	<div class="center">
 		<h1>Master User</h1>

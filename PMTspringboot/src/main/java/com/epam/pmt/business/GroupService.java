@@ -49,14 +49,11 @@ public class GroupService {
 		boolean status = false;
 		List<Account> accounts = ((Collection<Account>) accountRepository.findAll()).stream()
 				.filter(i -> i.getGroupname().equals(currentGroupname)).collect(Collectors.toList());
-		if (this.checkIfGroupExists(currentGroupname)) {
-
-			if (!accounts.isEmpty()) {
+		if (this.checkIfGroupExists(currentGroupname) && !accounts.isEmpty()) {
 				accounts.stream().forEach(i -> i.setGroupname(newGroupname));
 				accountRepository.save(accounts.get(0));
 				master.setAccounts(accounts);
 				status = true;
-			}
 		}
 		return status;
 	}

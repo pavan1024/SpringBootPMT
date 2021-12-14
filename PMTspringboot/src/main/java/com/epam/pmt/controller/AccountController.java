@@ -15,7 +15,8 @@ import com.epam.pmt.entities.Account;
 public class AccountController {
 	@Autowired
 	AccountService accountService;
-
+	String errormsg = "errorMessage";
+	String error = "error";
 	@GetMapping("createAccountForm")
 	public String createAccountForm() {
 		return "createAccountForm";
@@ -36,8 +37,8 @@ public class AccountController {
 				mv.setViewName("createAccount");
 			}
 		} catch (Exception ex) {
-			mv.addObject("errorMessage", ex.getMessage());
-			mv.setViewName("error");
+			mv.addObject(errormsg, ex.getMessage());
+			mv.setViewName(error);
 		}
 		return mv;
 	}
@@ -57,8 +58,8 @@ public class AccountController {
 				mv.setViewName("displayPassword");
 			}
 		} catch (Exception ex) {
-			mv.addObject("errorMessage", ex.getMessage());
-			mv.setViewName("error");
+			mv.addObject(errormsg, ex.getMessage());
+			mv.setViewName(error);
 		}
 		return mv;
 	}
@@ -76,8 +77,8 @@ public class AccountController {
 				mv.setViewName("deleteAccount");
 			}
 		} catch (Exception ex) {
-			mv.addObject("errorMessage", ex.getMessage());
-			mv.setViewName("error");
+			mv.addObject(errormsg, ex.getMessage());
+			mv.setViewName(error);
 		}
 		return mv;
 	}
@@ -90,8 +91,8 @@ public class AccountController {
 			mv.addObject("accounts", accountService.getAll());
 
 		} catch (Exception ex) {
-			mv.addObject("errorMessage", ex.getMessage());
-			mv.setViewName("error");
+			mv.addObject(errormsg, ex.getMessage());
+			mv.setViewName(error);
 		}
 		return mv;
 	}
@@ -115,8 +116,8 @@ public class AccountController {
 				mv.setViewName("updateAccountUsername");
 			}
 		} catch (Exception ex) {
-			mv.addObject("errorMessage", ex.getMessage());
-			mv.setViewName("error");
+			mv.addObject(errormsg, ex.getMessage());
+			mv.setViewName(error);
 		}
 		return mv;
 	}
@@ -135,8 +136,8 @@ public class AccountController {
 				mv.setViewName("updateAccountPassword");
 			}
 		} catch (Exception ex) {
-			mv.addObject("errorMessage", ex.getMessage());
-			mv.setViewName("error");
+			mv.addObject(errormsg, ex.getMessage());
+			mv.setViewName(error);
 		}
 		return mv;
 	}

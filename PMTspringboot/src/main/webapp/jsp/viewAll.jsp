@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
@@ -21,8 +21,8 @@ body {
 	margin-top: 150px;
 	margin-left: 400px;
 	border: 1px solid white;
-	width: 400px;
-	height: 250px;
+	width: 500px;
+	height: 300px;
 	padding: 50px;
 }
 </style>
@@ -33,10 +33,10 @@ body {
 
 		<table border=1>
 			<tr>
-				<th>URL</th>
-				<th>Username</th>
-				<th>Password</th>
-				<th>Groupname</th>
+				<th id="url">URL</th>
+				<th id="username">Username</th>
+				<th id="password">Password</th>
+				<th id="groupname">Groupname</th>
 			</tr>
 
 			<c:forEach items="${accounts}" var="account">

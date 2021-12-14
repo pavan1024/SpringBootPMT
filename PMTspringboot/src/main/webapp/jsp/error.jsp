@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
@@ -26,10 +26,10 @@ body {
 </head>
 <body>
 	<div class="center">
-		<h2>Error Page</h2>
+		<h2>Error</h2>
 
 		${errorMessage} <br>
-		<!-- <a href="/master/" >Back</a>  -->
+		<a href="menu" >Menu</a>
 	</div>
 </body>
 </html>

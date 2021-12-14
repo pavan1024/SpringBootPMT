@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!Doctype html>
-<html>
+<html lang="en">
+<head>
+<title>Insert title here</title>
 <style>
 body {
 	background: #00C9FF; /* fallback for old browsers */
@@ -37,6 +39,7 @@ body {
 	background-color: #3e8e41;
 }
 </style>
+</head>
 <body>
 	<div class="center">
 		<h1>Menu</h1>
@@ -50,7 +53,7 @@ body {
 				<button>Display Account Password</button>
 			</form>
 			<form name="DisplayAllAccountsbyGroupname"
-				action="/account/displayByGroupForm">
+				action="/group/displayByGroupForm">
 				<button>Display All Accounts by Groupname</button>
 			</form>
 			<form name="Delete Account" action="/account/deleteAccountForm">
@@ -60,14 +63,14 @@ body {
 				<button>Update Account Details</button>
 
 			</form>
-			<form name="ModifyGroupname" action="/account/updateGroupnameForm">
-				<button>Modify Groupname</button>
+			<form name="UpdateyGroupname" action="/group/updateGroupnameForm">
+				<button>Update Groupname</button>
 			</form>
 			<form name="view All" action="/account/viewAll">
 				<button>View All Accounts</button>
 
 			</form>
-			<form name="Delete Group" action="/account/deleteGroupForm">
+			<form name="Delete Group" action="/group/deleteGroupForm">
 				<button>Delete Group</button>
 			</form>
 			<br> <a href="/master/">Back</a>

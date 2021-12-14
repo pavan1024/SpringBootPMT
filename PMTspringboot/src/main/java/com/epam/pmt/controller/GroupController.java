@@ -12,11 +12,17 @@ import com.epam.pmt.business.GroupService;
 import com.epam.pmt.entities.Account;
 
 @Controller
-@RequestMapping("account")
+@RequestMapping("group")
 public class GroupController {
 	@Autowired
 	GroupService groupService;
-
+	String errormsg = "errorMessage";
+	String error = "error";
+	@GetMapping("menu")
+	public String gmenu() {
+		return "menu";
+	}
+	
 	@GetMapping("deleteGroupForm")
 	public String deleteGroupForm() {
 		return "deleteGroupForm";
@@ -30,8 +36,8 @@ public class GroupController {
 				mv.setViewName("deleteGroup");
 			}
 		} catch (Exception ex) {
-			mv.addObject("errorMessage", ex.getMessage());
-			mv.setViewName("error");
+			mv.addObject(errormsg, ex.getMessage());
+			mv.setViewName(error);
 		}
 		return mv;
 	}
@@ -50,8 +56,8 @@ public class GroupController {
 			mv.setViewName("displayByGroup");
 
 		} catch (Exception ex) {
-			mv.addObject("errorMessage", ex.getMessage());
-			mv.setViewName("error");
+			mv.addObject(errormsg, ex.getMessage());
+			mv.setViewName(error);
 		}
 		return mv;
 	}
@@ -69,8 +75,8 @@ public class GroupController {
 			mv.setViewName("updateGroupname");
 
 		} catch (Exception ex) {
-			mv.addObject("errorMessage", ex.getMessage());
-			mv.setViewName("error");
+			mv.addObject(errormsg, ex.getMessage());
+			mv.setViewName(error);
 		}
 		return mv;
 	}

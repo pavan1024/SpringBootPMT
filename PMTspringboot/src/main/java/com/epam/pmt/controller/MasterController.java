@@ -25,7 +25,7 @@ public class MasterController {
 	}
 
 	@PostMapping("menu")
-	public ModelAndView Login(String username, String password) {
+	public ModelAndView login(String username, String password) {
 		ModelAndView mv = new ModelAndView();
 		try {
 			if (masterUserService.login(username, password)) {
