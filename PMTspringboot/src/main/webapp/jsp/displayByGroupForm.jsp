@@ -19,6 +19,7 @@ background-color: white;
 </head>
 <body>
 <div class="left">
+<h3>Display Accounts By Groupname</h3>
 <form name="Display By Group" action="displayByGroup" method="post">
 Groupname : <input type="text" name="groupname">
 <br><br>

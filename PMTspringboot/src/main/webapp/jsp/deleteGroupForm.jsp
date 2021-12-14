@@ -19,6 +19,7 @@ background-color: white;
 </head>
 <body>
 <div class="left">
+<h3>Delete Group</h3>
 <form name="deleteGroupForm" action="deleteGroup" method="post">
 Groupname : <input type="text" name="groupname">
 <br><br>

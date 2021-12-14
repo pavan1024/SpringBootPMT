@@ -34,7 +34,6 @@
 <button>Register</button>
 </form>
 <br>
-<a href="/master/" >Menu</a>
 </div>
 
 

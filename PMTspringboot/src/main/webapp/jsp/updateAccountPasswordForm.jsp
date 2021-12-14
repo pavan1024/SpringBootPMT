@@ -19,6 +19,7 @@ background-color: white;
 </head>
 <body>
 <div class="left">
+<h3>Update Account Password</h3>
 <form name="updatePassword" action="updateAccountPassword" method="post">
 Url : <input type="text" name="url">
 <br><br>

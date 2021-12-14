@@ -19,6 +19,7 @@ background-color: white;
 </head>
 <body>
 <div class="left">
+<h3>Update Groupname</h3>
 <form name="update Groupname" action="updateGroupname" method="post">
 Current Groupname : <input type="text" name="currentGroupname">
 <br><br>

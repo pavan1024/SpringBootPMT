@@ -19,7 +19,7 @@ background-color: "green";
 </head>
 <body>
 <div class="center">
-<h3>Create Account</h3>
+<h3>Display Account Password</h3>
 <form name="displayPassword" action="displayPassword" method="post">
 Url : <input type="text" name="url">
 <br><br>

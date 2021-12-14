@@ -19,6 +19,7 @@ background-color: white;
 </head>
 <body>
 <div class="left">
+<h3>Delete Account</h3>
 <form name="deleteAccountForm" action="deleteAccount" method="post">
 Url : <input type="text" name="url">
 <br><br>

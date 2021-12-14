@@ -6,7 +6,8 @@ import javax.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.epam.pmt.dao.MasterDaoImpl;
+import com.epam.pmt.dao.MasterDao;
+import com.epam.pmt.daoimpl.MasterDaoImpl;
 import com.epam.pmt.entities.Master;
 import com.epam.pmt.factory.SingletonFactory;
 
@@ -15,7 +16,7 @@ public class MasterUserService {
 	@Autowired
 	SingletonFactory singletonFactory;
 	@Autowired
-	MasterDaoImpl masterDaoImpl;
+	MasterDao masterDao;
 	@Autowired
 	Validation validation;
 	EntityManagerFactory factory;
@@ -45,9 +46,14 @@ public class MasterUserService {
 		return status;
 	}
 	
-	public boolean createMaster(String userName, String password) {
-		return masterDaoImpl.createMaster(userName, password);
-	
+	public boolean createMaster(String username, String password) {
+		boolean status = false;
+		Master master = new Master();
+		master.setUsername(username);
+		master.setPassword(password);
+		status = masterDao.createMaster(master);
+		return status;
+
 	}
 
 	public boolean login(String username, String password) {
