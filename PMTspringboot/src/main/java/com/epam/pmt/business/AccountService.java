@@ -1,29 +1,23 @@
 package com.epam.pmt.business;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.epam.pmt.dao.AccountDao;
 import com.epam.pmt.entities.Account;
 import com.epam.pmt.entities.Master;
-import com.epam.pmt.factory.SingletonFactory;
+import com.epam.pmt.repo.AccountRepository;
 
 @Service
 public class AccountService {
+
 	@Autowired
-	AccountDao accountDao;
-	@Autowired
-	SingletonFactory singletonFactory;
+	AccountRepository accountRepository;
 	Master master = MasterProvider.getMaster();
-	EntityManagerFactory factory;
-	EntityManager manager;
-	
 	public boolean createAccount(String url, String username, String password, String groupname) {
 		boolean status = false;
 		Account account = new Account();
@@ -31,62 +25,73 @@ public class AccountService {
 		account.setUsername(username);
 		account.setPassword(password);
 		account.setGroupname(groupname);
-		status = accountDao.createAccount(account);
+		account.setMaster(master);
+		Account savedAccount = accountRepository.save(account);
+		if(savedAccount!=null){
+			status = true;
+		}
 		return status;
 
 	}
-	
-	
 	public String readPassword(String url) {
 		String password="";
-		List<Account> accounts=accountDao.getAll().stream().filter(i->i.getUrl().equals(url)).collect(Collectors.toList());
+		List<Account> accounts=((Collection<Account>) accountRepository.findAll()).stream().filter(i->i.getUrl().equals(url)).collect(Collectors.toList());
 		if(!accounts.isEmpty())
-			password = accountDao.readPassword(accounts.get(0));
+			password = accounts.get(0).getPassword();
 		return password;
 	}
 	
 	public boolean checkUrl(String url) {
 		boolean status = false;
-		factory = singletonFactory.getEntityManagerFactory();
-		manager = factory.createEntityManager();	
-		Account account=manager.find(Account.class, url);
-		try {
-			if(account!=null) {
+		List<Account> accounts=((Collection<Account>) accountRepository.findAll()).stream().filter(i->i.getUrl().equals(url)).collect(Collectors.toList());
+		if(!accounts.isEmpty()) {
 				status =true;
-			}
-		}catch(IllegalStateException e) {
-			e.getStackTrace();
-		}finally {
-			manager.close();
 		}
 		return status;
 	}
-
-	
-	
 	public boolean deleteAccount(String url) {
-		List<Account> accounts=accountDao.getAll().stream().filter(i->i.getUrl().equals(url)).collect(Collectors.toList());
-		return accountDao.deleteAccount(accounts.get(0));
+		boolean status=false;
+		List<Account> accounts=((Collection<Account>) accountRepository.findAll()).stream().filter(i->i.getUrl().equals(url)).collect(Collectors.toList());
+		if(!accounts.isEmpty()) {
+			accountRepository.delete(accounts.get(0));
+			status =true;
+	}
+		return status;
+	}
+	public boolean updateUsername(String url, String newUsername) {
+		boolean status=false;
+		List<Account> accounts=((Collection<Account>) accountRepository.findAll()).stream().filter(i->i.getUrl().equals(url)).collect(Collectors.toList());
+		
+		master.setAccounts(accounts);
+		if(!accounts.isEmpty()) {
+			accounts.stream().forEach(i->i.setUsername(newUsername));
+			accountRepository.save(accounts.get(0));
+			status =true;
+	}
+		return status;
+
 	}
 	
-
-	public boolean updateUsername(String url, String newUsername) {
-		List<Account> accounts=accountDao.getAll().stream().filter(i->i.getUrl().equals(url)).collect(Collectors.toList());
-		accounts.stream().forEach(i->i.setUsername(newUsername));
-		master.setAccounts(accounts);
-		return this.accountDao.updateAccount(accounts.get(0));
-
-	}
-
 	public boolean updatePassword(String url, String newPassword) {
-		List<Account> accounts=accountDao.getAll().stream().filter(i->i.getUrl().equals(url)).collect(Collectors.toList());
-		accounts.stream().forEach(i->i.setPassword(newPassword));
+		boolean status=false;
+		List<Account> accounts=((Collection<Account>) accountRepository.findAll()).stream().filter(i->i.getUrl().equals(url)).collect(Collectors.toList());
+		
 		master.setAccounts(accounts);
-		return this.accountDao.updateAccount(accounts.get(0));
+		if(!accounts.isEmpty()) {
+			accounts.stream().forEach(i->i.setPassword(newPassword));
+			accountRepository.save(accounts.get(0));
+			status =true;
+	}
+		return status;
 
 	}
 	
 	public List<Account> getAll() {
-		return accountDao.getAll();
+		return (List<Account>) accountRepository.findAll();
 	}
+	
 }
+
+
+
+

@@ -12,7 +12,7 @@ import com.epam.pmt.business.GroupService;
 import com.epam.pmt.entities.Account;
 
 @Controller
-@RequestMapping("master/account")
+@RequestMapping("account")
 public class GroupController {
 	@Autowired
 	GroupService groupService;

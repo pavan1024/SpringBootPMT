@@ -30,30 +30,30 @@ body{
 <h1>Menu</h1>
 
 <div class="btn-group">
-<form name="CreateAccount" action="createAccountForm">
+<form name="CreateAccount" action="/account/createAccountForm">
 <button >Create Account</button>
 </form>
-<form name="DisplayAccountPassword" action="displayPasswordForm">
+<form name="DisplayAccountPassword" action="/account/displayPasswordForm">
 <button >Display Account Password</button>
 </form>
-<form name="DisplayAllAccountsbyGroupname" action="displayByGroupForm">
+<form name="DisplayAllAccountsbyGroupname" action="/account/displayByGroupForm">
 <button >Display All Accounts by Groupname</button>
 </form>
-<form name="Delete Account" action="deleteAccountForm" >
+<form name="Delete Account" action="/account/deleteAccountForm" >
 <button >Delete Account</button>
 </form>
-<form name="UpdateAccountDetails" action="submenu">
+<form name="UpdateAccountDetails" action="/account/submenu">
 <button >Update Account Details</button>
 
 </form>
-<form name="ModifyGroupname" action="updateGroupnameForm">
+<form name="ModifyGroupname" action="/account/updateGroupnameForm">
 <button >Modify Groupname</button>
 </form>
-<form name="view All" action="viewAll" >
+<form name="view All" action="/account/viewAll" >
 <button >View All Accounts</button>
 
 </form>
-<form name="Delete Group" action="deleteGroupForm">
+<form name="Delete Group" action="/account/deleteGroupForm">
 <button >Delete Group</button>
 </form>
 <br>

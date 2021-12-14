@@ -11,7 +11,7 @@ import com.epam.pmt.business.AccountService;
 import com.epam.pmt.entities.Account;
 
 @Controller
-@RequestMapping("master/account")
+@RequestMapping("account")
 public class AccountController {
 	@Autowired
 	AccountService accountService;
@@ -145,40 +145,4 @@ public class AccountController {
 }
 
 
-
-
-//@PostMapping("checkGroupForm")
-//public String checkGroupForm() {
-//	return "checkGroupForm";
-//}
-//
-//@PostMapping("checkGroup")
-//public ModelAndView checkGroup(Account account) {
-//	ModelAndView mv = new ModelAndView();
-//	try {
-//		if(groupService.checkIfGroupExists(account.getGroupname())) {
-//			mv.setViewName("updateGroupnameForm");
-//		}
-//	} catch (Exception ex) {
-//		mv.addObject("errorMessage", ex.getMessage());
-//		mv.setViewName("error");
-//	}
-//	return mv;
-//}
-//@PostMapping("updateGroupnameForm")
-//public String updateGroupnameForm() {
-//	return "updateGroupnameForm";
-//}
-//@PostMapping("updateGroupname")
-//public ModelAndView updateGroupname(Account account) {
-//	ModelAndView mv = new ModelAndView();
-//	try {
-//			groupService.updateGroupName(account.getGroupname(), account.getGroupname());
-//			mv.setViewName("updated");
-//	} catch (Exception ex) {
-//		mv.addObject("errorMessage", ex.getMessage());
-//		mv.setViewName("error");
-//	}
-//	return mv;
-//}
 

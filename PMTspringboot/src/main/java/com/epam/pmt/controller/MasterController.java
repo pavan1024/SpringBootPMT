@@ -23,7 +23,7 @@ public class MasterController {
 		return "Login";
 	}
 
-	@PostMapping("account/menu")
+	@PostMapping("menu")
 	public ModelAndView Login(String username,String password) {
 		ModelAndView mv = new ModelAndView();
 		try {

@@ -3,6 +3,9 @@
 <!Doctype html>
 <html>
 <style>
+body{
+	background-image: linear-gradient(red, blue);
+}
 .btn-group button {
   background-color: #04AA6D; /* Green background */
   border: 1px solid green; /* Green border */

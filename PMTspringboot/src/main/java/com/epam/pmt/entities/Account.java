@@ -17,6 +17,7 @@ public class Account {
 	private String username;
 	@Column
 	private String password;
+	@Column
 	private String groupname;
 	@ManyToOne
 	@JoinColumn(name = "master_id")
