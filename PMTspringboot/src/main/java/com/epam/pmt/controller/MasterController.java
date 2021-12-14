@@ -47,7 +47,7 @@ public class MasterController {
 	public ModelAndView register(String username, String password) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			if (masterUserService.createMaster(username, password)) {
+			if (masterUserService.registerAccount(username, password)) {
 				mv.setViewName("register");
 			}
 		} catch (Exception ex) {

@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.epam.pmt.entities.Account;
 import com.epam.pmt.entities.Master;
 import com.epam.pmt.repo.MasterRepository;
 
@@ -20,21 +19,14 @@ public class MasterUserService {
 
 	public boolean registerAccount(String username, String password) {
 		boolean status = false;
-		if (validation.isValidPassword(password)) {
-			this.createMaster(username, password);
-			status = true;
-		}
-		return status;
-	}
-
-	public boolean createMaster(String username, String password) {
-		boolean status = false;
+		if(validation.isValidPassword(password)) {
 		Master master = new Master();
 		master.setUsername(username);
 		master.setPassword(password);
 		Master savedMaster = masterRepository.save(master);
-		if (savedMaster != null) {
-			status = true;
+			if (savedMaster != null) {
+				status = true;
+			}
 		}
 		return status;
 
