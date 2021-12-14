@@ -32,6 +32,7 @@ body {
 		<h2>Group Accounts</h2>
 
 		<table border=1>
+		<caption>Groups</caption>
 			<tr>
 				<th id="url">URL</th>
 				<th id="username">Username</th>

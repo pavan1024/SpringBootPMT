@@ -31,7 +31,8 @@ body {
 	<div class="center">
 		<h2>User Accounts</h2>
 
-		<table border=1>
+		<table border=1 >
+		<caption>All Accounts</caption>
 			<tr>
 				<th id="url">URL</th>
 				<th id="username">Username</th>

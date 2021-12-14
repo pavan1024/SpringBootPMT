@@ -33,21 +33,17 @@ public class AccountService {
 
 	public String readPassword(String url) {
 		String password = "";
-		List<Account> accounts = ((Collection<Account>) accountRepository.findAll()).stream()
-				.filter(i -> i.getUrl().equals(url)).collect(Collectors.toList());
 		Account account = accountRepository.findByUrlAndMaster(url, master);
-		if (account!=null && !accounts.isEmpty()) {
-			password = accounts.get(0).getPassword();
+		if (account!=null) {
+			password = account.getPassword();
 		}
 		return password;
 	}
 
 	public boolean checkUrl(String url) {
 		boolean status = false;
-		List<Account> accounts = ((Collection<Account>) accountRepository.findAll()).stream()
-				.filter(i -> i.getUrl().equals(url)).collect(Collectors.toList());
 		Account account = accountRepository.findByUrlAndMaster(url, master);
-		if (account!=null && !accounts.isEmpty()) {
+		if (account!=null) {
 			status = true;
 		}
 		return status;
@@ -67,13 +63,10 @@ public class AccountService {
 
 	public boolean updateUsername(String url, String newUsername) {
 		boolean status = false;
-		List<Account> accounts = ((Collection<Account>) accountRepository.findAll()).stream()
-				.filter(i -> i.getUrl().equals(url)).collect(Collectors.toList());
 		Account account = accountRepository.findByUrlAndMaster(url, master);
-		if (account != null && !accounts.isEmpty()) {
-			accounts.stream().forEach(i -> i.setUsername(newUsername));
-			accountRepository.save(accounts.get(0));
-			master.setAccounts(accounts);
+		if (account != null) {
+			account.setUsername(newUsername);
+			accountRepository.save(account);
 			status = true;
 		}
 		return status;
@@ -82,13 +75,10 @@ public class AccountService {
 
 	public boolean updatePassword(String url, String newPassword) {
 		boolean status = false;
-		List<Account> accounts = ((Collection<Account>) accountRepository.findAll()).stream()
-				.filter(i -> i.getUrl().equals(url)).collect(Collectors.toList());
 		Account account = accountRepository.findByUrlAndMaster(url, master);
-		if (account != null && !accounts.isEmpty()) {
-			accounts.stream().forEach(i -> i.setPassword(newPassword));
-			accountRepository.save(accounts.get(0));
-			master.setAccounts(accounts);
+		if (account != null) {
+			account.setPassword(newPassword);
+			accountRepository.save(account);
 			status = true;
 		}
 		return status;
