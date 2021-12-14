@@ -27,10 +27,10 @@
 <h1>Master User</h1>
 
 <div class="btn-group">
-<form name="masterLogin" action="LoginForm" >
+<form name="masterLogin" action="loginForm" >
 <button>Login</button>
 </form>
-<form name="masterRegister" action="Register" >
+<form name="masterRegister" action="registerForm" >
 <button>Register</button>
 </form>
 <br>

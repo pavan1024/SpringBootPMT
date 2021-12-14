@@ -22,19 +22,16 @@ public class MasterController {
 	public String masterMenuForm() {
 		return "mastermenu";
 	}
-	@GetMapping("LoginForm")
+	@GetMapping("loginForm")
 	public String loginForm() {
 		return "Login";
 	}
-	@PostMapping("Register")
-	public String registerForm() {
-		return "register";
-	}
+
 	@PostMapping("account/menu")
-	public ModelAndView Login(Master master) {
+	public ModelAndView Login(String username,String password) {
 		ModelAndView mv = new ModelAndView();
 		try {
-		if(masterUserService.checkIfMasterExists(master.getUsername()) && masterUserService.login(master.getUsername(), master.getPassword())) {
+		if(masterUserService.checkIfMasterExists(username) && masterUserService.login(username,password)) {
 			mv.setViewName("menu");
 		}
 		} catch (Exception ex) {
@@ -43,7 +40,23 @@ public class MasterController {
 		}
 		return mv;
 	}
-
+	@GetMapping("registerForm")
+	public String registerForm() {
+		return "registerForm";
+	}
+	@PostMapping("register")
+	public ModelAndView register(String username,String password) {
+		ModelAndView mv = new ModelAndView();
+		try {
+			if(masterUserService.createMaster(username, password)) {
+				mv.setViewName("register");
+			}
+		} catch (Exception ex) {
+			mv.addObject("errorMessage", ex.getMessage());
+			mv.setViewName("error");
+		}
+		return mv;
+	}
 
 	
 }

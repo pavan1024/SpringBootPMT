@@ -57,7 +57,7 @@ body{
 <button >Delete Group</button>
 </form>
 <br>
-<a href="menu" >Back</a>
+<a href="/master/" >Back</a>
 </div>
 
 </body>

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Register</title>
+<title>Insert title here</title>
 <style>
 body{
 background-color: white;
@@ -19,9 +19,15 @@ background-color: white;
 </head>
 <body>
 <div class="left">
-<h2>Master Account Registered Successfuly</h2>
-<br>
+<form name="masterRegister" action="register" method="post">
+Username : <input placeholder="username"  type="text" name="username">
+<br><br>
+Password : <input placeholder="password" type="password" name="password">
+<br><br>
+<input type="submit" value="Login">
+<br><br>
 <a href="/master/" >Menu</a>
+</form>
 </div>
 </body>
 </html>
