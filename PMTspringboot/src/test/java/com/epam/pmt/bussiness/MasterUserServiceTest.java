@@ -22,16 +22,15 @@ import com.epam.pmt.repo.MasterRepository;
 class MasterUserServiceTest {
 	@Mock
 	MasterRepository masterRepository;
-	
+
 	@InjectMocks
 	MasterUserService masterUserService;
-	
-	
+
 	Master master;
-	Master master1=null;
+	Master master1 = null;
 	List<Master> masterAccounts;
 	List<Master> emptyAccounts = null;
-	
+
 	@BeforeEach
 	public void setUp() {
 		MasterProvider.setMaster("masteruser", "Master@123");
@@ -39,14 +38,14 @@ class MasterUserServiceTest {
 		masterAccounts = new ArrayList<>();
 		masterAccounts.add(master);
 	}
-	
+
 	@Test
 	void loginTest() {
 		when(masterRepository.findAll()).thenReturn(masterAccounts);
 		assertTrue(masterUserService.login("masteruser", "Master@123"));
 		assertFalse(masterUserService.login("masteruser", "Master3"));
 	}
-	
+
 	@Test
 	void registerTest() {
 		assertTrue(masterUserService.registerAccount("masteruser", "Master@123"));

@@ -20,20 +20,19 @@ import com.epam.pmt.repo.AccountRepository;
 
 @SpringBootTest
 class AccountServiceTest {
-	
+
 	@Mock
 	AccountRepository accountRepository;
-	
+
 	@InjectMocks
 	AccountService accountService;
-	
+
 	List<Account> accounts;
-	
 	Account account;
 	Account emptyAccount = null;
-	
 	Master master;
-	Master master1=null;
+	Master master1 = null;
+
 	@BeforeEach
 	public void setUp() {
 		MasterProvider.setMaster("masteruser", "Master@123");
@@ -45,9 +44,9 @@ class AccountServiceTest {
 		account.setPassword("yahoo@123");
 		account.setGroupname("yahoo");
 		accounts = new ArrayList<>();
-		accounts.add(account);	
+		accounts.add(account);
 	}
-	
+
 	@Test
 	void updateUsernameTest() {
 		when(accountRepository.findByUrlAndMaster("https://www.yahoo.com", master)).thenReturn(account);
@@ -55,7 +54,7 @@ class AccountServiceTest {
 		assertFalse(accountService.updateUsername("https://www.instagram.com", "mailusername"));
 		assertTrue(accountService.updatePassword("https://www.yahoo.com", "yahoousername"));
 	}
-	
+
 	@Test
 	void updatePasswordTest() {
 		when(accountRepository.findByUrlAndMaster("https://www.yahoo.com", master)).thenReturn(account);
@@ -63,22 +62,21 @@ class AccountServiceTest {
 		assertFalse(accountService.updateUsername("https://www.instagram.com", "mailusername"));
 		assertTrue(accountService.updatePassword("https://www.yahoo.com", "yahoousername"));
 	}
-	
+
 	@Test
 	void createAccountTest() {
 		when(accountRepository.findByMaster(master)).thenReturn(accounts);
 		when(accountRepository.findByMaster(master1)).thenReturn(null);
 		assertTrue(accountService.createAccount("https://www.yahoo.com", "yahoo", "yahoo@123", "yahoo"));
 	}
-	
+
 	@Test
 	void getPasswordTest() {
 		when(accountRepository.findByUrlAndMaster("https://www.yahoo.com", master)).thenReturn(account);
 		when(accountRepository.findByUrlAndMaster("https://www.instagram.com", master)).thenReturn(emptyAccount);
-		assertEquals("yahoo@123",accountService.readPassword("https://www.yahoo.com"));
+		assertEquals("yahoo@123", accountService.readPassword("https://www.yahoo.com"));
 	}
 
-	
 	@Test
 	void checkUrlTest() {
 		when(accountRepository.findByUrlAndMaster("https://www.yahoo.com", master)).thenReturn(account);
@@ -86,13 +84,14 @@ class AccountServiceTest {
 		assertFalse(accountService.checkUrl("https://www.instagram.com"));
 		assertTrue(accountService.checkUrl("https://www.yahoo.com"));
 	}
+
 	@Test
 	void getAllTest() {
 		when(accountRepository.findByMaster(master)).thenReturn(accounts);
 		when(accountRepository.findByMaster(master1)).thenReturn(null);
-		assertEquals(accounts,accountService.getAll());
+		assertEquals(accounts, accountService.getAll());
 	}
-	
+
 	@Test
 	void deleteAccountTest() {
 		when(accountRepository.findByUrlAndMaster("https://www.yahoo.com", master)).thenReturn(account);
@@ -100,7 +99,5 @@ class AccountServiceTest {
 		assertFalse(accountService.deleteAccount("https://www.instagram.com"));
 		assertTrue(accountService.deleteAccount("https://www.yahoo.com"));
 	}
-	
-	
 
 }

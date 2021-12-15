@@ -1,8 +1,6 @@
 package com.epam.pmt.business;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.epam.pmt.entities.Account;
@@ -34,7 +32,7 @@ public class AccountService {
 	public String readPassword(String url) {
 		String password = "";
 		Account account = accountRepository.findByUrlAndMaster(url, master);
-		if (account!=null) {
+		if (account != null) {
 			password = account.getPassword();
 		}
 		return password;
@@ -43,7 +41,7 @@ public class AccountService {
 	public boolean checkUrl(String url) {
 		boolean status = false;
 		Account account = accountRepository.findByUrlAndMaster(url, master);
-		if (account!=null) {
+		if (account != null) {
 			status = true;
 		}
 		return status;
@@ -52,7 +50,7 @@ public class AccountService {
 	public boolean deleteAccount(String url) {
 		boolean status = false;
 		Account account = accountRepository.findByUrlAndMaster(url, master);
-		if (account!=null) {
+		if (account != null) {
 			accountRepository.delete(account);
 			status = true;
 		}
@@ -85,6 +83,6 @@ public class AccountService {
 
 	public List<Account> getAll() {
 		return accountRepository.findByMaster(master);
-	}		
+	}
 
 }

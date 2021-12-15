@@ -8,6 +8,7 @@ import com.epam.pmt.entities.Account;
 import com.epam.pmt.entities.Master;
 
 public interface AccountRepository extends CrudRepository<Account, String> {
-		public Account findByUrlAndMaster(String url,Master master);
-		public List<Account> findByMaster(Master master);
+	public Account findByUrlAndMaster(String url, Master master);
+
+	public List<Account> findByMaster(Master master);
 }

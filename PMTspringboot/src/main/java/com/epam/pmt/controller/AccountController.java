@@ -17,6 +17,7 @@ public class AccountController {
 	AccountService accountService;
 	String errormsg = "errorMessage";
 	String error = "error";
+
 	@GetMapping("createAccountForm")
 	public String createAccountForm() {
 		return "createAccountForm";

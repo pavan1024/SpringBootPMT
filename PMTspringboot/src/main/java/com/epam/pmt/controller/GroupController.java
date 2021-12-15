@@ -18,11 +18,12 @@ public class GroupController {
 	GroupService groupService;
 	String errormsg = "errorMessage";
 	String error = "error";
+
 	@GetMapping("menu")
 	public String gmenu() {
 		return "menu";
 	}
-	
+
 	@GetMapping("deleteGroupForm")
 	public String deleteGroupForm() {
 		return "deleteGroupForm";
