@@ -3,6 +3,7 @@ package com.epam.pmt.bussiness;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -25,10 +26,12 @@ class AccountServiceTest {
 	
 	@InjectMocks
 	AccountService accountService;
+	
 	List<Account> accounts;
-	List<Account> emptyAccounts;
+	
 	Account account;
 	Account emptyAccount = null;
+	
 	Master master;
 	Master master1=null;
 	@BeforeEach
@@ -41,12 +44,12 @@ class AccountServiceTest {
 		account.setUsername("yahoouser");
 		account.setPassword("yahoo@123");
 		account.setGroupname("yahoo");
-//		accounts.add(account);
-		
+		accounts = new ArrayList<>();
+		accounts.add(account);	
 	}
 	
 	@Test
-	void updateUsernametest() {
+	void updateUsernameTest() {
 		when(accountRepository.findByUrlAndMaster("https://www.yahoo.com", master)).thenReturn(account);
 		when(accountRepository.findByUrlAndMaster("https://www.instagram.com", master)).thenReturn(emptyAccount);
 		assertFalse(accountService.updateUsername("https://www.instagram.com", "mailusername"));
@@ -54,31 +57,50 @@ class AccountServiceTest {
 	}
 	
 	@Test
-	void updatePasswordtest() {
+	void updatePasswordTest() {
 		when(accountRepository.findByUrlAndMaster("https://www.yahoo.com", master)).thenReturn(account);
 		when(accountRepository.findByUrlAndMaster("https://www.instagram.com", master)).thenReturn(emptyAccount);
 		assertFalse(accountService.updateUsername("https://www.instagram.com", "mailusername"));
 		assertTrue(accountService.updatePassword("https://www.yahoo.com", "yahoousername"));
 	}
+	
 	@Test
-	void getPasswordtest() {
+	void createAccountTest() {
+		when(accountRepository.findByMaster(master)).thenReturn(accounts);
+		when(accountRepository.findByMaster(master1)).thenReturn(null);
+		assertTrue(accountService.createAccount("https://www.yahoo.com", "yahoo", "yahoo@123", "yahoo"));
+	}
+	
+	@Test
+	void getPasswordTest() {
 		when(accountRepository.findByUrlAndMaster("https://www.yahoo.com", master)).thenReturn(account);
 		when(accountRepository.findByUrlAndMaster("https://www.instagram.com", master)).thenReturn(emptyAccount);
 		assertEquals("yahoo@123",accountService.readPassword("https://www.yahoo.com"));
 	}
-//	@Test
-//	void getAlltest() {
-//		when(accountRepository.findByMaster(master)).thenReturn(accounts);
-//		when(accountRepository.findByMaster(master1)).thenReturn(emptyAccounts);
-//		assertEquals(accounts,accountService.getAll());
-//	}
+
 	
 	@Test
-	void checkUrltest() {
+	void checkUrlTest() {
 		when(accountRepository.findByUrlAndMaster("https://www.yahoo.com", master)).thenReturn(account);
 		when(accountRepository.findByUrlAndMaster("https://www.instagram.com", master)).thenReturn(emptyAccount);
 		assertFalse(accountService.checkUrl("https://www.instagram.com"));
 		assertTrue(accountService.checkUrl("https://www.yahoo.com"));
 	}
+	@Test
+	void getAllTest() {
+		when(accountRepository.findByMaster(master)).thenReturn(accounts);
+		when(accountRepository.findByMaster(master1)).thenReturn(null);
+		assertEquals(accounts,accountService.getAll());
+	}
+	
+	@Test
+	void deleteAccountTest() {
+		when(accountRepository.findByUrlAndMaster("https://www.yahoo.com", master)).thenReturn(account);
+		when(accountRepository.findByUrlAndMaster("https://www.instagram.com", master)).thenReturn(emptyAccount);
+		assertFalse(accountService.deleteAccount("https://www.instagram.com"));
+		assertTrue(accountService.deleteAccount("https://www.yahoo.com"));
+	}
+	
+	
 
 }

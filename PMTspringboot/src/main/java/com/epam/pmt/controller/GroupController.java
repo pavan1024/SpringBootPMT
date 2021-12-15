@@ -51,7 +51,7 @@ public class GroupController {
 	public ModelAndView displaybyGroup(Account account) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			List<Account> groupAccounts = groupService.groupDetails(account.getGroupname());
+			List<Account> groupAccounts = groupService.getGroupList(account.getGroupname());
 			mv.addObject("accounts", groupAccounts);
 			mv.setViewName("displayByGroup");
 

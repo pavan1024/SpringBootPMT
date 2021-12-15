@@ -19,25 +19,25 @@ public class GroupService {
 
 	public boolean checkIfGroupExists(String groupname) {
 		boolean status = false;
-		List<Account> groupAccounts = ((Collection<Account>) accountRepository.findAll()).stream()
-				.filter(i -> i.getGroupname().equals(groupname)).collect(Collectors.toList());
+		List<Account> groupAccounts = ((Collection<Account>) accountRepository.findByMaster(master)).stream()
+				.filter(i -> i.getGroupname().equalsIgnoreCase(groupname)).collect(Collectors.toList());
 		if (!groupAccounts.isEmpty()) {
 			status = true;
 		}
 		return status;
 	}
 
-	public List<Account> groupDetails(String groupname) {
+	public List<Account> getGroupList(String groupname) {
 		List<Account> groupAccounts = null;
-		groupAccounts = ((Collection<Account>) accountRepository.findAll()).stream()
-				.filter(i -> i.getGroupname().equals(groupname)).collect(Collectors.toList());
+		groupAccounts = ((Collection<Account>) accountRepository.findByMaster(master)).stream()
+				.filter(i -> i.getGroupname().equalsIgnoreCase(groupname)).collect(Collectors.toList());
 		return groupAccounts;
 	}
 
 	public boolean deleteGroup(String groupname) {
 		boolean status = false;
-		List<Account> groupAccounts = ((Collection<Account>) accountRepository.findAll()).stream()
-				.filter(i -> i.getGroupname().equals(groupname)).collect(Collectors.toList());
+		List<Account> groupAccounts = ((Collection<Account>) accountRepository.findByMaster(master)).stream()
+				.filter(i -> i.getGroupname().equalsIgnoreCase(groupname)).collect(Collectors.toList());
 		if (!groupAccounts.isEmpty()) {
 			accountRepository.deleteAll(groupAccounts);
 			status = true;
@@ -47,7 +47,7 @@ public class GroupService {
 
 	public boolean updateGroupname(String currentGroupname, String newGroupname) {
 		boolean status = false;
-		List<Account> accounts = ((Collection<Account>) accountRepository.findAll()).stream()
+		List<Account> accounts = accountRepository.findByMaster(master).stream()
 				.filter(i -> i.getGroupname().equals(currentGroupname)).collect(Collectors.toList());
 		if (this.checkIfGroupExists(currentGroupname) && !accounts.isEmpty()) {
 				accounts.stream().forEach(i -> i.setGroupname(newGroupname));

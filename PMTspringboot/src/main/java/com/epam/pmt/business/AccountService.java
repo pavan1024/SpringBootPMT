@@ -51,11 +51,9 @@ public class AccountService {
 
 	public boolean deleteAccount(String url) {
 		boolean status = false;
-		List<Account> accounts = ((Collection<Account>) accountRepository.findAll()).stream()
-				.filter(i -> i.getUrl().equals(url)).collect(Collectors.toList());
 		Account account = accountRepository.findByUrlAndMaster(url, master);
-		if (account!=null && !accounts.isEmpty()) {
-			accountRepository.delete(accounts.get(0));
+		if (account!=null) {
+			accountRepository.delete(account);
 			status = true;
 		}
 		return status;

@@ -14,18 +14,14 @@ import com.epam.pmt.repo.MasterRepository;
 public class MasterUserService {
 	@Autowired
 	MasterRepository masterRepository;
-	@Autowired
-	Validation validation;
 
 	public boolean registerAccount(String username, String password) {
 		boolean status = false;
-		if(validation.isValidPassword(password)) {
 			Master master = new Master();
 			master.setUsername(username);
 			master.setPassword(password);
 			masterRepository.save(master);
 			status = true;
-		}
 		return status;
 
 	}
