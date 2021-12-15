@@ -1,29 +1,16 @@
-package com.epam.pmt.entities;
+package com.epam.pmt.dto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+public class AccountDto {
 
-import com.epam.pmt.dto.MasterDto;
-
-@Entity
-@Table(name = "Accounts")
-public class Account {
-
-	@Id
 	private String url;
-	@Column
+
 	private String username;
-	@Column
+
 	private String password;
-	@Column
+
 	private String groupname;
-	@ManyToOne
-	@JoinColumn(name = "master_id")
-	private Master master;
+
+	private MasterDto masterDto;
 
 	public String getGroupname() {
 		return groupname;
@@ -33,12 +20,12 @@ public class Account {
 		this.groupname = groupName;
 	}
 
-	public Master getMaster() {
-		return master;
+	public MasterDto getMasterDto() {
+		return masterDto;
 	}
 
-	public void setMaster(Master master) {
-		this.master = master;
+	public void setMasterDto(MasterDto masterDto) {
+		this.masterDto = masterDto;
 	}
 
 	public String getUrl() {

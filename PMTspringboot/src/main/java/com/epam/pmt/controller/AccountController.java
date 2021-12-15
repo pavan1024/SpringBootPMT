@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.epam.pmt.business.AccountService;
+import com.epam.pmt.dto.AccountDto;
 import com.epam.pmt.entities.Account;
 
 @Controller
@@ -29,11 +30,10 @@ public class AccountController {
 	}
 
 	@PostMapping("createAccount")
-	public ModelAndView accountCreation(Account account) {
+	public ModelAndView accountCreation(AccountDto accountDto) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			boolean status = accountService.createAccount(account.getUrl(), account.getUsername(),
-					account.getPassword(), account.getGroupname());
+			boolean status = accountService.addAccount(accountDto);
 			if (status) {
 				mv.setViewName("createAccount");
 			}
@@ -50,10 +50,10 @@ public class AccountController {
 	}
 
 	@PostMapping("displayPassword")
-	public ModelAndView displayPassword(Account account) {
+	public ModelAndView displayPassword(AccountDto accountDto) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			String password = accountService.readPassword(account.getUrl());
+			String password = accountService.readPassword(accountDto);
 			if (password != null) {
 				mv.addObject("password", password);
 				mv.setViewName("displayPassword");
@@ -71,10 +71,10 @@ public class AccountController {
 	}
 
 	@PostMapping("deleteAccount")
-	public ModelAndView deleteAccount(Account account) {
+	public ModelAndView deleteAccount(AccountDto accountDto) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			if (accountService.deleteAccount(account.getUrl())) {
+			if (accountService.deleteAccount(accountDto)) {
 				mv.setViewName("deleteAccount");
 			}
 		} catch (Exception ex) {
@@ -109,11 +109,10 @@ public class AccountController {
 	}
 
 	@PostMapping("updateAccountUsername")
-	public ModelAndView updateAccountUsername(Account account) {
+	public ModelAndView updateAccountUsername(AccountDto accountDto) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			if (accountService.checkUrl(account.getUrl())
-					&& accountService.updateUsername(account.getUrl(), account.getUsername())) {
+			if (accountService.checkUrl(accountDto) && accountService.updateUsername(accountDto)) {
 				mv.setViewName("updateAccountUsername");
 			}
 		} catch (Exception ex) {
@@ -129,11 +128,10 @@ public class AccountController {
 	}
 
 	@PostMapping("updateAccountPassword")
-	public ModelAndView updateAccountPassword(Account account) {
+	public ModelAndView updateAccountPassword(AccountDto accountDto) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			if (accountService.checkUrl(account.getUrl())
-					&& accountService.updatePassword(account.getUrl(), account.getPassword())) {
+			if (accountService.checkUrl(accountDto) && accountService.updatePassword(accountDto)) {
 				mv.setViewName("updateAccountPassword");
 			}
 		} catch (Exception ex) {

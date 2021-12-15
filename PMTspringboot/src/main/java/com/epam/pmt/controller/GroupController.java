@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import com.epam.pmt.business.GroupService;
+import com.epam.pmt.dto.AccountDto;
 import com.epam.pmt.entities.Account;
+import com.epam.pmt.exception.GroupNotFoundException;
 
 @Controller
 @RequestMapping("group")
@@ -30,13 +32,13 @@ public class GroupController {
 	}
 
 	@PostMapping("deleteGroup")
-	public ModelAndView deleteGroup(Account account) {
+	public ModelAndView deleteGroup(AccountDto accountDto) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			if (groupService.deleteGroup(account.getGroupname())) {
+			if (groupService.deleteGroup(accountDto.getGroupname())) {
 				mv.setViewName("deleteGroup");
 			}
-		} catch (Exception ex) {
+		} catch (GroupNotFoundException ex) {
 			mv.addObject(errormsg, ex.getMessage());
 			mv.setViewName(error);
 		}
@@ -49,10 +51,10 @@ public class GroupController {
 	}
 
 	@PostMapping("displayByGroup")
-	public ModelAndView displaybyGroup(Account account) {
+	public ModelAndView displaybyGroup(AccountDto accountDto) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			List<Account> groupAccounts = groupService.getGroupList(account.getGroupname());
+			List<Account> groupAccounts = groupService.getGroupList(accountDto.getGroupname());
 			mv.addObject("accounts", groupAccounts);
 			mv.setViewName("displayByGroup");
 
