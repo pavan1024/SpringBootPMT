@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.epam.pmt.business.AccountService;
 import com.epam.pmt.business.GroupService;
 import com.epam.pmt.business.MasterProvider;
+import com.epam.pmt.business.Security;
 import com.epam.pmt.entities.Account;
 import com.epam.pmt.entities.Master;
 import com.epam.pmt.repo.AccountRepository;
@@ -23,6 +24,9 @@ import com.epam.pmt.repo.AccountRepository;
 class GroupServiceTest {
 	@Mock
 	AccountRepository accountRepository;
+	
+	@Mock
+	Security security;
 
 	@InjectMocks
 	GroupService groupService;

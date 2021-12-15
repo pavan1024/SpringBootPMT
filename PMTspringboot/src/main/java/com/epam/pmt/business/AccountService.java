@@ -19,24 +19,34 @@ public class AccountService {
 	AccountRepository accountRepository;
 	@Autowired
 	MasterRepository masterRepository;
+	@Autowired
+	Validation validation;
+	@Autowired
+	Security security;
+
 	Master master = MasterProvider.getMaster();
-	
 	ModelMapper mapper = new ModelMapper();
-	
 
 	public boolean createAccount(AccountDto accountDto) {
-		Account account = mapper.map(accountDto, Account.class);
-		account.setMaster(master);
-		accountRepository.save(account);
-		return true;
-
+		boolean status = false;
+		if (validation.isValidURL(accountDto.getUrl()) && validation.isValidPassword(accountDto.getPassword())) {
+			Account account = new Account();
+			account.setUrl(accountDto.getUrl());
+			account.setUsername(accountDto.getUsername());
+			account.setPassword(security.encrypt(accountDto.getPassword()));
+			account.setGroupname(accountDto.getGroupname());
+			account.setMaster(master);
+			accountRepository.save(account);
+			status = true;
+		}
+		return status;
 	}
 
 	public String readPassword(String url) {
 		String password = "";
 		Account account = accountRepository.findByUrlAndMaster(url, master);
 		if (account != null) {
-			password = account.getPassword();
+			password = security.decrypt(account.getPassword());
 		}
 		return password;
 	}
@@ -75,8 +85,8 @@ public class AccountService {
 	public boolean updatePassword(String url, String newPassword) {
 		boolean status = false;
 		Account account = accountRepository.findByUrlAndMaster(url, master);
-		if (account != null) {
-			account.setPassword(newPassword);
+		if (account != null && validation.isValidPassword(newPassword)) {
+			account.setPassword(security.encrypt(newPassword));
 			accountRepository.save(account);
 			status = true;
 		}
@@ -85,7 +95,9 @@ public class AccountService {
 	}
 
 	public List<Account> getAll() {
-		return accountRepository.findByMaster(master);
+		List<Account> accounts = accountRepository.findByMaster(master);
+		accounts.stream().forEach(i->i.setPassword(security.decrypt(i.getPassword())));
+		return accounts;
 	}
 
 }

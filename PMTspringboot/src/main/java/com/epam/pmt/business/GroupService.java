@@ -15,6 +15,8 @@ public class GroupService {
 
 	@Autowired
 	AccountRepository accountRepository;
+	@Autowired
+	Security security;
 	Master master = MasterProvider.getMaster();
 
 	public boolean checkIfGroupExists(String groupname) {
@@ -31,6 +33,7 @@ public class GroupService {
 		List<Account> groupAccounts = null;
 		groupAccounts = ((Collection<Account>) accountRepository.findByMaster(master)).stream()
 				.filter(i -> i.getGroupname().equalsIgnoreCase(groupname)).collect(Collectors.toList());
+		groupAccounts.stream().forEach(i->i.setPassword(security.decrypt(i.getPassword())));
 		return groupAccounts;
 	}
 
