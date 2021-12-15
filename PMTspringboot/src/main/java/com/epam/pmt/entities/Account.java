@@ -7,8 +7,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.epam.pmt.dto.MasterDto;
-
 @Entity
 @Table(name = "Accounts")
 public class Account {

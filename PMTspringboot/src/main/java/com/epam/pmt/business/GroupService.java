@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.epam.pmt.entities.Account;
 import com.epam.pmt.entities.Master;
-import com.epam.pmt.exception.GroupNotFoundException;
 import com.epam.pmt.repo.AccountRepository;
 
 @Service
@@ -35,15 +34,13 @@ public class GroupService {
 		return groupAccounts;
 	}
 
-	public boolean deleteGroup(String groupname) throws GroupNotFoundException {
+	public boolean deleteGroup(String groupname) {
 		boolean status = false;
 		List<Account> groupAccounts = ((Collection<Account>) accountRepository.findByMaster(master)).stream()
 				.filter(i -> i.getGroupname().equalsIgnoreCase(groupname)).collect(Collectors.toList());
 		if (!groupAccounts.isEmpty()) {
 			accountRepository.deleteAll(groupAccounts);
 			status = true;
-		} else {
-//			throw new GroupNotFoundException("Group Not Found : "+groupname); //clean install not working
 		}
 		return status;
 	}

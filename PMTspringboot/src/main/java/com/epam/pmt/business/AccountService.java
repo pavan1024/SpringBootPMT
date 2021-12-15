@@ -1,9 +1,11 @@
 package com.epam.pmt.business;
 
 import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.epam.pmt.dto.AccountDto;
 import com.epam.pmt.entities.Account;
 import com.epam.pmt.entities.Master;
@@ -17,43 +19,40 @@ public class AccountService {
 	AccountRepository accountRepository;
 	@Autowired
 	MasterRepository masterRepository;
-	@Autowired
-	ModelMapper mapper;
 	Master master = MasterProvider.getMaster();
+	
+	ModelMapper mapper = new ModelMapper();
+	
 
-	public boolean addAccount(AccountDto accountDto) {
+	public boolean createAccount(AccountDto accountDto) {
 		Account account = mapper.map(accountDto, Account.class);
-		account.setUrl(accountDto.getUrl());
-		account.setUsername(accountDto.getUsername());
-		account.setPassword(accountDto.getPassword());
-		account.setGroupname(accountDto.getGroupname());
 		account.setMaster(master);
 		accountRepository.save(account);
 		return true;
 
 	}
 
-	public String readPassword(AccountDto accountDto) {
+	public String readPassword(String url) {
 		String password = "";
-		Account retrievedAccount = accountRepository.findByUrlAndMaster(accountDto.getUrl(), master);
-		if (retrievedAccount != null) {
-			password = retrievedAccount.getPassword();
+		Account account = accountRepository.findByUrlAndMaster(url, master);
+		if (account != null) {
+			password = account.getPassword();
 		}
 		return password;
 	}
 
-	public boolean checkUrl(AccountDto accountDto) {
+	public boolean checkUrl(String url) {
 		boolean status = false;
-		Account account = accountRepository.findByUrlAndMaster(accountDto.getUrl(), master);
+		Account account = accountRepository.findByUrlAndMaster(url, master);
 		if (account != null) {
 			status = true;
 		}
 		return status;
 	}
 
-	public boolean deleteAccount(AccountDto accountDto) {
+	public boolean deleteAccount(String url) {
 		boolean status = false;
-		Account account = accountRepository.findByUrlAndMaster(accountDto.getUrl(), master);
+		Account account = accountRepository.findByUrlAndMaster(url, master);
 		if (account != null) {
 			accountRepository.delete(account);
 			status = true;
@@ -61,11 +60,11 @@ public class AccountService {
 		return status;
 	}
 
-	public boolean updateUsername(AccountDto accountDto) {
+	public boolean updateUsername(String url, String newUsername) {
 		boolean status = false;
-		Account account = accountRepository.findByUrlAndMaster(accountDto.getUrl(), master);
+		Account account = accountRepository.findByUrlAndMaster(url, master);
 		if (account != null) {
-			account.setUsername(accountDto.getUsername());
+			account.setUsername(newUsername);
 			accountRepository.save(account);
 			status = true;
 		}
@@ -73,11 +72,11 @@ public class AccountService {
 
 	}
 
-	public boolean updatePassword(AccountDto accountDto) {
+	public boolean updatePassword(String url, String newPassword) {
 		boolean status = false;
-		Account account = accountRepository.findByUrlAndMaster(accountDto.getUrl(), master);
+		Account account = accountRepository.findByUrlAndMaster(url, master);
 		if (account != null) {
-			account.setPassword(accountDto.getPassword());
+			account.setPassword(newPassword);
 			accountRepository.save(account);
 			status = true;
 		}

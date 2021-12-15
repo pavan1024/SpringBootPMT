@@ -33,7 +33,7 @@ public class AccountController {
 	public ModelAndView accountCreation(AccountDto accountDto) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			boolean status = accountService.addAccount(accountDto);
+			boolean status = accountService.createAccount(accountDto);
 			if (status) {
 				mv.setViewName("createAccount");
 			}
@@ -50,10 +50,10 @@ public class AccountController {
 	}
 
 	@PostMapping("displayPassword")
-	public ModelAndView displayPassword(AccountDto accountDto) {
+	public ModelAndView displayPassword(Account account) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			String password = accountService.readPassword(accountDto);
+			String password = accountService.readPassword(account.getUrl());
 			if (password != null) {
 				mv.addObject("password", password);
 				mv.setViewName("displayPassword");
@@ -71,10 +71,10 @@ public class AccountController {
 	}
 
 	@PostMapping("deleteAccount")
-	public ModelAndView deleteAccount(AccountDto accountDto) {
+	public ModelAndView deleteAccount(Account account) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			if (accountService.deleteAccount(accountDto)) {
+			if (accountService.deleteAccount(account.getUrl())) {
 				mv.setViewName("deleteAccount");
 			}
 		} catch (Exception ex) {
@@ -109,10 +109,11 @@ public class AccountController {
 	}
 
 	@PostMapping("updateAccountUsername")
-	public ModelAndView updateAccountUsername(AccountDto accountDto) {
+	public ModelAndView updateAccountUsername(Account account) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			if (accountService.checkUrl(accountDto) && accountService.updateUsername(accountDto)) {
+			if (accountService.checkUrl(account.getUrl())
+					&& accountService.updateUsername(account.getUrl(), account.getUsername())) {
 				mv.setViewName("updateAccountUsername");
 			}
 		} catch (Exception ex) {
@@ -128,10 +129,11 @@ public class AccountController {
 	}
 
 	@PostMapping("updateAccountPassword")
-	public ModelAndView updateAccountPassword(AccountDto accountDto) {
+	public ModelAndView updateAccountPassword(Account account) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			if (accountService.checkUrl(accountDto) && accountService.updatePassword(accountDto)) {
+			if (accountService.checkUrl(account.getUrl())
+					&& accountService.updatePassword(account.getUrl(), account.getPassword())) {
 				mv.setViewName("updateAccountPassword");
 			}
 		} catch (Exception ex) {

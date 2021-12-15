@@ -1,5 +1,7 @@
 package com.epam.pmt.dto;
 
+import com.epam.pmt.entities.Master;
+
 public class AccountDto {
 
 	private String url;
@@ -10,7 +12,7 @@ public class AccountDto {
 
 	private String groupname;
 
-	private MasterDto masterDto;
+	private Master master;
 
 	public String getGroupname() {
 		return groupname;
@@ -20,12 +22,12 @@ public class AccountDto {
 		this.groupname = groupName;
 	}
 
-	public MasterDto getMasterDto() {
-		return masterDto;
+	public Master getmaster() {
+		return master;
 	}
 
-	public void setMasterDto(MasterDto masterDto) {
-		this.masterDto = masterDto;
+	public void setMasterDto(Master master) {
+		this.master = master;
 	}
 
 	public String getUrl() {
