@@ -51,7 +51,7 @@ public class GroupService {
 	public boolean updateGroupname(String currentGroupname, String newGroupname) {
 		boolean status = false;
 		List<Account> accounts = accountRepository.findByMaster(master).stream()
-				.filter(i -> i.getGroupname().equals(currentGroupname)).collect(Collectors.toList());
+				.filter(i -> i.getGroupname().equalsIgnoreCase(currentGroupname)).collect(Collectors.toList());
 		if (this.checkIfGroupExists(currentGroupname) && !accounts.isEmpty()) {
 			accounts.stream().forEach(i -> i.setGroupname(newGroupname));
 			accountRepository.save(accounts.get(0));

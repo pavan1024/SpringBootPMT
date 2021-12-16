@@ -11,4 +11,5 @@ public interface AccountRepository extends CrudRepository<Account, String> {
 	public Account findByUrlAndMaster(String url, Master master);
 
 	public List<Account> findByMaster(Master master);
+	
 }
