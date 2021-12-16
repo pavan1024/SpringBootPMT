@@ -20,13 +20,13 @@ body {
 	padding: 50px;
 }
 </style>
-<title>Insert title here</title>
+<title>Add Account</title>
 </head>
 <body>
 	<div class="left">
 		<h2>Account Added Successfully...............</h2>
 
-		<br> <a href="createAccountForm">Back</a>
+		<br> <a href="addAccountForm">Back</a>
 	</div>
 </body>
 </html>

@@ -21,10 +21,10 @@ public class MasterController {
 
 	@GetMapping("loginForm")
 	public String loginForm() {
-		return "Login";
+		return "loginForm";
 	}
 
-	@PostMapping("menu")
+	@PostMapping("login")
 	public ModelAndView login(String username, String password) {
 		ModelAndView mv = new ModelAndView();
 		try {

@@ -9,6 +9,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.epam.pmt.business.AccountService;
 import com.epam.pmt.dto.AccountDto;
+import com.epam.pmt.exception.PasswordNotValidException;
+import com.epam.pmt.exception.URLNotFoundException;
+import com.epam.pmt.exception.URLNotValidException;
 
 @Controller
 @RequestMapping("account")
@@ -18,9 +21,9 @@ public class AccountController {
 	String errormsg = "errorMessage";
 	String error = "error";
 
-	@GetMapping("createAccountForm")
-	public String createAccountForm() {
-		return "createAccountForm";
+	@GetMapping("addAccountForm")
+	public String addAccountForm() {
+		return "addAccountForm";
 	}
 
 	@GetMapping("menu")
@@ -28,15 +31,15 @@ public class AccountController {
 		return "menu";
 	}
 
-	@PostMapping("createAccount")
-	public ModelAndView accountCreation(AccountDto accountDto) {
+	@PostMapping("addAccount")
+	public ModelAndView addAccount(AccountDto accountDto) {
 		ModelAndView mv = new ModelAndView();
 		try {
 			boolean status = accountService.createAccount(accountDto);
 			if (status) {
-				mv.setViewName("createAccount");
+				mv.setViewName("addAccount");
 			}
-		} catch (Exception ex) {
+		} catch (URLNotValidException | PasswordNotValidException ex) {
 			mv.addObject(errormsg, ex.getMessage());
 			mv.setViewName(error);
 		}
@@ -76,7 +79,7 @@ public class AccountController {
 			if (accountService.deleteAccount(accountDto.getUrl())) {
 				mv.setViewName("deleteAccount");
 			}
-		} catch (Exception ex) {
+		} catch (URLNotFoundException ex) {
 			mv.addObject(errormsg, ex.getMessage());
 			mv.setViewName(error);
 		}
@@ -115,7 +118,7 @@ public class AccountController {
 					&& accountService.updateUsername(accountDto.getUrl(), accountDto.getUsername())) {
 				mv.setViewName("updateAccountUsername");
 			}
-		} catch (Exception ex) {
+		} catch (URLNotFoundException ex) {
 			mv.addObject(errormsg, ex.getMessage());
 			mv.setViewName(error);
 		}
@@ -135,7 +138,7 @@ public class AccountController {
 					&& accountService.updatePassword(accountDto.getUrl(), accountDto.getPassword())) {
 				mv.setViewName("updateAccountPassword");
 			}
-		} catch (Exception ex) {
+		} catch (URLNotFoundException | PasswordNotValidException ex ) {
 			mv.addObject(errormsg, ex.getMessage());
 			mv.setViewName(error);
 		}

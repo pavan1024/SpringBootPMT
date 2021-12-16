@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Add Account</title>
 <style>
 body {
 	background: #00C9FF; /* fallback for old browsers */
@@ -27,7 +27,7 @@ body {
 <body>
 	<div class="center">
 		<h3>Add Account</h3>
-		<form name="CreateAccount" action="createAccount" method="post">
+		<form name="Add Account" action="addAccount" method="post">
 			Url : <input type="text" name="url"> <br>
 			<br> Username : <input type="text" name="username"> <br>
 			<br> Password : <input type="password" name="password">

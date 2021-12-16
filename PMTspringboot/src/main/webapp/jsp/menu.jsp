@@ -45,7 +45,7 @@ body {
 		<h1>Menu</h1>
 
 		<div class="btn-group">
-			<form name="CreateAccount" action="/account/createAccountForm">
+			<form name="Add Account" action="/account/addAccountForm">
 				<button>Add Account</button>
 			</form>
 			<form name="DisplayAccountPassword"

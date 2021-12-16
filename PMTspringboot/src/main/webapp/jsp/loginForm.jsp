@@ -26,7 +26,7 @@ body {
 </head>
 <body>
 	<div class="center">
-		<form name="master" action="menu" method="post">
+		<form name="master" action="login" method="post">
 			<h3>Master Login</h3>
 			<label for="username">Username </label> <input name="username"
 				type="text" placeholder="username" id="username"> <br>

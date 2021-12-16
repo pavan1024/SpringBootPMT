@@ -1,6 +1,7 @@
 package com.epam.pmt.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
@@ -16,8 +17,13 @@ class AccountControllerTest {
 	private MockMvc mockMvc;
 
 	@Test
-	void createAccountFormTest() throws Exception {
-		this.mockMvc.perform(get("/account/createAccountForm")).andExpect(status().isOk());
+	void addAccountFormTest() throws Exception {
+		this.mockMvc.perform(get("/account/addAccountForm")).andExpect(status().isOk());
+	}
+	
+	@Test
+	void addAccountTest() throws Exception {
+		this.mockMvc.perform(post("/account/addAccount")).andExpect(status().isOk());
 	}
 	
 	@Test

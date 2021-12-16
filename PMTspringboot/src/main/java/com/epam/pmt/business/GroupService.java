@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.epam.pmt.entities.Account;
 import com.epam.pmt.entities.Master;
+import com.epam.pmt.exception.GroupNotFoundException;
 import com.epam.pmt.repo.AccountRepository;
 
 @Service
@@ -17,33 +18,38 @@ public class GroupService {
 	Security security;
 	Master master = MasterProvider.getMaster();
 
-	public boolean checkIfGroupExists(String groupname) {
+	public boolean checkIfGroupExists(String groupname) throws GroupNotFoundException{
 		boolean status = false;
 		List<Account> groupAccounts = accountRepository.findByGroupnameAndMaster(groupname, master);
 		if (!groupAccounts.isEmpty()) {
 			status = true;
 		}
+		else {
+			throw new GroupNotFoundException(groupname+" Group not Found");
+		}
 		return status;
 	}
 
-	public List<Account> getGroupList(String groupname) {
+	public List<Account> getGroupList(String groupname) throws GroupNotFoundException {
 		List<Account> groupAccounts = null;
-		groupAccounts = accountRepository.findByGroupnameAndMaster(groupname, master);
-		groupAccounts.stream().forEach(i->i.setPassword(security.decrypt(i.getPassword())));
+		if(this.checkIfGroupExists(groupname)) {
+			groupAccounts = accountRepository.findByGroupnameAndMaster(groupname, master);
+			groupAccounts.stream().forEach(i->i.setPassword(security.decrypt(i.getPassword())));
+		}
 		return groupAccounts;
 	}
 
-	public boolean deleteGroup(String groupname) {
+	public boolean deleteGroup(String groupname) throws GroupNotFoundException {
 		boolean status = false;
 		List<Account> groupAccounts = accountRepository.findByGroupnameAndMaster(groupname, master);
-		if (!groupAccounts.isEmpty()) {
+		if (this.checkIfGroupExists(groupname) && !groupAccounts.isEmpty()) {
 			accountRepository.deleteAll(groupAccounts);
 			status = true;
 		}
 		return status;
 	}
 
-	public boolean updateGroupname(String currentGroupname, String newGroupname) {
+	public boolean updateGroupname(String currentGroupname, String newGroupname) throws GroupNotFoundException {
 		boolean status = false;
 		List<Account> groupAccounts = accountRepository.findByGroupnameAndMaster(currentGroupname, master);
 		if (this.checkIfGroupExists(currentGroupname) && !groupAccounts.isEmpty()) {

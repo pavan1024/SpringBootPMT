@@ -10,7 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.epam.pmt.business.AccountService;
@@ -19,6 +18,7 @@ import com.epam.pmt.business.Security;
 import com.epam.pmt.business.Validation;
 import com.epam.pmt.entities.Account;
 import com.epam.pmt.entities.Master;
+import com.epam.pmt.exception.URLNotFoundException;
 import com.epam.pmt.repo.AccountRepository;
 
 @SpringBootTest
@@ -61,8 +61,13 @@ class AccountServiceTest {
 	void updateUsernameTest() {
 		when(accountRepository.findByUrlAndMaster("https://www.yahoo.com", master)).thenReturn(account);
 		when(accountRepository.findByUrlAndMaster("https://www.instagram.com", master)).thenReturn(emptyAccount);
+		try {
 		assertFalse(accountService.updateUsername("https://www.instagram.com", "mailusername"));
 		assertTrue(accountService.updateUsername("https://www.yahoo.com", "yahoousername"));
+		}
+		catch(URLNotFoundException ex) {
+			
+		}
 	}
 
 	@Test
@@ -70,8 +75,13 @@ class AccountServiceTest {
 		when(accountRepository.findByUrlAndMaster("https://www.yahoo.com", master)).thenReturn(account);
 		when(accountRepository.findByUrlAndMaster("https://www.instagram.com", master)).thenReturn(emptyAccount);
 		when(validation.isValidPassword("Yahoo@123")).thenReturn(true);
+		try {
 		assertFalse(accountService.updatePassword("https://www.instagram.com", "Mail@1"));
 		assertTrue(accountService.updatePassword("https://www.yahoo.com", "Yahoo@123"));
+		}
+		catch(URLNotFoundException ex){
+			
+		}
 	}
 
 //	@Test
@@ -92,8 +102,13 @@ class AccountServiceTest {
 	void checkUrlTest() {
 		when(accountRepository.findByUrlAndMaster("https://www.yahoo.com", master)).thenReturn(account);
 		when(accountRepository.findByUrlAndMaster("https://www.instagram.com", master)).thenReturn(emptyAccount);
+		try {
 		assertFalse(accountService.checkUrl("https://www.instagram.com"));
 		assertTrue(accountService.checkUrl("https://www.yahoo.com"));
+		}
+		catch(URLNotFoundException ex) {
+				
+			}
 	}
 
 	@Test
@@ -107,8 +122,13 @@ class AccountServiceTest {
 	void deleteAccountTest() {
 		when(accountRepository.findByUrlAndMaster("https://www.yahoo.com", master)).thenReturn(account);
 		when(accountRepository.findByUrlAndMaster("https://www.instagram.com", master)).thenReturn(emptyAccount);
+		try {
 		assertFalse(accountService.deleteAccount("https://www.instagram.com"));
 		assertTrue(accountService.deleteAccount("https://www.yahoo.com"));
+		}
+		catch(URLNotFoundException ex) {
+			
+		}
 	}
 
 }

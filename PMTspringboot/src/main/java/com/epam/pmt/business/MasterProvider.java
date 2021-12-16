@@ -8,8 +8,8 @@ import com.epam.pmt.entities.Master;
 public class MasterProvider {
 	static Master master = new Master();
 
-	public static void setMaster(String userName, String password) {
-		master.setUsername(userName);
+	public static void setMaster(String username, String password) {
+		master.setUsername(username);
 		master.setPassword(password);
 	}
 

@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.epam.pmt.business.GroupService;
 import com.epam.pmt.dto.AccountDto;
 import com.epam.pmt.entities.Account;
+import com.epam.pmt.exception.GroupNotFoundException;
 
 @Controller
 @RequestMapping("group")
@@ -37,7 +38,7 @@ public class GroupController {
 			if (groupService.deleteGroup(accountDto.getGroupname())) {
 				mv.setViewName("deleteGroup");
 			}
-		} catch (Exception ex) {
+		} catch (GroupNotFoundException ex) {
 			mv.addObject(errormsg, ex.getMessage());
 			mv.setViewName(error);
 		}
@@ -57,7 +58,7 @@ public class GroupController {
 			mv.addObject("accounts", groupAccounts);
 			mv.setViewName("displayByGroup");
 
-		} catch (Exception ex) {
+		} catch (GroupNotFoundException ex) {
 			mv.addObject(errormsg, ex.getMessage());
 			mv.setViewName(error);
 		}
@@ -76,7 +77,7 @@ public class GroupController {
 			groupService.updateGroupname(currentGroupname, newGroupname);
 			mv.setViewName("updateGroupname");
 
-		} catch (Exception ex) {
+		} catch (GroupNotFoundException ex) {
 			mv.addObject(errormsg, ex.getMessage());
 			mv.setViewName(error);
 		}

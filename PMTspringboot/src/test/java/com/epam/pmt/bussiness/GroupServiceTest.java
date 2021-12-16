@@ -11,13 +11,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import com.epam.pmt.business.AccountService;
 import com.epam.pmt.business.GroupService;
 import com.epam.pmt.business.MasterProvider;
 import com.epam.pmt.business.Security;
 import com.epam.pmt.entities.Account;
 import com.epam.pmt.entities.Master;
+import com.epam.pmt.exception.GroupNotFoundException;
 import com.epam.pmt.repo.AccountRepository;
 
 @SpringBootTest
@@ -65,32 +64,52 @@ class GroupServiceTest {
 	void getGroupListTest() {
 		when(accountRepository.findByGroupnameAndMaster("google", master)).thenReturn(groupAccounts);
 		when(accountRepository.findByGroupnameAndMaster("google", master1)).thenReturn(emptyAccounts);
+		try {
 		assertEquals(groupAccounts, groupService.getGroupList("google"));
 		assertEquals(emptyAccounts, groupService.getGroupList("yahoo"));
+		}
+		catch(GroupNotFoundException ex) {
+			
+		}
 	}
 
 	@Test
 	void updateGroupnameTest() {
 		when(accountRepository.findByGroupnameAndMaster("google", master)).thenReturn(groupAccounts);
 		when(accountRepository.findByGroupnameAndMaster("google", master1)).thenReturn(emptyAccounts);
+		try {
 		assertEquals(true, groupService.updateGroupname("google", "googlegroup"));
 		assertEquals(false, groupService.updateGroupname("yahoo", "yahoogroup"));
+		}
+		catch(GroupNotFoundException ex) {
+					
+		}
 	}
 
 	@Test
 	void checkIfGroupExistsTest() {
 		when(accountRepository.findByGroupnameAndMaster("google", master)).thenReturn(groupAccounts);
 		when(accountRepository.findByGroupnameAndMaster("google", master1)).thenReturn(emptyAccounts);
+		try {
 		assertEquals(true, groupService.checkIfGroupExists("google"));
 		assertEquals(false, groupService.checkIfGroupExists("yahoo"));
+		}
+		catch(GroupNotFoundException ex) {
+					
+		}
 	}
 
 	@Test
 	void deleteGroupTest() {
 		when(accountRepository.findByGroupnameAndMaster("google", master)).thenReturn(groupAccounts);
 		when(accountRepository.findByGroupnameAndMaster("google", master1)).thenReturn(emptyAccounts);
+		try {
 		assertEquals(true, groupService.deleteGroup("google"));
 		assertEquals(false, groupService.deleteGroup("yahoo"));
+		}
+		catch(GroupNotFoundException ex) {
+			
+		}
 	}
 
 }

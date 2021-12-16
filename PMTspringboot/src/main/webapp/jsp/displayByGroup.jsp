@@ -7,7 +7,7 @@
 <html lang="en">
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Display By Group</title>
 <style>
 body {
 	background: #00C9FF; /* fallback for old browsers */
@@ -32,7 +32,7 @@ body {
 		<h2>Group Accounts</h2>
 
 		<table border=1>
-		<caption>Groups</caption>
+		<caption>Group Accounts</caption>
 			<tr>
 				<th id="url">URL</th>
 				<th id="username">Username</th>
