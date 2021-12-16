@@ -4,6 +4,7 @@
 <html lang="en">
 <head>
 <meta charset="ISO-8859-1">
+<title>Add Account</title>
 <style>
 body {
 	background: #00C9FF; 
@@ -20,7 +21,7 @@ body {
 	padding: 50px;
 }
 </style>
-<title>Add Account</title>
+
 </head>
 <body>
 	<div class="left">

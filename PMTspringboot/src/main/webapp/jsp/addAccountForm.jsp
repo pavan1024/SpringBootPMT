@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
 <meta charset="ISO-8859-1">
-<title>Add Account</title>
+<title>Add Account Form</title>
 <style>
 body {
 	background: #00C9FF; /* fallback for old browsers */

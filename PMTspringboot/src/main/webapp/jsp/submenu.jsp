@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Sub Menu</title>
 <style>
 .btn-group button {
 	background-color: #04AA6D; /* Green background */

@@ -4,6 +4,7 @@
 <html lang="en">
 <head>
 <meta charset="ISO-8859-1">
+<title>Updated Account Username</title>
 <style>
 body {
 	background: #00C9FF; /* fallback for old browsers */
@@ -22,7 +23,6 @@ body {
 	padding: 50px;
 }
 </style>
-<title>Insert title here</title>
 </head>
 <body>
 	<div class="center">

@@ -3,7 +3,7 @@
 <!Doctype html>
 <html lang="en">
 <head>
-<title>Insert title here</title>
+<title>Master Menu</title>
 <style>
 .btn-group button {
 	background-color: #04AA6D; /* Green background */

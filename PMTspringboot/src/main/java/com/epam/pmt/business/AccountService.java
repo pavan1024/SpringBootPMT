@@ -1,6 +1,7 @@
 package com.epam.pmt.business;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class AccountService {
 	Master master = MasterProvider.getMaster();
 	ModelMapper mapper = new ModelMapper();
 
-	public boolean createAccount(AccountDto accountDto) throws URLNotValidException, PasswordNotValidException{
+	public boolean createAccount(AccountDto accountDto) throws URLNotValidException, PasswordNotValidException {
 		boolean status = false;
 		if (validation.isValidURL(accountDto.getUrl())) {
 			if (validation.isValidPassword(accountDto.getPassword())) {
@@ -43,10 +44,9 @@ public class AccountService {
 				accountRepository.save(account);
 				status = true;
 			} else {
-				throw new PasswordNotValidException(
-						"Password must contain 1 upppercase,lowercase,special character and it must be more than 8 characters");
+				throw new PasswordNotValidException("Password must contain 1 upppercase,lowercase,"
+						+ "special character and it must be more than 8 characters");
 			}
-
 		} else {
 			throw new URLNotValidException("Url must start with https://");
 		}
@@ -56,7 +56,8 @@ public class AccountService {
 	public String readPassword(String url) {
 		String password = "";
 		Account account = accountRepository.findByUrlAndMaster(url, master);
-		if (account != null) {
+		Optional<Account> optionalAccount = Optional.ofNullable(account);
+		if (optionalAccount.isPresent()) {
 			password = security.decrypt(account.getPassword());
 		}
 		return password;
@@ -65,16 +66,16 @@ public class AccountService {
 	public boolean checkUrl(String url) throws URLNotFoundException {
 		boolean status = false;
 		Account account = accountRepository.findByUrlAndMaster(url, master);
-		if (account != null) {
+		Optional<Account> optionalAccount = Optional.ofNullable(account);
+		if (optionalAccount.isPresent()) {
 			status = true;
-		}
-		else {
-			throw new URLNotFoundException(url+" URL not Found");
+		} else {
+			throw new URLNotFoundException(url + " URL not Found");
 		}
 		return status;
 	}
 
-	public boolean deleteAccount(String url) throws URLNotFoundException{
+	public boolean deleteAccount(String url) throws URLNotFoundException {
 		boolean status = false;
 		Account account = accountRepository.findByUrlAndMaster(url, master);
 		if (checkUrl(url)) {
@@ -96,16 +97,16 @@ public class AccountService {
 
 	}
 
-	public boolean updatePassword(String url, String newPassword) throws URLNotFoundException,PasswordNotValidException {
+	public boolean updatePassword(String url, String newPassword)
+			throws URLNotFoundException, PasswordNotValidException {
 		boolean status = false;
 		Account account = accountRepository.findByUrlAndMaster(url, master);
 		if (checkUrl(url)) {
-			if(validation.isValidPassword(newPassword)) {
+			if (validation.isValidPassword(newPassword)) {
 				account.setPassword(security.encrypt(newPassword));
 				accountRepository.save(account);
 				status = true;
-			}
-			else {
+			} else {
 				throw new PasswordNotValidException(
 						"Password must contain 1 upppercase,lowercase,special character and it must be more than 8 characters");
 

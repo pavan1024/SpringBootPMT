@@ -42,7 +42,7 @@ public class GroupService {
 	public boolean deleteGroup(String groupname) throws GroupNotFoundException {
 		boolean status = false;
 		List<Account> groupAccounts = accountRepository.findByGroupnameAndMaster(groupname, master);
-		if (this.checkIfGroupExists(groupname) && !groupAccounts.isEmpty()) {
+		if (this.checkIfGroupExists(groupname)) {
 			accountRepository.deleteAll(groupAccounts);
 			status = true;
 		}
@@ -52,9 +52,9 @@ public class GroupService {
 	public boolean updateGroupname(String currentGroupname, String newGroupname) throws GroupNotFoundException {
 		boolean status = false;
 		List<Account> groupAccounts = accountRepository.findByGroupnameAndMaster(currentGroupname, master);
-		if (this.checkIfGroupExists(currentGroupname) && !groupAccounts.isEmpty()) {
+		if (this.checkIfGroupExists(currentGroupname)) {
 			groupAccounts.stream().forEach(i -> i.setGroupname(newGroupname));
-			accountRepository.save(groupAccounts.get(0));
+			accountRepository.saveAll(groupAccounts);
 			status = true;
 		}
 		return status;

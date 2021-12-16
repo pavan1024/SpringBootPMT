@@ -3,7 +3,7 @@
 <!Doctype html>
 <html lang="en">
 <head>
-<title>Insert title here</title>
+<title>Menu</title>
 <style>
 body {
 	background: #00C9FF; /* fallback for old browsers */

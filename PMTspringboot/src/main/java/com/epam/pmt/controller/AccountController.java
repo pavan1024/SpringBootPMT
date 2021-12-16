@@ -138,7 +138,7 @@ public class AccountController {
 					&& accountService.updatePassword(accountDto.getUrl(), accountDto.getPassword())) {
 				mv.setViewName("updateAccountPassword");
 			}
-		} catch (URLNotFoundException | PasswordNotValidException ex ) {
+		} catch (URLNotFoundException | PasswordNotValidException ex) {
 			mv.addObject(errormsg, ex.getMessage());
 			mv.setViewName(error);
 		}

@@ -1,37 +1,34 @@
 package com.epam.pmt.controller;
 
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
+import com.epam.pmt.business.MasterUserService;
 
-
-@AutoConfigureMockMvc
-@SpringBootTest
+@WebMvcTest(MasterController.class)
+@ContextConfiguration(classes = {MasterController.class})
 class MasterControllerTest {
 	
-
-	@Autowired
-	private WebApplicationContext wac;
 	@Autowired
 	private MockMvc mockMvc;
-
-	@BeforeEach
-	void setUp() {
-		mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
-	}
+	@MockBean
+	MasterUserService masterService;
 	
 	@Test
 	void loginTest() throws Exception {
-		this.mockMvc.perform(post("/master/login").param("username", "user").param("password", "pass")).andExpect(status().isOk()).andExpect(view().name("master/login"));
+		when(masterService.login("master12", "Master@12")).thenReturn(true);
+		this.mockMvc.perform(post("/master/login").param("username", "user").param("password", "pass")).andExpect(view().name("master/login"));
 	}
 	
 	@Test
@@ -49,6 +46,11 @@ class MasterControllerTest {
 		this.mockMvc.perform(get("/master/registerForm")).andExpect(status().isOk());
 	}
 	
+	@Test
+	void registerTest() throws Exception {
+		when(masterService.registerAccount("master12", "Master@12")).thenReturn(true);
+		this.mockMvc.perform(post("/master/register").param("username", "user").param("password", "pass")).andExpect(view().name("master/register"));
+	}
 	
 	
 	

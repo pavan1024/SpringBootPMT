@@ -7,7 +7,7 @@
 <html lang="en">
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>View All Accounts</title>
 <style>
 body {
 	background: #00C9FF; /* fallback for old browsers */
