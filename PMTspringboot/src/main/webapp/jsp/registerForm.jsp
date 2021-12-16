@@ -27,6 +27,7 @@ body {
 <body>
 	<div class="center">
 		<form name="masterRegister" action="register" method="post">
+		<h3>Master Register</h3>
 			Username : <input placeholder="username" type="text" name="username">
 			<br>
 			<br> Password : <input placeholder="password" type="password"

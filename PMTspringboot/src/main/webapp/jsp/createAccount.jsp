@@ -24,7 +24,7 @@ body {
 </head>
 <body>
 	<div class="left">
-		<h2>Account created successfully...............</h2>
+		<h2>Account Added Successfully...............</h2>
 
 		<br> <a href="createAccountForm">Back</a>
 	</div>

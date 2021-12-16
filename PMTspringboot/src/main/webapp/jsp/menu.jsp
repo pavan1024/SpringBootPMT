@@ -46,7 +46,7 @@ body {
 
 		<div class="btn-group">
 			<form name="CreateAccount" action="/account/createAccountForm">
-				<button>Create Account</button>
+				<button>Add Account</button>
 			</form>
 			<form name="DisplayAccountPassword"
 				action="/account/displayPasswordForm">

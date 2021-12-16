@@ -26,14 +26,14 @@ body {
 </head>
 <body>
 	<div class="center">
-		<h3>Create Account</h3>
+		<h3>Add Account</h3>
 		<form name="CreateAccount" action="createAccount" method="post">
 			Url : <input type="text" name="url"> <br>
 			<br> Username : <input type="text" name="username"> <br>
 			<br> Password : <input type="password" name="password">
 			<br>
 			<br> Groupname : <input type="text" name="groupname"> <br>
-			<br> <input type="submit" value="Create Account"> <br>
+			<br> <input type="submit" value="Add Account"> <br>
 			<br> <a href="menu">Back</a>
 	</div>
 	</form>
