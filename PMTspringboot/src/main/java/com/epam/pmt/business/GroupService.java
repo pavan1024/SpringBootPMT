@@ -1,9 +1,7 @@
 package com.epam.pmt.business;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.epam.pmt.entities.Account;
@@ -21,8 +19,7 @@ public class GroupService {
 
 	public boolean checkIfGroupExists(String groupname) {
 		boolean status = false;
-		List<Account> groupAccounts = ((Collection<Account>) accountRepository.findByMaster(master)).stream()
-				.filter(i -> i.getGroupname().equalsIgnoreCase(groupname)).collect(Collectors.toList());
+		List<Account> groupAccounts = accountRepository.findByGroupnameAndMaster(groupname, master);
 		if (!groupAccounts.isEmpty()) {
 			status = true;
 		}
@@ -31,16 +28,14 @@ public class GroupService {
 
 	public List<Account> getGroupList(String groupname) {
 		List<Account> groupAccounts = null;
-		groupAccounts = ((Collection<Account>) accountRepository.findByMaster(master)).stream()
-				.filter(i -> i.getGroupname().equalsIgnoreCase(groupname)).collect(Collectors.toList());
+		groupAccounts = accountRepository.findByGroupnameAndMaster(groupname, master);
 		groupAccounts.stream().forEach(i->i.setPassword(security.decrypt(i.getPassword())));
 		return groupAccounts;
 	}
 
 	public boolean deleteGroup(String groupname) {
 		boolean status = false;
-		List<Account> groupAccounts = ((Collection<Account>) accountRepository.findByMaster(master)).stream()
-				.filter(i -> i.getGroupname().equalsIgnoreCase(groupname)).collect(Collectors.toList());
+		List<Account> groupAccounts = accountRepository.findByGroupnameAndMaster(groupname, master);
 		if (!groupAccounts.isEmpty()) {
 			accountRepository.deleteAll(groupAccounts);
 			status = true;
@@ -50,12 +45,10 @@ public class GroupService {
 
 	public boolean updateGroupname(String currentGroupname, String newGroupname) {
 		boolean status = false;
-		List<Account> accounts = accountRepository.findByMaster(master).stream()
-				.filter(i -> i.getGroupname().equalsIgnoreCase(currentGroupname)).collect(Collectors.toList());
-		if (this.checkIfGroupExists(currentGroupname) && !accounts.isEmpty()) {
-			accounts.stream().forEach(i -> i.setGroupname(newGroupname));
-			accountRepository.save(accounts.get(0));
-			master.setAccounts(accounts);
+		List<Account> groupAccounts = accountRepository.findByGroupnameAndMaster(currentGroupname, master);
+		if (this.checkIfGroupExists(currentGroupname) && !groupAccounts.isEmpty()) {
+			groupAccounts.stream().forEach(i -> i.setGroupname(newGroupname));
+			accountRepository.save(groupAccounts.get(0));
 			status = true;
 		}
 		return status;

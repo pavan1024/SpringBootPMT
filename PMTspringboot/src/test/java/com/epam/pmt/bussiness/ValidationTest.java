@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import com.epam.pmt.business.Validation;
 
-public class ValidationTest {
+class ValidationTest {
 	
 	
 	Validation validation = new Validation();;

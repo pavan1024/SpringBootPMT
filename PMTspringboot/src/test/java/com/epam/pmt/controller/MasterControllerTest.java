@@ -14,7 +14,7 @@ import com.epam.pmt.entities.Master;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class MasterControllerTest {
+class MasterControllerTest {
 	
 
 	@Autowired
@@ -33,12 +33,6 @@ public class MasterControllerTest {
 	@Test
 	void registerFormTest() throws Exception {
 		this.mockMvc.perform(get("/master/registerForm")).andExpect(status().isOk());
-	}
-	
-	
-	@Test
-	void registerTest() throws Exception {
-		
 	}
 	
 	

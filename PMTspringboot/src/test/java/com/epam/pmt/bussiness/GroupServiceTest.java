@@ -24,7 +24,7 @@ import com.epam.pmt.repo.AccountRepository;
 class GroupServiceTest {
 	@Mock
 	AccountRepository accountRepository;
-	
+
 	@Mock
 	Security security;
 
@@ -47,51 +47,48 @@ class GroupServiceTest {
 		master = MasterProvider.getMaster();
 		groupAccounts = new ArrayList<>();
 		emptyAccounts = new ArrayList<>();
+
 		account1 = new Account();
 		account1.setMaster(master);
 		account1.setUrl("https://www.gmail.com");
-		account1.setUsername("gmailuser");
-		account1.setPassword("Gmail@123");
 		account1.setGroupname("google");
 
 		account2 = new Account();
 		account2.setMaster(master);
-		account2.setUrl("https://www.drive.com");
-		account2.setUsername("driveuser");
-		account2.setPassword("Drive@123");
 		account2.setGroupname("google");
+
 		groupAccounts.add(account1);
 		groupAccounts.add(account2);
 	}
 
 	@Test
 	void getGroupListTest() {
-		when(accountRepository.findByMaster(master)).thenReturn(groupAccounts);
-		when(accountRepository.findByMaster(master1)).thenReturn(emptyAccounts);
+		when(accountRepository.findByGroupnameAndMaster("google", master)).thenReturn(groupAccounts);
+		when(accountRepository.findByGroupnameAndMaster("google", master1)).thenReturn(emptyAccounts);
 		assertEquals(groupAccounts, groupService.getGroupList("google"));
 		assertEquals(emptyAccounts, groupService.getGroupList("yahoo"));
 	}
 
 	@Test
 	void updateGroupnameTest() {
-		when(accountRepository.findByMaster(master)).thenReturn(groupAccounts);
-		when(accountRepository.findByMaster(master1)).thenReturn(emptyAccounts);
+		when(accountRepository.findByGroupnameAndMaster("google", master)).thenReturn(groupAccounts);
+		when(accountRepository.findByGroupnameAndMaster("google", master1)).thenReturn(emptyAccounts);
 		assertEquals(true, groupService.updateGroupname("google", "googlegroup"));
 		assertEquals(false, groupService.updateGroupname("yahoo", "yahoogroup"));
 	}
 
 	@Test
 	void checkIfGroupExistsTest() {
-		when(accountRepository.findByMaster(master)).thenReturn(groupAccounts);
-		when(accountRepository.findByMaster(master1)).thenReturn(emptyAccounts);
+		when(accountRepository.findByGroupnameAndMaster("google", master)).thenReturn(groupAccounts);
+		when(accountRepository.findByGroupnameAndMaster("google", master1)).thenReturn(emptyAccounts);
 		assertEquals(true, groupService.checkIfGroupExists("google"));
 		assertEquals(false, groupService.checkIfGroupExists("yahoo"));
 	}
 
 	@Test
 	void deleteGroupTest() {
-		when(accountRepository.findByMaster(master)).thenReturn(groupAccounts);
-		when(accountRepository.findByMaster(master1)).thenReturn(emptyAccounts);
+		when(accountRepository.findByGroupnameAndMaster("google", master)).thenReturn(groupAccounts);
+		when(accountRepository.findByGroupnameAndMaster("google", master1)).thenReturn(emptyAccounts);
 		assertEquals(true, groupService.deleteGroup("google"));
 		assertEquals(false, groupService.deleteGroup("yahoo"));
 	}
