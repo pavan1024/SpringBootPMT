@@ -1,4 +1,4 @@
-package com.epam.pmt.business;
+package com.epam.pmt.util;
 
 import java.util.Base64;
 

@@ -8,10 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import com.epam.pmt.business.GroupService;
+
 import com.epam.pmt.dto.AccountDto;
 import com.epam.pmt.entities.Account;
 import com.epam.pmt.exception.GroupNotFoundException;
+import com.epam.pmt.service.GroupService;
 
 @Controller
 @RequestMapping("group")

@@ -27,8 +27,8 @@ public class Account {
 		return groupname;
 	}
 
-	public void setGroupname(String groupName) {
-		this.groupname = groupName;
+	public void setGroupname(String groupname) {
+		this.groupname = groupname;
 	}
 
 	public Master getMaster() {

@@ -1,4 +1,4 @@
-package com.epam.pmt.business;
+package com.epam.pmt.service;
 
 import java.util.Collection;
 import java.util.List;
@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.epam.pmt.entities.Master;
 import com.epam.pmt.repo.MasterRepository;
+import com.epam.pmt.util.MasterProvider;
 
 @Service
 public class MasterUserService {

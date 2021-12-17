@@ -1,4 +1,4 @@
-package com.epam.pmt.bussiness;
+package com.epam.pmt.servicetest;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -12,15 +12,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.epam.pmt.business.AccountService;
-import com.epam.pmt.business.MasterProvider;
-import com.epam.pmt.business.Security;
-import com.epam.pmt.business.Validation;
 import com.epam.pmt.dto.AccountDto;
 import com.epam.pmt.entities.Account;
 import com.epam.pmt.entities.Master;
 import com.epam.pmt.exception.URLNotFoundException;
 import com.epam.pmt.repo.AccountRepository;
+import com.epam.pmt.service.AccountService;
+import com.epam.pmt.util.MasterProvider;
+import com.epam.pmt.util.Security;
+import com.epam.pmt.util.Validation;
 
 @SpringBootTest
 class AccountServiceTest {

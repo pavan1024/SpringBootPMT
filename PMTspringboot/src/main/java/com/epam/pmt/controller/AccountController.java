@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.epam.pmt.business.AccountService;
 import com.epam.pmt.dto.AccountDto;
 import com.epam.pmt.exception.PasswordNotValidException;
 import com.epam.pmt.exception.URLNotFoundException;
 import com.epam.pmt.exception.URLNotValidException;
+import com.epam.pmt.service.AccountService;
 
 @Controller
 @RequestMapping("account")

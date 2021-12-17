@@ -1,4 +1,4 @@
-package com.epam.pmt.bussiness;
+package com.epam.pmt.servicetest;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -13,10 +13,10 @@ import org.mockito.Mock;
 
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.epam.pmt.business.MasterProvider;
-import com.epam.pmt.business.MasterUserService;
 import com.epam.pmt.entities.Master;
 import com.epam.pmt.repo.MasterRepository;
+import com.epam.pmt.service.MasterUserService;
+import com.epam.pmt.util.MasterProvider;
 
 @SpringBootTest
 class MasterUserServiceTest {

@@ -26,7 +26,7 @@ public class AccountDto {
 		return master;
 	}
 
-	public void setMasterDto(Master master) {
+	public void setMaster(Master master) {
 		this.master = master;
 	}
 

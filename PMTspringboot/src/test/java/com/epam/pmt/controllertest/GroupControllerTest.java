@@ -1,4 +1,4 @@
-package com.epam.pmt.controller;
+package com.epam.pmt.controllertest;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -15,8 +15,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.epam.pmt.business.GroupService;
 import com.epam.pmt.entities.Account;
+import com.epam.pmt.service.GroupService;
 
 @SpringBootTest
 @AutoConfigureMockMvc

@@ -25,7 +25,7 @@ public class Master {
 	}
 
 	public void setAccounts(List<Account> accounts) {
-		accounts.forEach(account -> account.setMaster(this));
+		accounts.stream().forEach(account -> account.setMaster(this));
 		this.accounts = accounts;
 	}
 

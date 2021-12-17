@@ -1,4 +1,4 @@
-package com.epam.pmt.bussiness;
+package com.epam.pmt.servicetest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -11,13 +11,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-import com.epam.pmt.business.GroupService;
-import com.epam.pmt.business.MasterProvider;
-import com.epam.pmt.business.Security;
+
 import com.epam.pmt.entities.Account;
 import com.epam.pmt.entities.Master;
 import com.epam.pmt.exception.GroupNotFoundException;
 import com.epam.pmt.repo.AccountRepository;
+import com.epam.pmt.service.GroupService;
+import com.epam.pmt.util.MasterProvider;
+import com.epam.pmt.util.Security;
 
 @SpringBootTest
 class GroupServiceTest {

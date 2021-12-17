@@ -1,4 +1,4 @@
-package com.epam.pmt.controller;
+package com.epam.pmt.controllertest;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -15,8 +15,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.epam.pmt.business.AccountService;
+import com.epam.pmt.controller.AccountController;
 import com.epam.pmt.dto.AccountDto;
+import com.epam.pmt.service.AccountService;
 
 @WebMvcTest(AccountController.class)
 @ContextConfiguration(classes = {AccountController.class})

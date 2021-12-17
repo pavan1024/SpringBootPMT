@@ -1,10 +1,10 @@
-package com.epam.pmt.bussiness;
+package com.epam.pmt.servicetest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.epam.pmt.business.Validation;
+import com.epam.pmt.util.Validation;
 
 class ValidationTest {
 	
