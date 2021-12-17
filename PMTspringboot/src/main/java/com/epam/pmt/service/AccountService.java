@@ -30,19 +30,19 @@ public class AccountService {
 	Validation validation;
 	@Autowired
 	Security security;
+	@Autowired
+	ModelMapper mapper;
+	
 
 	Master master = MasterProvider.getMaster();
-	ModelMapper mapper = new ModelMapper();
+	
 
 	public boolean createAccount(AccountDto accountDto) throws URLNotValidException, PasswordNotValidException {
 		boolean status = false;
 		if (validation.isValidURL(accountDto.getUrl())) {
 			if (validation.isValidPassword(accountDto.getPassword())) {
-				Account account = new Account();
-				account.setUrl(accountDto.getUrl());
-				account.setUsername(accountDto.getUsername());
+				Account account = mapper.map(accountDto,Account.class);
 				account.setPassword(security.encrypt(accountDto.getPassword()));
-				account.setGroupname(accountDto.getGroupname());
 				account.setMaster(master);
 				accountRepository.save(account);
 				status = true;

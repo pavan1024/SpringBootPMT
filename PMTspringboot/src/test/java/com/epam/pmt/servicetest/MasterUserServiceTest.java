@@ -10,9 +10,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.epam.pmt.dto.MasterDto;
 import com.epam.pmt.entities.Master;
 import com.epam.pmt.repo.MasterRepository;
 import com.epam.pmt.service.MasterUserService;
@@ -22,6 +23,9 @@ import com.epam.pmt.util.MasterProvider;
 class MasterUserServiceTest {
 	@Mock
 	MasterRepository masterRepository;
+	
+	@Mock
+	ModelMapper mapper;
 
 	@InjectMocks
 	MasterUserService masterUserService;
@@ -41,13 +45,22 @@ class MasterUserServiceTest {
 
 	@Test
 	void loginTest() {
+		MasterDto master = new MasterDto();
+		master.setUsername("masteruser");
+		master.setPassword("Master@123");
+		MasterDto master1 = new MasterDto();
+		master1.setUsername("user");
+		master1.setPassword("pass");
 		when(masterRepository.findAll()).thenReturn(masterAccounts);
-		assertTrue(masterUserService.login("masteruser", "Master@123"));
-		assertFalse(masterUserService.login("masteruser", "Master3"));
+		assertTrue(masterUserService.login(master));
+		assertFalse(masterUserService.login(master1));
 	}
 
 	@Test
 	void registerTest() {
-		assertTrue(masterUserService.registerAccount("masteruser", "Master@123"));
+		MasterDto master = new MasterDto();
+		master.setUsername("user");
+		master.setPassword("password");
+		assertTrue(masterUserService.registerAccount(master));
 	}
 }

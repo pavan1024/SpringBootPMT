@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.epam.pmt.dto.MasterDto;
 import com.epam.pmt.service.MasterUserService;
 
 @Controller
@@ -26,10 +27,10 @@ public class MasterController {
 	}
 
 	@PostMapping("login")
-	public ModelAndView login(String username, String password) {
+	public ModelAndView login(MasterDto masterDto) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			if (masterUserService.login(username, password)) {
+			if (masterUserService.login(masterDto)) {
 				mv.setViewName("menu");
 			}
 		} catch (Exception ex) {
@@ -45,10 +46,10 @@ public class MasterController {
 	}
 
 	@PostMapping("register")
-	public ModelAndView register(String username, String password) {
+	public ModelAndView register(MasterDto masterDto) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			if (masterUserService.registerAccount(username, password)) {
+			if (masterUserService.registerAccount(masterDto)) {
 				mv.setViewName("register");
 			}
 		} catch (Exception ex) {

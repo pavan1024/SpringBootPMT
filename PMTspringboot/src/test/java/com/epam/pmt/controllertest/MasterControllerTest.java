@@ -16,6 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.epam.pmt.controller.MasterController;
+import com.epam.pmt.dto.MasterDto;
 import com.epam.pmt.service.MasterUserService;
 
 @WebMvcTest(MasterController.class)
@@ -29,7 +30,10 @@ class MasterControllerTest {
 	
 	@Test
 	void loginTest() throws Exception {
-		when(masterService.login("master12", "Master@12")).thenReturn(true);
+		MasterDto master = new MasterDto();
+		master.setUsername("user");
+		master.setPassword("password");
+		when(masterService.login(master)).thenReturn(true);
 		this.mockMvc.perform(post("/master/login").param("username", "user").param("password", "pass")).andExpect(view().name("master/login"));
 	}
 	
@@ -50,7 +54,10 @@ class MasterControllerTest {
 	
 	@Test
 	void registerTest() throws Exception {
-		when(masterService.registerAccount("master12", "Master@12")).thenReturn(true);
+		MasterDto master = new MasterDto();
+		master.setUsername("user");
+		master.setPassword("password");
+		when(masterService.registerAccount(master)).thenReturn(true);
 		this.mockMvc.perform(post("/master/register").param("username", "user").param("password", "pass")).andExpect(view().name("master/register"));
 	}
 	
