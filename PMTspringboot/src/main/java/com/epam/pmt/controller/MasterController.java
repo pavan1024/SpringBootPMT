@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.epam.pmt.dto.MasterDto;
+import com.epam.pmt.exception.UserNotFoundException;
 import com.epam.pmt.service.MasterUserService;
 
 @Controller
@@ -33,9 +34,9 @@ public class MasterController {
 			if (masterUserService.login(masterDto)) {
 				mv.setViewName("menu");
 			}
-		} catch (Exception ex) {
+		} catch (UserNotFoundException ex) {
 			mv.addObject("errorMessage", ex.getMessage());
-			mv.setViewName("error");
+			mv.setViewName("loginError");
 		}
 		return mv;
 	}

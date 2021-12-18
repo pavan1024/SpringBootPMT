@@ -26,11 +26,11 @@ body {
 </head>
 <body>
 	<div class="center">
-		<h2>Error</h2>
+		<h2>Login Error</h2>
 
 		${errorMessage} <br>
 		<br><br>
-		<a href="menu" >Menu</a>
+		<a href="/master/" >Menu</a>
 	</div>
 </body>
 </html>

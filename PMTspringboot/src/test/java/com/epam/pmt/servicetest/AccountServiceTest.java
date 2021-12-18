@@ -46,6 +46,8 @@ class AccountServiceTest {
 	Account emptyAccount = null;
 	Master master;
 	Master master1 = null;
+	AccountDto accountDto;
+	AccountDto invalidAccountDto;
 
 	@BeforeEach
 	public void setUp() {
@@ -60,15 +62,29 @@ class AccountServiceTest {
 		accounts = new ArrayList<>();
 		accounts.add(account);
 		
+		accountDto = new AccountDto();
+		accountDto.setUrl("https://www.yahoo.com");
+		accountDto.setUsername("yahoouser");
+		accountDto.setPassword("Yahoo@123");
+		accountDto.setGroupname("yahoo");
+		
+		invalidAccountDto = new AccountDto();
+		invalidAccountDto.setUrl("https://www.instagram.com");
+		invalidAccountDto.setUsername("mailusername");
+		invalidAccountDto.setPassword("Mail@1");
+
 	}
 
 	@Test
 	void updateUsernameTest() {
+		AccountDto invalidAccountDto = new AccountDto();
+		invalidAccountDto.setUrl("https://www.instagram.com");
+		invalidAccountDto.setUsername("mailusername");
 		when(accountRepository.findByUrlAndMaster("https://www.yahoo.com", master)).thenReturn(account);
 		when(accountRepository.findByUrlAndMaster("https://www.instagram.com", master)).thenReturn(emptyAccount);
-		assertTrue(accountService.updateUsername("https://www.yahoo.com", "yahoousername"));
+		assertTrue(accountService.updateUsername(accountDto));
 		try {
-		assertFalse(accountService.updateUsername("https://www.instagram.com", "mailusername"));
+		assertFalse(accountService.updateUsername(invalidAccountDto));
 		
 		}
 		catch(URLNotFoundException ex) {
@@ -81,9 +97,9 @@ class AccountServiceTest {
 		when(accountRepository.findByUrlAndMaster("https://www.yahoo.com", master)).thenReturn(account);
 		when(accountRepository.findByUrlAndMaster("https://www.instagram.com", master)).thenReturn(emptyAccount);
 		when(validation.isValidPassword("Yahoo@123")).thenReturn(true);
-		assertTrue(accountService.updatePassword("https://www.yahoo.com", "Yahoo@123"));
+		assertTrue(accountService.updatePassword(accountDto));
 		try {
-		assertFalse(accountService.updatePassword("https://www.instagram.com", "Mail@1"));
+		assertFalse(accountService.updatePassword(invalidAccountDto));
 		
 		}
 		catch(URLNotFoundException ex){
@@ -112,7 +128,7 @@ class AccountServiceTest {
 	void getPasswordTest() {
 		when(accountRepository.findByUrlAndMaster("https://www.yahoo.com", master)).thenReturn(account);
 		when(accountRepository.findByUrlAndMaster("https://www.instagram.com", master)).thenReturn(emptyAccount);
-		assertEquals(security.decrypt(security.encrypt("Yahoo@123")), accountService.readPassword("https://www.yahoo.com"));
+		assertEquals(security.decrypt(security.encrypt("Yahoo@123")), accountService.readPassword(accountDto));
 	}
 
 	@Test
@@ -137,11 +153,12 @@ class AccountServiceTest {
 
 	@Test
 	void deleteAccountTest() {
+		
 		when(accountRepository.findByUrlAndMaster("https://www.yahoo.com", master)).thenReturn(account);
 		when(accountRepository.findByUrlAndMaster("https://www.instagram.com", master)).thenReturn(emptyAccount);
-		assertTrue(accountService.deleteAccount("https://www.yahoo.com"));
+		assertTrue(accountService.deleteAccount(accountDto));
 		try {
-		assertFalse(accountService.deleteAccount("https://www.instagram.com"));
+		assertFalse(accountService.deleteAccount(invalidAccountDto));
 		}
 		catch(URLNotFoundException ex) {
 			

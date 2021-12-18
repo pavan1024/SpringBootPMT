@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -15,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.epam.pmt.dto.AccountDto;
 import com.epam.pmt.entities.Account;
 import com.epam.pmt.service.GroupService;
 
@@ -25,7 +27,15 @@ class GroupControllerTest {
 	private MockMvc mockMvc;
 	@MockBean
 	GroupService groupService;
+	
+	AccountDto accountDto;
 
+	@BeforeEach
+	void setUp() {
+		accountDto = new AccountDto();
+		accountDto.setGroupname("group");
+	}
+	
 	@Test
 	void masterMenuTest() throws Exception {
 		this.mockMvc.perform(get("/group/menu")).andExpect(status().isOk());
@@ -37,7 +47,7 @@ class GroupControllerTest {
 	}
 	@Test
 	void deleteGroupTest() throws Exception {
-		when(groupService.deleteGroup("group")).thenReturn(true);
+		when(groupService.deleteGroup(accountDto)).thenReturn(true);
 		this.mockMvc.perform(post("/group/deleteGroup")).andExpect(status().isOk()).andExpect(view().name("group/deleteGroup"));
 	}
 	
@@ -49,7 +59,7 @@ class GroupControllerTest {
 	@Test
 	void displayGroupTest() throws Exception {
 		List<Account> groupAccounts = null;
-		when(groupService.getGroupList("group")).thenReturn(groupAccounts);
+		when(groupService.getGroupList(accountDto)).thenReturn(groupAccounts);
 		this.mockMvc.perform(post("/group/displayByGroup")).andExpect(status().isOk()).andExpect(view().name("displayByGroup"));
 	}
 	

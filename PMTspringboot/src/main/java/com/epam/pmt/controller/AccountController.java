@@ -55,12 +55,12 @@ public class AccountController {
 	public ModelAndView displayPassword(AccountDto accountDto) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			String password = accountService.readPassword(accountDto.getUrl());
-			if (password != null) {
+			String password = accountService.readPassword(accountDto);
+			if (!password.equals("")) {
 				mv.addObject("password", password);
 				mv.setViewName("displayPassword");
 			}
-		} catch (Exception ex) {
+		} catch (URLNotFoundException ex) {
 			mv.addObject(errormsg, ex.getMessage());
 			mv.setViewName(error);
 		}
@@ -76,7 +76,7 @@ public class AccountController {
 	public ModelAndView deleteAccount(AccountDto accountDto) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			if (accountService.deleteAccount(accountDto.getUrl())) {
+			if (accountService.deleteAccount(accountDto)) {
 				mv.setViewName("deleteAccount");
 			}
 		} catch (URLNotFoundException ex) {
@@ -115,7 +115,7 @@ public class AccountController {
 		ModelAndView mv = new ModelAndView();
 		try {
 			if (accountService.checkUrl(accountDto.getUrl())
-					&& accountService.updateUsername(accountDto.getUrl(), accountDto.getUsername())) {
+					&& accountService.updateUsername(accountDto)) {
 				mv.setViewName("updateAccountUsername");
 			}
 		} catch (URLNotFoundException ex) {
@@ -135,7 +135,7 @@ public class AccountController {
 		ModelAndView mv = new ModelAndView();
 		try {
 			if (accountService.checkUrl(accountDto.getUrl())
-					&& accountService.updatePassword(accountDto.getUrl(), accountDto.getPassword())) {
+					&& accountService.updatePassword(accountDto) ) {
 				mv.setViewName("updateAccountPassword");
 			}
 		} catch (URLNotFoundException | PasswordNotValidException ex) {

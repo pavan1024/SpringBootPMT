@@ -36,7 +36,7 @@ public class GroupController {
 	public ModelAndView deleteGroup(AccountDto accountDto) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			if (groupService.deleteGroup(accountDto.getGroupname())) {
+			if (groupService.deleteGroup(accountDto)) {
 				mv.setViewName("deleteGroup");
 			}
 		} catch (GroupNotFoundException ex) {
@@ -55,7 +55,7 @@ public class GroupController {
 	public ModelAndView displaybyGroup(AccountDto accountDto) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			List<Account> groupAccounts = groupService.getGroupList(accountDto.getGroupname());
+			List<Account> groupAccounts = groupService.getGroupList(accountDto);
 			mv.addObject("accounts", groupAccounts);
 			mv.setViewName("displayByGroup");
 

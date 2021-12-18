@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.epam.pmt.dto.MasterDto;
 import com.epam.pmt.entities.Master;
+import com.epam.pmt.exception.UserNotFoundException;
 import com.epam.pmt.repo.MasterRepository;
 import com.epam.pmt.util.MasterProvider;
 
@@ -29,7 +30,7 @@ public class MasterUserService {
 
 	}
 
-	public boolean login(MasterDto masterDto) {
+	public boolean login(MasterDto masterDto) throws UserNotFoundException{
 		boolean status = false;
 		List<Master> masterAccounts = ((Collection<Master>) masterRepository.findAll()).stream()
 				.filter(i -> i.getUsername().equals(masterDto.getUsername())).collect(Collectors.toList());
@@ -37,6 +38,9 @@ public class MasterUserService {
 			if (masterAccounts.get(0).getPassword().equals(masterDto.getPassword())) {
 				MasterProvider.setMaster(masterDto.getUsername(), masterDto.getPassword());
 				status = true;
+			}
+			else {
+				throw new UserNotFoundException("Invalid Username or Password ");
 			}
 		} catch (IndexOutOfBoundsException e) {
 			e.getStackTrace();

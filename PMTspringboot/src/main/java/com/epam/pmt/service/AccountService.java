@@ -56,11 +56,11 @@ public class AccountService {
 		return status;
 	}
 
-	public String readPassword(String url) {
+	public String readPassword(AccountDto accountDto) throws URLNotFoundException {
 		String password = "";
-		Account account = accountRepository.findByUrlAndMaster(url, master);
+		Account account = accountRepository.findByUrlAndMaster(accountDto.getUrl(), master);
 		Optional<Account> optionalAccount = Optional.ofNullable(account);
-		if (optionalAccount.isPresent()) {
+		if (checkUrl(accountDto.getUrl()) && optionalAccount.isPresent() ) {
 			password = security.decrypt(account.getPassword());
 		}
 		return password;
@@ -78,21 +78,21 @@ public class AccountService {
 		return status;
 	}
 
-	public boolean deleteAccount(String url) throws URLNotFoundException {
+	public boolean deleteAccount(AccountDto accountDto) throws URLNotFoundException {
 		boolean status = false;
-		Account account = accountRepository.findByUrlAndMaster(url, master);
-		if (checkUrl(url)) {
+		Account account = accountRepository.findByUrlAndMaster(accountDto.getUrl(), master);
+		if (checkUrl(accountDto.getUrl())) {
 			accountRepository.delete(account);
 			status = true;
 		}
 		return status;
 	}
 
-	public boolean updateUsername(String url, String newUsername) throws URLNotFoundException {
+	public boolean updateUsername(AccountDto accountDto) throws URLNotFoundException {
 		boolean status = false;
-		Account account = accountRepository.findByUrlAndMaster(url, master);
-		if (checkUrl(url)) {
-			account.setUsername(newUsername);
+		Account account = accountRepository.findByUrlAndMaster(accountDto.getUrl(), master);
+		if (checkUrl(accountDto.getUrl())) {
+			account.setUsername(accountDto.getUsername());
 			accountRepository.save(account);
 			status = true;
 		}
@@ -100,13 +100,13 @@ public class AccountService {
 
 	}
 
-	public boolean updatePassword(String url, String newPassword)
+	public boolean updatePassword(AccountDto accountDto)
 			throws URLNotFoundException, PasswordNotValidException {
 		boolean status = false;
-		Account account = accountRepository.findByUrlAndMaster(url, master);
-		if (checkUrl(url)) {
-			if (validation.isValidPassword(newPassword)) {
-				account.setPassword(security.encrypt(newPassword));
+		Account account = accountRepository.findByUrlAndMaster(accountDto.getUrl(), master);
+		if (checkUrl(accountDto.getUrl())) {
+			if (validation.isValidPassword(accountDto.getPassword())) {
+				account.setPassword(security.encrypt(accountDto.getPassword()));
 				accountRepository.save(account);
 				status = true;
 			} else {
