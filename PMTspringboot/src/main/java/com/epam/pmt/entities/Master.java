@@ -9,14 +9,17 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Table(name = "MasterAccounts")
 public class Master {
 
 	@Id
-	private String username;
+	@Getter @Setter private String username;
 	@Column
-	private String password;
+	@Getter @Setter private String password;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "master")
 	private List<Account> accounts;
 
@@ -29,19 +32,4 @@ public class Master {
 		this.accounts = accounts;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
 }
