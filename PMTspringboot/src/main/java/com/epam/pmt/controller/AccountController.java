@@ -114,8 +114,7 @@ public class AccountController {
 	public ModelAndView updateAccountUsername(AccountDto accountDto) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			if (accountService.checkUrl(accountDto.getUrl())
-					&& accountService.updateUsername(accountDto)) {
+			if (accountService.updateUsername(accountDto)) {
 				mv.setViewName("updateAccountUsername");
 			}
 		} catch (URLNotFoundException ex) {
@@ -134,8 +133,7 @@ public class AccountController {
 	public ModelAndView updateAccountPassword(AccountDto accountDto) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			if (accountService.checkUrl(accountDto.getUrl())
-					&& accountService.updatePassword(accountDto) ) {
+			if (accountService.updatePassword(accountDto) ) {
 				mv.setViewName("updateAccountPassword");
 			}
 		} catch (URLNotFoundException | PasswordNotValidException ex) {

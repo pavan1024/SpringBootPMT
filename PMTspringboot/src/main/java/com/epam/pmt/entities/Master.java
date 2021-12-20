@@ -17,9 +17,15 @@ import lombok.Setter;
 public class Master {
 
 	@Id
-	@Getter @Setter private String username;
+	@Getter
+	@Setter
+	private String username;
+	
 	@Column
-	@Getter @Setter private String password;
+	@Getter
+	@Setter
+	private String password;
+	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "master")
 	private List<Account> accounts;
 

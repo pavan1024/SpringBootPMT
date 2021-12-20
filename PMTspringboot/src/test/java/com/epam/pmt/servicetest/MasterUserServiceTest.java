@@ -23,7 +23,7 @@ import com.epam.pmt.util.MasterProvider;
 class MasterUserServiceTest {
 	@Mock
 	MasterRepository masterRepository;
-	
+
 	@Mock
 	ModelMapper mapper;
 
