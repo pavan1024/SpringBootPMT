@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.epam.pmt.dto.AccountDto;
 import com.epam.pmt.entities.Account;
 import com.epam.pmt.entities.Master;
+import com.epam.pmt.exception.PasswordNotValidException;
 import com.epam.pmt.exception.URLNotFoundException;
 import com.epam.pmt.repo.AccountRepository;
 import com.epam.pmt.service.AccountService;
@@ -37,6 +38,12 @@ class AccountServiceTest {
 
 	@Mock
 	ModelMapper mapper;
+	
+	@Mock
+	AccountDto accountDto;
+	
+	@Mock
+	AccountDto invalidAccountDto;
 
 	@InjectMocks
 	AccountService accountService;
@@ -46,8 +53,7 @@ class AccountServiceTest {
 	Account emptyAccount = null;
 	Master master;
 	Master master1 = null;
-	AccountDto accountDto;
-	AccountDto invalidAccountDto;
+
 
 	@BeforeEach
 	public void setUp() {
@@ -72,6 +78,7 @@ class AccountServiceTest {
 		invalidAccountDto.setUrl("https://www.instagram.com");
 		invalidAccountDto.setUsername("mailusername");
 		invalidAccountDto.setPassword("Mail@1");
+		invalidAccountDto.setGroupname("instagram");
 
 	}
 
@@ -120,7 +127,18 @@ class AccountServiceTest {
 			// this test case need to be handled
 		}
 	}
-
+	
+//	@Test
+//	void createAccountErrorTest() throws Exception {
+////		when(validation.isValidURL("https://www.gmail.com")).thenReturn(true);
+//		when(validation.isValidPassword("Gmail123")).thenReturn(false);
+//		try {
+//			assertEquals(false,accountService.createAccount(invalidAccountDto));
+//		} catch (PasswordNotValidException ex) {
+//			
+//		}
+//	}
+	
 	@Test
 	void getPasswordTest() {
 		when(accountRepository.findByUrlAndMaster("https://www.yahoo.com", master)).thenReturn(account);

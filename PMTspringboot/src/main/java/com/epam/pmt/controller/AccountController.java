@@ -35,8 +35,7 @@ public class AccountController {
 	public ModelAndView addAccount(AccountDto accountDto) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			boolean status = accountService.createAccount(accountDto);
-			if (status) {
+			if (accountService.createAccount(accountDto)) {
 				mv.setViewName("addAccount");
 			}
 		} catch (URLNotValidException | PasswordNotValidException ex) {

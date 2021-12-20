@@ -31,6 +31,7 @@ class AccountControllerTest {
 	private MockMvc mockMvc;
 	@MockBean
 	AccountService accountService;
+	@MockBean
 	AccountDto accountDto;
 
 	@BeforeEach
@@ -39,6 +40,7 @@ class AccountControllerTest {
 		accountDto.setUrl("https://www.yahoo.com");
 		accountDto.setUsername("username");
 		accountDto.setPassword("Password@123");
+		accountDto.setGroupname("yahoo");
 	}
 
 	@Test
@@ -49,14 +51,10 @@ class AccountControllerTest {
 
 	@Test
 	void addAccountTest() throws Exception {
-		AccountDto accountDto = new AccountDto();
-		accountDto.setUrl("https://www.facebook.com");
-		accountDto.setUsername("fbuser");
-		accountDto.setPassword("Facebook@123");
-		accountDto.setGroupname("facebook");
 		when(accountService.createAccount(accountDto)).thenReturn(true);
-		this.mockMvc.perform(post("/account/addAccount")).andExpect(status().isOk())
-				.andExpect(view().name("account/addAccount"));
+		mockMvc.perform(post("/account/addAccount")).andExpect(model().size(1))
+		.andExpect(model().hasNoErrors()).andExpect(view().name("account/addAccount"))
+		.andExpect(status().isOk());
 	}
 
 	@Test
@@ -73,7 +71,9 @@ class AccountControllerTest {
 //	@Test
 //	void displayPasswordTest() throws Exception {
 //		when(accountService.readPassword(accountDto)).thenReturn("Facebook@123");
-//		this.mockMvc.perform(post("/account/displayPassword")).andExpect(status().isOk()).andExpect(view().name("account/displayPassword"));
+//		mockMvc.perform(post("/account/displayPassword")).andExpect(model().size(2))
+//		.andExpect(model().attribute("password", "Facebook@123")).andExpect(view().name("account/displayPassword"))
+//		.andExpect(status().isOk());
 //	}
 
 	@Test
