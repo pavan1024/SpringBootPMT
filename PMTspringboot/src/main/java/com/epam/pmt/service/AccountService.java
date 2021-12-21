@@ -122,7 +122,7 @@ public class AccountService {
 	public List<Account> getAll() {
 		List<Account> accounts = accountRepository.findByMaster(master);
 		accounts.stream().forEach(i -> i.setPassword(security.decrypt(i.getPassword())));
-		return accounts;
+		return accounts;		
 	}
 
 }
