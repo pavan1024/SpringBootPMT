@@ -25,26 +25,24 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.ApiResponse;
 
-
-
 @RestController
 @RequestMapping("/restaccounts")
 @Api("Operations to accounts in pmt app")
-public class AccountControllerRest {
+public class AccountController {
 
 	@Autowired
 	private AccountService accountService;
 
 	@GetMapping
-	@ApiOperation(value = "View List of Accounts",response = List.class)
-	@ApiResponses(value = {@ApiResponse(code = 200,message = "successfully retrieved list") } )
+	@ApiOperation(value = "View List of Accounts", response = List.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "successfully retrieved list") })
 	public ResponseEntity<List<Account>> fetchAllAccounts() {
 		return new ResponseEntity<>(accountService.getAll(), HttpStatus.OK);
 	}
 
 	@PostMapping
-	@ApiOperation(value = "Add Account",response = String.class)
-	@ApiResponses(value = {@ApiResponse(code = 200,message = "Account Added Successfully") } )
+	@ApiOperation(value = "Add Account", response = String.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Account Added Successfully") })
 	public ResponseEntity<String> addAccount(@RequestBody AccountDto accountDto)
 			throws URLNotValidException, PasswordNotValidException {
 		String status = "";
@@ -60,8 +58,8 @@ public class AccountControllerRest {
 	}
 
 	@PostMapping("/readpassword")
-	@ApiOperation(value = "View Password",response = String.class)
-	@ApiResponses(value = {@ApiResponse(code = 200,message = "successfully retrieved password") } )
+	@ApiOperation(value = "View Password", response = String.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "successfully retrieved password") })
 	public ResponseEntity<String> readPassword(@RequestBody AccountDto accountDto) throws URLNotFoundException {
 		String password = "";
 		HttpStatus statusCode = null;
@@ -75,8 +73,8 @@ public class AccountControllerRest {
 	}
 
 	@PutMapping("/updateusername")
-	@ApiOperation(value = "Update Username",response = String.class)
-	@ApiResponses(value = {@ApiResponse(code = 200,message = "Account Username Updated Successfully") } )
+	@ApiOperation(value = "Update Username", response = String.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Account Username Updated Successfully") })
 	public ResponseEntity<String> updateUsername(@RequestBody AccountDto accountDto)
 			throws URLNotFoundException, PasswordNotValidException {
 		String status = "";
@@ -92,8 +90,8 @@ public class AccountControllerRest {
 	}
 
 	@PutMapping("/updatepassword")
-	@ApiOperation(value = "Update Password",response = String.class)
-	@ApiResponses(value = {@ApiResponse(code = 200,message = "Account Password Updated Successfully") } )
+	@ApiOperation(value = "Update Password", response = String.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Account Password Updated Successfully") })
 	public ResponseEntity<String> updatePassword(@RequestBody AccountDto accountDto)
 			throws URLNotFoundException, PasswordNotValidException {
 		String status = "";
@@ -109,8 +107,8 @@ public class AccountControllerRest {
 	}
 
 	@DeleteMapping
-	@ApiOperation(value = "Delete Account",response = String.class)
-	@ApiResponses(value = {@ApiResponse(code = 200,message = "Account Deleted Successfully") } )
+	@ApiOperation(value = "Delete Account", response = String.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Account Deleted Successfully") })
 	public ResponseEntity<String> delete(@RequestBody AccountDto accountDto) throws URLNotFoundException {
 		String status = "";
 		HttpStatus statusCode = null;

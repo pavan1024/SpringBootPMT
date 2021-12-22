@@ -27,21 +27,21 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @RequestMapping("/restgroups")
 @Api("Operations to groups in pmt app")
-public class GroupControllerRest {
+public class GroupController {
 	@Autowired
 	private GroupService groupService;
 
 	@PostMapping
-	@ApiOperation(value = "View List of Group Accounts",response = List.class)
-	@ApiResponses(value = {@ApiResponse(code = 200,message = "successfully retrieved group list") } )
+	@ApiOperation(value = "View List of Group Accounts", response = List.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "successfully retrieved group list") })
 	public ResponseEntity<List<Account>> fetchAllAccounts(@RequestBody AccountDto accountDto)
 			throws GroupNotFoundException {
 		return new ResponseEntity<>(groupService.getGroupList(accountDto), HttpStatus.OK);
 	}
 
 	@PutMapping("/{newGroupname}")
-	@ApiOperation(value = "Update Groupname",response = String.class)
-	@ApiResponses(value = {@ApiResponse(code = 200,message = "Groupname Updated Successfully") } )
+	@ApiOperation(value = "Update Groupname", response = String.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Groupname Updated Successfully") })
 	public ResponseEntity<String> updateGroupname(@RequestBody AccountDto accountDto, @PathVariable String newGroupname)
 			throws GroupNotFoundException {
 		String status = "";
@@ -57,8 +57,8 @@ public class GroupControllerRest {
 	}
 
 	@DeleteMapping
-	@ApiOperation(value = "Delete Group",response = String.class)
-	@ApiResponses(value = {@ApiResponse(code = 200,message = "Groupname Deleted Successfully") } )
+	@ApiOperation(value = "Delete Group", response = String.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Groupname Deleted Successfully") })
 	public ResponseEntity<String> deleteGroup(@RequestBody AccountDto accountDto) throws URLNotFoundException {
 		String status = "";
 		HttpStatus statusCode = null;

@@ -1,7 +1,5 @@
 package com.epam.pmt.restcontroller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,13 +20,13 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @RequestMapping("/masterusers")
 @Api("Operations to Master in pmt app")
-public class MasterControllerRest {
+public class MasterController {
 	@Autowired
 	private MasterUserService masterService;
 
 	@PostMapping("/login")
-	@ApiOperation(value = "Login",response = String.class)
-	@ApiResponses(value = {@ApiResponse(code = 200,message = "Login Successful") } )
+	@ApiOperation(value = "Login", response = String.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Login Successful") })
 	public ResponseEntity<String> login(@RequestBody MasterDto masterDto) throws UserNotFoundException {
 		String status = "";
 		HttpStatus statusCode = null;
@@ -44,8 +42,8 @@ public class MasterControllerRest {
 	}
 
 	@PostMapping("/register")
-	@ApiOperation(value = "Register",response = String.class)
-	@ApiResponses(value = {@ApiResponse(code = 200,message = "Account Registered Successfully") } )
+	@ApiOperation(value = "Register", response = String.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Account Registered Successfully") })
 	public ResponseEntity<String> register(@RequestBody MasterDto masterDto) {
 		String status = "";
 		HttpStatus statusCode = null;
