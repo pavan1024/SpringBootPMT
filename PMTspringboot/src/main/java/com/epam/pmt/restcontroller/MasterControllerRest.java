@@ -1,5 +1,7 @@
 package com.epam.pmt.restcontroller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +14,21 @@ import com.epam.pmt.dto.MasterDto;
 import com.epam.pmt.exception.UserNotFoundException;
 import com.epam.pmt.service.MasterUserService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @RequestMapping("/masterusers")
+@Api("Operations to Master in pmt app")
 public class MasterControllerRest {
 	@Autowired
 	private MasterUserService masterService;
 
 	@PostMapping("/login")
+	@ApiOperation(value = "Login",response = String.class)
+	@ApiResponses(value = {@ApiResponse(code = 200,message = "Login Successful") } )
 	public ResponseEntity<String> login(@RequestBody MasterDto masterDto) throws UserNotFoundException {
 		String status = "";
 		HttpStatus statusCode = null;
@@ -34,9 +44,9 @@ public class MasterControllerRest {
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity<String> register(MasterDto masterDto) {
-		masterDto.setUsername("master111");
-		masterDto.setPassword("Master@123");
+	@ApiOperation(value = "Register",response = String.class)
+	@ApiResponses(value = {@ApiResponse(code = 200,message = "Account Registered Successfully") } )
+	public ResponseEntity<String> register(@RequestBody MasterDto masterDto) {
 		String status = "";
 		HttpStatus statusCode = null;
 		if (masterService.registerAccount(masterDto)) {
