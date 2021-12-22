@@ -7,6 +7,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -40,6 +42,7 @@ public class Account {
 	@JoinColumn(name = "master_id")
 	@Getter
 	@Setter
+	@JsonIgnore
 	private Master master;
 
 }

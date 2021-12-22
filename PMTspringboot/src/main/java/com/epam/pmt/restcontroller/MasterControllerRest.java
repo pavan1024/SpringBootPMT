@@ -39,16 +39,15 @@ public class MasterControllerRest {
 		masterDto.setPassword("Master@123");
 		String status = "";
 		HttpStatus statusCode = null;
-		if(masterService.registerAccount(masterDto)) {
+		if (masterService.registerAccount(masterDto)) {
 			status = "Account Registered Successfully";
 			statusCode = HttpStatus.ACCEPTED;
-		}else {
+		} else {
 			status = "Account Not Registered";
 			statusCode = HttpStatus.NOT_FOUND;
 		}
-		return new ResponseEntity<>(status,statusCode);
-		
-		
+		return new ResponseEntity<>(status, statusCode);
+
 	}
 
 }

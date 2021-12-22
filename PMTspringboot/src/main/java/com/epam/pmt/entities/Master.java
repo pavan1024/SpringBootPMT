@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,6 +29,7 @@ public class Master {
 	private String password;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "master")
+	@JsonIgnore
 	private List<Account> accounts;
 
 	public List<Account> getAccounts() {

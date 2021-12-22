@@ -24,14 +24,16 @@ import com.epam.pmt.service.GroupService;
 public class GroupControllerRest {
 	@Autowired
 	private GroupService groupService;
-	
+
 	@GetMapping
-	public ResponseEntity<List<Account>> fetchAllAccounts(@RequestBody AccountDto accountDto) throws GroupNotFoundException{
+	public ResponseEntity<List<Account>> fetchAllAccounts(@RequestBody AccountDto accountDto)
+			throws GroupNotFoundException {
 		return new ResponseEntity<>(groupService.getGroupList(accountDto), HttpStatus.OK);
 	}
-	
+
 	@PutMapping("/{newGroupname}")
-	public ResponseEntity<String> updateGroupname(@RequestBody AccountDto accountDto,@PathVariable String newGroupname) throws GroupNotFoundException {
+	public ResponseEntity<String> updateGroupname(@RequestBody AccountDto accountDto, @PathVariable String newGroupname)
+			throws GroupNotFoundException {
 		String status = "";
 		HttpStatus statusCode = null;
 		if (groupService.updateGroupname(accountDto.getGroupname(), newGroupname)) {
@@ -43,6 +45,7 @@ public class GroupControllerRest {
 		}
 		return new ResponseEntity<>(status, statusCode);
 	}
+
 	@DeleteMapping
 	public ResponseEntity<String> deleteGroup(@RequestBody AccountDto accountDto) throws URLNotFoundException {
 		String status = "";
