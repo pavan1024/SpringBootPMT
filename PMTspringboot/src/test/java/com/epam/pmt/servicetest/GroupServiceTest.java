@@ -76,8 +76,8 @@ class GroupServiceTest {
 		when(accountRepository.findByGroupnameAndMaster("google", master)).thenReturn(groupAccounts);
 		when(accountRepository.findByGroupnameAndMaster("google", master1)).thenReturn(emptyAccounts);
 		try {
-			assertEquals(groupAccounts, groupService.getGroupList(accountDto));
-			assertEquals(emptyAccounts, groupService.getGroupList(invalidAccountDto));
+			assertEquals(groupAccounts, groupService.getGroupList(accountDto.getGroupname()));
+			assertEquals(emptyAccounts, groupService.getGroupList(invalidAccountDto.getGroupname()));
 		} catch (GroupNotFoundException ex) {
 
 		}
@@ -112,8 +112,8 @@ class GroupServiceTest {
 		when(accountRepository.findByGroupnameAndMaster("google", master)).thenReturn(groupAccounts);
 		when(accountRepository.findByGroupnameAndMaster("google", master1)).thenReturn(emptyAccounts);
 		try {
-			assertEquals(true, groupService.deleteGroup(accountDto));
-			assertEquals(false, groupService.deleteGroup(invalidAccountDto));
+			assertEquals(true, groupService.deleteGroup(accountDto.getGroupname()));
+			assertEquals(false, groupService.deleteGroup(invalidAccountDto.getGroupname()));
 		} catch (GroupNotFoundException ex) {
 
 		}

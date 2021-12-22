@@ -16,7 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.epam.pmt.dto.AccountDto;
 import com.epam.pmt.entities.Account;
 import com.epam.pmt.entities.Master;
-import com.epam.pmt.exception.PasswordNotValidException;
 import com.epam.pmt.exception.URLNotFoundException;
 import com.epam.pmt.repo.AccountRepository;
 import com.epam.pmt.service.AccountService;
@@ -89,9 +88,9 @@ class AccountServiceTest {
 		invalidAccountDto.setUsername("mailusername");
 		when(accountRepository.findByUrlAndMaster("https://www.yahoo.com", master)).thenReturn(account);
 		when(accountRepository.findByUrlAndMaster("https://www.instagram.com", master)).thenReturn(emptyAccount);
-		assertTrue(accountService.updateUsername(accountDto));
+		assertTrue(accountService.updateUsername(accountDto.getUrl(),accountDto.getUsername()));
 		try {
-			assertFalse(accountService.updateUsername(invalidAccountDto));
+			assertFalse(accountService.updateUsername(invalidAccountDto.getUrl(),invalidAccountDto.getUsername()));
 
 		} catch (URLNotFoundException ex) {
 
@@ -103,9 +102,9 @@ class AccountServiceTest {
 		when(accountRepository.findByUrlAndMaster("https://www.yahoo.com", master)).thenReturn(account);
 		when(accountRepository.findByUrlAndMaster("https://www.instagram.com", master)).thenReturn(emptyAccount);
 		when(validation.isValidPassword("Yahoo@123")).thenReturn(true);
-		assertTrue(accountService.updatePassword(accountDto));
+		assertTrue(accountService.updatePassword(accountDto.getUrl(),accountDto.getPassword()));
 		try {
-			assertFalse(accountService.updatePassword(invalidAccountDto));
+			assertFalse(accountService.updatePassword(invalidAccountDto.getUrl(),invalidAccountDto.getPassword()));
 
 		} catch (URLNotFoundException ex) {
 
@@ -130,10 +129,10 @@ class AccountServiceTest {
 	
 //	@Test
 //	void createAccountErrorTest() throws Exception {
-////		when(validation.isValidURL("https://www.gmail.com")).thenReturn(true);
+//		when(validation.isValidURL("https://www.gmail.com")).thenReturn(true);
 //		when(validation.isValidPassword("Gmail123")).thenReturn(false);
 //		try {
-//			assertEquals(false,accountService.createAccount(invalidAccountDto));
+//			assertEquals(true,accountService.createAccount(invalidAccountDto));
 //		} catch (PasswordNotValidException ex) {
 //			
 //		}
@@ -143,7 +142,7 @@ class AccountServiceTest {
 	void getPasswordTest() {
 		when(accountRepository.findByUrlAndMaster("https://www.yahoo.com", master)).thenReturn(account);
 		when(accountRepository.findByUrlAndMaster("https://www.instagram.com", master)).thenReturn(emptyAccount);
-		assertEquals(security.decrypt(security.encrypt("Yahoo@123")), accountService.readPassword(accountDto));
+		assertEquals(security.decrypt(security.encrypt("Yahoo@123")), accountService.readPassword(accountDto.getUrl()));
 	}
 
 	@Test
@@ -170,9 +169,9 @@ class AccountServiceTest {
 
 		when(accountRepository.findByUrlAndMaster("https://www.yahoo.com", master)).thenReturn(account);
 		when(accountRepository.findByUrlAndMaster("https://www.instagram.com", master)).thenReturn(emptyAccount);
-		assertTrue(accountService.deleteAccount(accountDto));
+		assertTrue(accountService.deleteAccount(accountDto.getUrl()));
 		try {
-			assertFalse(accountService.deleteAccount(invalidAccountDto));
+			assertFalse(accountService.deleteAccount(invalidAccountDto.getUrl()));
 		} catch (URLNotFoundException ex) {
 
 		}

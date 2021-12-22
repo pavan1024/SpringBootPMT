@@ -22,22 +22,22 @@ public class Account {
 	@Getter
 	@Setter
 	private String url;
-	
+
 	@Column
 	@Getter
 	@Setter
 	private String username;
-	
+
 	@Column
 	@Getter
 	@Setter
 	private String password;
-	
+
 	@Column
 	@Getter
 	@Setter
 	private String groupname;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "master_id")
 	@Getter

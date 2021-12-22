@@ -22,12 +22,12 @@ public class Master {
 	@Getter
 	@Setter
 	private String username;
-	
+
 	@Column
 	@Getter
 	@Setter
 	private String password;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "master")
 	@JsonIgnore
 	private List<Account> accounts;

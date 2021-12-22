@@ -32,16 +32,14 @@ public class AccountService {
 	Security security;
 	@Autowired
 	ModelMapper mapper;
-	
 
 	Master master = MasterProvider.getMaster();
-	
 
 	public boolean createAccount(AccountDto accountDto) throws URLNotValidException, PasswordNotValidException {
 		boolean status = false;
 		if (validation.isValidURL(accountDto.getUrl())) {
 			if (validation.isValidPassword(accountDto.getPassword())) {
-				Account account = mapper.map(accountDto,Account.class);
+				Account account = mapper.map(accountDto, Account.class);
 				account.setPassword(security.encrypt(accountDto.getPassword()));
 				account.setMaster(master);
 				accountRepository.save(account);
@@ -56,11 +54,11 @@ public class AccountService {
 		return status;
 	}
 
-	public String readPassword(AccountDto accountDto) throws URLNotFoundException {
+	public String readPassword(String url) throws URLNotFoundException {
 		String password = "";
-		Account account = accountRepository.findByUrlAndMaster(accountDto.getUrl(), master);
+		Account account = accountRepository.findByUrlAndMaster(url, master);
 		Optional<Account> optionalAccount = Optional.ofNullable(account);
-		if (checkUrl(accountDto.getUrl()) && optionalAccount.isPresent() ) {
+		if (checkUrl(url) && optionalAccount.isPresent()) {
 			password = security.decrypt(account.getPassword());
 		}
 		return password;
@@ -78,21 +76,21 @@ public class AccountService {
 		return status;
 	}
 
-	public boolean deleteAccount(AccountDto accountDto) throws URLNotFoundException {
+	public boolean deleteAccount(String url) throws URLNotFoundException {
 		boolean status = false;
-		Account account = accountRepository.findByUrlAndMaster(accountDto.getUrl(), master);
-		if (checkUrl(accountDto.getUrl())) {
+		Account account = accountRepository.findByUrlAndMaster(url, master);
+		if (checkUrl(url)) {
 			accountRepository.delete(account);
 			status = true;
 		}
 		return status;
 	}
 
-	public boolean updateUsername(AccountDto accountDto) throws URLNotFoundException {
+	public boolean updateUsername(String url, String newUsername) throws URLNotFoundException {
 		boolean status = false;
-		Account account = accountRepository.findByUrlAndMaster(accountDto.getUrl(), master);
-		if (checkUrl(accountDto.getUrl())) {
-			account.setUsername(accountDto.getUsername());
+		Account account = accountRepository.findByUrlAndMaster(url, master);
+		if (checkUrl(url)) {
+			account.setUsername(newUsername);
 			accountRepository.save(account);
 			status = true;
 		}
@@ -100,13 +98,13 @@ public class AccountService {
 
 	}
 
-	public boolean updatePassword(AccountDto accountDto)
+	public boolean updatePassword(String url, String newPassword)
 			throws URLNotFoundException, PasswordNotValidException {
 		boolean status = false;
-		Account account = accountRepository.findByUrlAndMaster(accountDto.getUrl(), master);
-		if (checkUrl(accountDto.getUrl())) {
-			if (validation.isValidPassword(accountDto.getPassword())) {
-				account.setPassword(security.encrypt(accountDto.getPassword()));
+		Account account = accountRepository.findByUrlAndMaster(url, master);
+		if (checkUrl(url)) {
+			if (validation.isValidPassword(newPassword)) {
+				account.setPassword(security.encrypt(newPassword));
 				accountRepository.save(account);
 				status = true;
 			} else {
@@ -122,7 +120,7 @@ public class AccountService {
 	public List<Account> getAll() {
 		List<Account> accounts = accountRepository.findByMaster(master);
 		accounts.stream().forEach(i -> i.setPassword(security.decrypt(i.getPassword())));
-		return accounts;		
+		return accounts;
 	}
 
 }

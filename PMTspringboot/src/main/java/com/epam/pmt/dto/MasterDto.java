@@ -10,7 +10,7 @@ public class MasterDto {
 	@Getter
 	@Setter
 	String username;
-	
+
 	@Getter
 	@Setter
 	String password;

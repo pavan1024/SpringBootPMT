@@ -1,7 +1,5 @@
 package com.epam.pmt.dto;
 
-import com.epam.pmt.entities.Master;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,9 +22,5 @@ public class AccountDto {
 	@Getter
 	@Setter
 	private String groupname;
-
-	@Getter
-	@Setter
-	private Master master;
 
 }

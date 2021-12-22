@@ -11,6 +11,7 @@ public class PmTspringbootApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PmTspringbootApplication.class, args);
 	}
+
 	@Bean
 	public ModelMapper getMapper() {
 		return new ModelMapper();

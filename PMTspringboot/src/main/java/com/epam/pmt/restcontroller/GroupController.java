@@ -6,14 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.epam.pmt.dto.AccountDto;
 import com.epam.pmt.entities.Account;
 import com.epam.pmt.exception.GroupNotFoundException;
 import com.epam.pmt.exception.URLNotFoundException;
@@ -25,7 +23,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@RequestMapping("/restgroups")
+@RequestMapping("/groups")
 @Api("Operations to groups in pmt app")
 public class GroupController {
 	@Autowired
@@ -34,19 +32,18 @@ public class GroupController {
 	@PostMapping
 	@ApiOperation(value = "View List of Group Accounts", response = List.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "successfully retrieved group list") })
-	public ResponseEntity<List<Account>> fetchAllAccounts(@RequestBody AccountDto accountDto)
-			throws GroupNotFoundException {
-		return new ResponseEntity<>(groupService.getGroupList(accountDto), HttpStatus.OK);
+	public ResponseEntity<List<Account>> fetchAllGroupAccounts(String groupname) throws GroupNotFoundException {
+		return new ResponseEntity<>(groupService.getGroupList(groupname), HttpStatus.OK);
 	}
 
-	@PutMapping("/{newGroupname}")
+	@PutMapping
 	@ApiOperation(value = "Update Groupname", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Groupname Updated Successfully") })
-	public ResponseEntity<String> updateGroupname(@RequestBody AccountDto accountDto, @PathVariable String newGroupname)
+	public ResponseEntity<String> updateGroupname(String currentGroupname, String newGroupname)
 			throws GroupNotFoundException {
 		String status = "";
 		HttpStatus statusCode = null;
-		if (groupService.updateGroupname(accountDto.getGroupname(), newGroupname)) {
+		if (groupService.updateGroupname(currentGroupname, newGroupname)) {
 			status = "Groupname Updated Successfully";
 			statusCode = HttpStatus.ACCEPTED;
 		} else {
@@ -59,10 +56,10 @@ public class GroupController {
 	@DeleteMapping
 	@ApiOperation(value = "Delete Group", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Groupname Deleted Successfully") })
-	public ResponseEntity<String> deleteGroup(@RequestBody AccountDto accountDto) throws URLNotFoundException {
+	public ResponseEntity<String> deleteGroup(String groupname) throws URLNotFoundException {
 		String status = "";
 		HttpStatus statusCode = null;
-		if (groupService.deleteGroup(accountDto)) {
+		if (groupService.deleteGroup(groupname)) {
 			status = "Group Deleted Successfully";
 			statusCode = HttpStatus.ACCEPTED;
 		} else {

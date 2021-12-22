@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,7 +25,7 @@ import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.ApiResponse;
 
 @RestController
-@RequestMapping("/restaccounts")
+@RequestMapping("/accounts")
 @Api("Operations to accounts in pmt app")
 public class AccountController {
 
@@ -43,7 +42,7 @@ public class AccountController {
 	@PostMapping
 	@ApiOperation(value = "Add Account", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Account Added Successfully") })
-	public ResponseEntity<String> addAccount(@RequestBody AccountDto accountDto)
+	public ResponseEntity<String> addAccount(AccountDto accountDto)
 			throws URLNotValidException, PasswordNotValidException {
 		String status = "";
 		HttpStatus statusCode = null;
@@ -57,14 +56,14 @@ public class AccountController {
 		return new ResponseEntity<>(status, statusCode);
 	}
 
-	@PostMapping("/readpassword")
+	@GetMapping("/readpassword")
 	@ApiOperation(value = "View Password", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "successfully retrieved password") })
-	public ResponseEntity<String> readPassword(@RequestBody AccountDto accountDto) throws URLNotFoundException {
+	public ResponseEntity<String> readPassword(String url) throws URLNotFoundException {
 		String password = "";
 		HttpStatus statusCode = null;
-		if (accountService.checkUrl(accountDto.getUrl())) {
-			password = accountService.readPassword(accountDto);
+		if (accountService.checkUrl(url)) {
+			password = accountService.readPassword(url);
 			statusCode = HttpStatus.ACCEPTED;
 		} else {
 			statusCode = HttpStatus.NOT_FOUND;
@@ -75,11 +74,11 @@ public class AccountController {
 	@PutMapping("/updateusername")
 	@ApiOperation(value = "Update Username", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Account Username Updated Successfully") })
-	public ResponseEntity<String> updateUsername(@RequestBody AccountDto accountDto)
+	public ResponseEntity<String> updateUsername(String url, String newUsername)
 			throws URLNotFoundException, PasswordNotValidException {
 		String status = "";
 		HttpStatus statusCode = null;
-		if (accountService.updateUsername(accountDto)) {
+		if (accountService.updateUsername(url, newUsername)) {
 			status = "Account Username Updated Successfully";
 			statusCode = HttpStatus.ACCEPTED;
 		} else {
@@ -92,11 +91,11 @@ public class AccountController {
 	@PutMapping("/updatepassword")
 	@ApiOperation(value = "Update Password", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Account Password Updated Successfully") })
-	public ResponseEntity<String> updatePassword(@RequestBody AccountDto accountDto)
+	public ResponseEntity<String> updatePassword(String url, String newPassword)
 			throws URLNotFoundException, PasswordNotValidException {
 		String status = "";
 		HttpStatus statusCode = null;
-		if (accountService.updatePassword(accountDto)) {
+		if (accountService.updatePassword(url, newPassword)) {
 			status = "Account Password Updated Successfully";
 			statusCode = HttpStatus.ACCEPTED;
 		} else {
@@ -109,10 +108,10 @@ public class AccountController {
 	@DeleteMapping
 	@ApiOperation(value = "Delete Account", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Account Deleted Successfully") })
-	public ResponseEntity<String> delete(@RequestBody AccountDto accountDto) throws URLNotFoundException {
+	public ResponseEntity<String> delete(String url) throws URLNotFoundException {
 		String status = "";
 		HttpStatus statusCode = null;
-		if (accountService.deleteAccount(accountDto)) {
+		if (accountService.deleteAccount(url)) {
 			status = "Account Deleted Successfully";
 			statusCode = HttpStatus.ACCEPTED;
 		} else {

@@ -18,19 +18,14 @@ public class ApplicationSwaggerConfig {
 
 	@Bean
 	public Docket pmtApi() {
-		return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.any()).build().apiInfo(getDocumentInfo());
+		return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.any()).build()
+				.apiInfo(getDocumentInfo());
 	}
-	
 
 	public ApiInfo getDocumentInfo() {
-		ApiInfo apiInfo = new ApiInfo(
-				"PMT Service API",
-				"Accounts API for Password Management Tool",
-				"1.0",
+		return new ApiInfo("PMT Service API", "Accounts API for Password Management Tool", "1.0",
 				"Terms of Service",
-				new Contact("Pavan Kumar Shivashetty","https://localhost:9000/master/","pavankumar161024@gmail.com"),
-				"Apache License Version",
-				"https://apache.com",new ArrayList());
-		return apiInfo;
+				new Contact("Pavan Kumar Shivashetty", "https://localhost:9000/master/", "pavankumar161024@gmail.com"),
+				"Apache License Version", "https://apache.com", new ArrayList());
 	}
 }
