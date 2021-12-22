@@ -46,14 +46,28 @@ public class AccountControllerRest {
 		}
 		return new ResponseEntity<>(status, statusCode);
 	}
+	
+	
+	@GetMapping("/readpassword")
+	public ResponseEntity<String> readPassword(@RequestBody AccountDto accountDto)
+			throws URLNotFoundException {
+		String password = "";
+		HttpStatus statusCode = null;
+		if (accountService.checkUrl(accountDto.getUrl())) {
+			password = accountService.readPassword(accountDto);
+			statusCode = HttpStatus.ACCEPTED;
+		} else {
+			statusCode = HttpStatus.NOT_FOUND;
+		}
+		return new ResponseEntity<>(password, statusCode);
+	}
+	
 
-	@PutMapping
-	public ResponseEntity<String> update(@RequestBody AccountDto accountDto)
+	@PutMapping("/updateusername")
+	public ResponseEntity<String> updateUsername(@RequestBody AccountDto accountDto)
 			throws URLNotFoundException, PasswordNotValidException {
 		String status = "";
-		HttpStatus statusCode = HttpStatus.NOT_FOUND;
-
-		if (accountDto.getUsername() != null) {
+		HttpStatus statusCode = null;
 			if (accountService.updateUsername(accountDto)) {
 				status = "Account Username Updated Successfully";
 				statusCode = HttpStatus.ACCEPTED;
@@ -61,8 +75,15 @@ public class AccountControllerRest {
 				status = "Account Username Not Updated";
 				statusCode = HttpStatus.NOT_FOUND;
 			}
-
-		} else if (accountDto.getPassword() != null) {
+		return new ResponseEntity<>(status, statusCode);
+	}
+	
+	
+	@PutMapping("/updatepassword")
+	public ResponseEntity<String> updatePassword(@RequestBody AccountDto accountDto)
+			throws URLNotFoundException, PasswordNotValidException {
+		String status = "";
+		HttpStatus statusCode = null;
 			if (accountService.updatePassword(accountDto)) {
 				status = "Account Password Updated Successfully";
 				statusCode = HttpStatus.ACCEPTED;
@@ -70,10 +91,10 @@ public class AccountControllerRest {
 				status = "Account Password Not Updated";
 				statusCode = HttpStatus.NOT_FOUND;
 			}
-		}
-
 		return new ResponseEntity<>(status, statusCode);
 	}
+	
+	
 
 	@DeleteMapping
 	public ResponseEntity<String> delete(@RequestBody AccountDto accountDto) throws URLNotFoundException {

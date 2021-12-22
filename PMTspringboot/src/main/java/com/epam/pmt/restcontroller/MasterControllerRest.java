@@ -18,7 +18,7 @@ public class MasterControllerRest {
 	@Autowired
 	private MasterUserService masterService;
 
-	@PostMapping
+	@PostMapping("/login")
 	public ResponseEntity<String> login(@RequestBody MasterDto masterDto) throws UserNotFoundException {
 		String status = "";
 		HttpStatus statusCode = null;
@@ -33,22 +33,22 @@ public class MasterControllerRest {
 
 	}
 
-//	@PostMapping
-//	public ResponseEntity<String> register(MasterDto masterDto) {
-//		masterDto.setUsername("master111");
-//		masterDto.setPassword("Master@123");
-//		String status = "";
-//		HttpStatus statusCode = null;
-//		if(masterService.register(masterDto)) {
-//			status = "Account Registered Successfully";
-//			statusCode = HttpStatus.ACCEPTED;
-//		}else {
-//			status = "Account Not Registered";
-//			statusCode = HttpStatus.NOT_FOUND;
-//		}
-//		return new ResponseEntity<>(status,statusCode);
-//		
-//		
-//	}
+	@PostMapping("/register")
+	public ResponseEntity<String> register(MasterDto masterDto) {
+		masterDto.setUsername("master111");
+		masterDto.setPassword("Master@123");
+		String status = "";
+		HttpStatus statusCode = null;
+		if(masterService.registerAccount(masterDto)) {
+			status = "Account Registered Successfully";
+			statusCode = HttpStatus.ACCEPTED;
+		}else {
+			status = "Account Not Registered";
+			statusCode = HttpStatus.NOT_FOUND;
+		}
+		return new ResponseEntity<>(status,statusCode);
+		
+		
+	}
 
 }
