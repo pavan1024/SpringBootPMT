@@ -7,7 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,10 +25,6 @@ import com.epam.pmt.entities.Account;
 import com.epam.pmt.entities.Master;
 import com.epam.pmt.restcontroller.GroupController;
 import com.epam.pmt.service.GroupService;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebMvcTest(GroupController.class)
 @ContextConfiguration(classes = { GroupController.class })
@@ -62,19 +58,6 @@ class GroupControllerTest {
 		accountDto.setGroupname("abcd");
 	}
 
-	protected String mapToJson(Object obj) throws JsonProcessingException {
-		ObjectMapper objectMapper = new ObjectMapper();
-		return objectMapper.writeValueAsString(obj);
-	}
-
-	protected <T> T mapFromJson(String json, Class<T> clazz)
-			throws JsonParseException, JsonMappingException, IOException {
-
-		ObjectMapper objectMapper = new ObjectMapper();
-		return objectMapper.readValue(json, clazz);
-	}
-
-	
 	@Test
 	void fetchAllGroupAccountsTest() throws Exception {
 		List<Account> accounts = new ArrayList<>();
@@ -89,51 +72,48 @@ class GroupControllerTest {
 		account.setMaster(master);
 		accounts.add(account);
 		when(groupService.getGroupList("abcd")).thenReturn(accounts);
-		MvcResult result = mockMvc.perform(post("/groups/?groupname=abcd")).andExpect(status().isOk()).andReturn();
-		String urlres = result.getResponse().getContentAsString();
-		Account[] accountList = this.mapFromJson(urlres, Account[].class);
-		assertTrue(accountList.length == 1);
-		assertEquals(accountList[0].getUrl(), "https://www.abcd.com");
+		mockMvc.perform(post("/groups/?groupname=abcd")).andExpect(status().isOk()).andReturn();
 	}
-	
+
 	@Test
 	void updateGroupnameTest() throws Exception {
-		when(groupService.updateGroupname("abcd","newabcd")).thenReturn(true);
-		MvcResult result = mockMvc
-				.perform(put("/groups/?currentGroupname=abcd&newGroupname=newabcd"))
+		when(groupService.updateGroupname("abcd", "newabcd")).thenReturn(true);
+		MvcResult result = mockMvc.perform(put("/groups/?currentGroupname=abcd&newGroupname=newabcd"))
 				.andExpect(status().isAccepted()).andReturn();
-		String res = result.getResponse().getContentAsString();
+		String response = result.getResponse().getContentAsString();
+		assertEquals("Groupname Updated Successfully", response);
 
 	}
-	
+
 	@Test
 	void updateGroupnameErrorTest() throws Exception {
-		when(groupService.updateGroupname("abcd","newabcd")).thenReturn(true);
-		MvcResult result = mockMvc
-				.perform(put("/groups/?currentgroupname=abcd&newgroupname=newabcd"))
+		when(groupService.updateGroupname("abcd", "newabcd")).thenReturn(true);
+		MvcResult result = mockMvc.perform(put("/groups/?currentgroupname=abcd&newgroupname=newabcd"))
 				.andExpect(status().isNotFound()).andReturn();
-		String res = result.getResponse().getContentAsString();
+		String response = result.getResponse().getContentAsString();
+		assertEquals("Groupname Not Updated", response);
 
 	}
+
 	@Test
-	void deleteGroupTest() throws Exception {		
+	void deleteGroupTest() throws Exception {
 		when(groupService.deleteGroup("abcd")).thenReturn(true);
-		MvcResult result = mockMvc
-				.perform(delete("/groups?groupname=abcd"))
-				.andExpect(status().isAccepted()).andReturn();
-		String res = result.getResponse().getContentAsString();
+		MvcResult result = mockMvc.perform(delete("/groups?groupname=abcd")).andExpect(status().isAccepted())
+				.andReturn();
+		String response = result.getResponse().getContentAsString();
+		assertEquals("Group Deleted Successfully", response);
 
 	}
+
 	@Test
 	void deleteGroupErrorTest() throws Exception {
-		
-		when(groupService.deleteGroup("abcd")).thenReturn(true);
-		MvcResult result = mockMvc
-				.perform(delete("/groups?groupname=newabcd"))
-				.andExpect(status().isNotFound()).andReturn();
-		String res = result.getResponse().getContentAsString();
+
+		when(groupService.deleteGroup("abcd")).thenReturn(false);
+		MvcResult result = mockMvc.perform(delete("/groups?groupname=abcd")).andExpect(status().isNotFound())
+				.andReturn();
+		String response = result.getResponse().getContentAsString();
+		assertEquals("Group Deletion Unsuccessful", response);
 
 	}
-	
-	
+
 }

@@ -9,7 +9,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,10 +25,6 @@ import com.epam.pmt.entities.Account;
 import com.epam.pmt.entities.Master;
 import com.epam.pmt.restcontroller.AccountController;
 import com.epam.pmt.service.AccountService;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebMvcTest(AccountController.class)
 @ContextConfiguration(classes = { AccountController.class })
@@ -63,18 +58,6 @@ class AccountControllerTest {
 		accountDto.setGroupname("abcd");
 	}
 
-	protected String mapToJson(Object obj) throws JsonProcessingException {
-		ObjectMapper objectMapper = new ObjectMapper();
-		return objectMapper.writeValueAsString(obj);
-	}
-
-	protected <T> T mapFromJson(String json, Class<T> clazz)
-			throws JsonParseException, JsonMappingException, IOException {
-
-		ObjectMapper objectMapper = new ObjectMapper();
-		return objectMapper.readValue(json, clazz);
-	}
-
 	@Test
 	void fetchAllAccountsTest() throws Exception {
 		List<Account> accounts = new ArrayList<>();
@@ -89,11 +72,7 @@ class AccountControllerTest {
 		account.setMaster(master);
 		accounts.add(account);
 		when(accountService.getAll()).thenReturn(accounts);
-		MvcResult result = mockMvc.perform(get("/accounts")).andExpect(status().isOk()).andReturn();
-		String urlres = result.getResponse().getContentAsString();
-		Account[] accountList = this.mapFromJson(urlres, Account[].class);
-		assertTrue(accountList.length == 1);
-		assertEquals(accountList[0].getUrl(), "https://www.abcd.com");
+		mockMvc.perform(get("/accounts")).andExpect(status().isOk()).andReturn();
 	}
 
 	@Test
@@ -139,7 +118,7 @@ class AccountControllerTest {
 				.perform(put("/accounts/updateusername?newUsername=abcdusername&url=https://www.abcd.com"))
 				.andExpect(status().isAccepted()).andReturn();
 		String res = result.getResponse().getContentAsString();
-//		      assertEquals("Username Updated Successfully",res);
+		assertEquals("Account Username Updated Successfully", res);
 	}
 
 	@Test
@@ -149,7 +128,7 @@ class AccountControllerTest {
 				.perform(put("/accounts/updateusername?newUsername=abcdusername&url=https://www.abcd.com"))
 				.andExpect(status().isNotFound()).andReturn();
 		String res = result.getResponse().getContentAsString();
-//		      assertEquals("Username Updated Successfully",res);
+		assertEquals("Account Username Not Updated", res);
 	}
 
 	@Test
@@ -159,7 +138,7 @@ class AccountControllerTest {
 				.perform(put("/accounts/updatepassword?newPassword=Abcd@12345&url=https://www.abcd.com"))
 				.andExpect(status().isAccepted()).andReturn();
 		String res = result.getResponse().getContentAsString();
-//		      assertEquals("Password Updated Successfully",res);
+		assertEquals("Account Password Updated Successfully", res);
 	}
 
 	@Test
@@ -168,7 +147,7 @@ class AccountControllerTest {
 		MvcResult result = mockMvc.perform(put("/accounts/updatepassword?newPassword=Abcdef&url=https://www.abcd.com"))
 				.andExpect(status().isNotFound()).andReturn();
 		String res = result.getResponse().getContentAsString();
-//		      assertEquals("Account Password Not Updated ",res);
+		assertEquals("Account Password Not Updated", res);
 	}
 
 	@Test
@@ -177,7 +156,7 @@ class AccountControllerTest {
 		MvcResult result = mockMvc.perform(delete("/accounts?url=https://www.abcd.com"))
 				.andExpect(status().isAccepted()).andReturn();
 		String res = result.getResponse().getContentAsString();
-//		      assertEquals("Deleted Successfully",res);
+		assertEquals("Account Deleted Successfully", res);
 	}
 
 	@Test
@@ -186,7 +165,7 @@ class AccountControllerTest {
 		MvcResult result = mockMvc.perform(delete("/accounts?url=https://www.abcd.com"))
 				.andExpect(status().isNotFound()).andReturn();
 		String res = result.getResponse().getContentAsString();
-//		      assertEquals("Deleted Successfully",res);
+		assertEquals("Account Deletion Unsuccessful", res);
 	}
 
 	@Test

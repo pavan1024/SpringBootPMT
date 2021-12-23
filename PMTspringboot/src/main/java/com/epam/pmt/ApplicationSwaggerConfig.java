@@ -23,7 +23,7 @@ public class ApplicationSwaggerConfig {
 	}
 
 	public ApiInfo getDocumentInfo() {
-		return new ApiInfo("PMT Service API", "Accounts API for Password Management Tool", "1.0",
+		return new ApiInfo("PMT Service API", "API for Password Management Tool", "1.0",
 				"Terms of Service",
 				new Contact("Pavan Kumar Shivashetty", "https://localhost:9000/master/", "pavankumar161024@gmail.com"),
 				"Apache License Version", "https://apache.com", new ArrayList());

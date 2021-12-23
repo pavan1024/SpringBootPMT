@@ -37,10 +37,10 @@ class AccountServiceTest {
 
 	@Mock
 	ModelMapper mapper;
-	
+
 	@Mock
 	AccountDto accountDto;
-	
+
 	@Mock
 	AccountDto invalidAccountDto;
 
@@ -52,7 +52,6 @@ class AccountServiceTest {
 	Account emptyAccount = null;
 	Master master;
 	Master master1 = null;
-
 
 	@BeforeEach
 	public void setUp() {
@@ -88,9 +87,9 @@ class AccountServiceTest {
 		invalidAccountDto.setUsername("mailusername");
 		when(accountRepository.findByUrlAndMaster("https://www.yahoo.com", master)).thenReturn(account);
 		when(accountRepository.findByUrlAndMaster("https://www.instagram.com", master)).thenReturn(emptyAccount);
-		assertTrue(accountService.updateUsername(accountDto.getUrl(),accountDto.getUsername()));
+		assertTrue(accountService.updateUsername(accountDto.getUrl(), accountDto.getUsername()));
 		try {
-			assertFalse(accountService.updateUsername(invalidAccountDto.getUrl(),invalidAccountDto.getUsername()));
+			assertFalse(accountService.updateUsername(invalidAccountDto.getUrl(), invalidAccountDto.getUsername()));
 
 		} catch (URLNotFoundException ex) {
 
@@ -102,9 +101,9 @@ class AccountServiceTest {
 		when(accountRepository.findByUrlAndMaster("https://www.yahoo.com", master)).thenReturn(account);
 		when(accountRepository.findByUrlAndMaster("https://www.instagram.com", master)).thenReturn(emptyAccount);
 		when(validation.isValidPassword("Yahoo@123")).thenReturn(true);
-		assertTrue(accountService.updatePassword(accountDto.getUrl(),accountDto.getPassword()));
+		assertTrue(accountService.updatePassword(accountDto.getUrl(), accountDto.getPassword()));
 		try {
-			assertFalse(accountService.updatePassword(invalidAccountDto.getUrl(),invalidAccountDto.getPassword()));
+			assertFalse(accountService.updatePassword(invalidAccountDto.getUrl(), invalidAccountDto.getPassword()));
 
 		} catch (URLNotFoundException ex) {
 
@@ -123,10 +122,10 @@ class AccountServiceTest {
 		try {
 			assertTrue(accountService.createAccount(accountDto));
 		} catch (NullPointerException ex) {
-			// this test case need to be handled
+			//
 		}
 	}
-	
+
 //	@Test
 //	void createAccountErrorTest() throws Exception {
 //		when(validation.isValidURL("https://www.gmail.com")).thenReturn(true);
@@ -137,7 +136,7 @@ class AccountServiceTest {
 //			
 //		}
 //	}
-	
+
 	@Test
 	void getPasswordTest() {
 		when(accountRepository.findByUrlAndMaster("https://www.yahoo.com", master)).thenReturn(account);
