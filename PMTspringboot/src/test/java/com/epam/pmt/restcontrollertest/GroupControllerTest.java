@@ -11,7 +11,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -20,7 +19,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import com.epam.pmt.dto.AccountDto;
 import com.epam.pmt.entities.Account;
 import com.epam.pmt.entities.Master;
 import com.epam.pmt.restcontroller.GroupController;
@@ -33,47 +31,6 @@ class GroupControllerTest {
 	private MockMvc mockMvc;
 	@MockBean
 	GroupService groupService;
-
-	AccountDto accountDto;
-	Master master;
-	List<Account> accounts;
-
-	@BeforeEach
-	void setUp() {
-		accounts = new ArrayList<>();
-		Master master = new Master();
-		master.setUsername("master111");
-		master.setPassword("Master@123");
-		Account account = new Account();
-		account.setUrl("https://www.abcd.com");
-		account.setUsername("abcduser");
-		account.setPassword("Abcd@123");
-		account.setGroupname("abcd");
-		account.setMaster(master);
-		accounts.add(account);
-		accountDto = new AccountDto();
-		accountDto.setUrl("https://www.abcd.com");
-		accountDto.setUsername("abcduser");
-		accountDto.setPassword("Abcd@123");
-		accountDto.setGroupname("abcd");
-	}
-
-	@Test
-	void fetchAllGroupAccountsTest() throws Exception {
-		List<Account> accounts = new ArrayList<>();
-		Master master = new Master();
-		master.setUsername("master111");
-		master.setPassword("Master@123");
-		Account account = new Account();
-		account.setUrl("https://www.abcd.com");
-		account.setUsername("abcduser");
-		account.setPassword("Abcd@123");
-		account.setGroupname("abcd");
-		account.setMaster(master);
-		accounts.add(account);
-		when(groupService.getGroupList("abcd")).thenReturn(accounts);
-		mockMvc.perform(post("/groups/?groupname=abcd")).andExpect(status().isOk()).andReturn();
-	}
 
 	@Test
 	void updateGroupnameTest() throws Exception {
@@ -114,6 +71,23 @@ class GroupControllerTest {
 		String response = result.getResponse().getContentAsString();
 		assertEquals("Group Deletion Unsuccessful", response);
 
+	}
+	
+	@Test
+	void fetchAllGroupAccountsTest() throws Exception {
+		List<Account> accounts = new ArrayList<>();
+		Master master = new Master();
+		master.setUsername("master111");
+		master.setPassword("Master@123");
+		Account account = new Account();
+		account.setUrl("https://www.abcd.com");
+		account.setUsername("abcduser");
+		account.setPassword("Abcd@123");
+		account.setGroupname("abcd");
+		account.setMaster(master);
+		accounts.add(account);
+		when(groupService.getGroupList("abcd")).thenReturn(accounts);
+		mockMvc.perform(post("/groups/?groupname=abcd")).andExpect(status().isOk()).andReturn();
 	}
 
 }
