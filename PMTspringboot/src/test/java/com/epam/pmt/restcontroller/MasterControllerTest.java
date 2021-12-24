@@ -1,4 +1,4 @@
-package com.epam.pmt.restcontrollertest;
+package com.epam.pmt.restcontroller;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,7 +14,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import com.epam.pmt.restcontroller.MasterController;
 import com.epam.pmt.service.MasterUserService;
 
 @WebMvcTest(MasterController.class)

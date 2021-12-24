@@ -9,7 +9,7 @@ import com.epam.pmt.entities.Master;
 import com.epam.pmt.exception.GroupNotFoundException;
 import com.epam.pmt.repo.AccountRepository;
 import com.epam.pmt.util.MasterProvider;
-import com.epam.pmt.util.Security;
+import com.epam.pmt.util.SecurityUtil;
 
 @Service
 public class GroupService {
@@ -17,7 +17,7 @@ public class GroupService {
 	@Autowired
 	AccountRepository accountRepository;
 	@Autowired
-	Security security;
+	SecurityUtil securityUtil;
 	Master master = MasterProvider.getMaster();
 
 	public boolean checkIfGroupExists(String groupname) throws GroupNotFoundException {
@@ -35,7 +35,7 @@ public class GroupService {
 		List<Account> groupAccounts = null;
 		if (this.checkIfGroupExists(groupname)) {
 			groupAccounts = accountRepository.findByGroupnameAndMaster(groupname, master);
-			groupAccounts.stream().forEach(i -> i.setPassword(security.decrypt(i.getPassword())));
+			groupAccounts.stream().forEach(i -> i.setPassword(securityUtil.decrypt(i.getPassword())));
 		}
 		return groupAccounts;
 	}

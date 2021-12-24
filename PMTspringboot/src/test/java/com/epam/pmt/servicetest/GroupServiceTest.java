@@ -1,6 +1,6 @@
 package com.epam.pmt.servicetest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -12,111 +12,110 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.epam.pmt.dto.AccountDto;
 import com.epam.pmt.entities.Account;
 import com.epam.pmt.entities.Master;
 import com.epam.pmt.exception.GroupNotFoundException;
 import com.epam.pmt.repo.AccountRepository;
 import com.epam.pmt.service.GroupService;
 import com.epam.pmt.util.MasterProvider;
-import com.epam.pmt.util.Security;
+import com.epam.pmt.util.SecurityUtil;
 
 @SpringBootTest
 class GroupServiceTest {
-	@Mock
-	AccountRepository accountRepository;
 
 	@Mock
-	Security security;
+	AccountRepository accountRepo;
+
+	@Mock
+	SecurityUtil securityUtil;
 
 	@InjectMocks
-	GroupService groupService;
-
-	List<Account> groupAccounts;
-	List<Account> emptyAccounts;
-
-	Account account1;
-	Account account2;
-	Account emptyAccount = null;
+	GroupService service;
 
 	Master master;
-	Master master1 = null;
-
-	AccountDto accountDto;
-	AccountDto invalidAccountDto;
+	Account account1;
+	Account account2;
+	List<Account> accounts;
+	List<Account> emptyAccounts;
 
 	@BeforeEach
-	public void setUp() {
+	void setUp() {
 		MasterProvider.setMaster("masteruser", "Master@123");
 		master = MasterProvider.getMaster();
-		groupAccounts = new ArrayList<>();
-		emptyAccounts = new ArrayList<>();
-
 		account1 = new Account();
 		account1.setMaster(master);
 		account1.setUrl("https://www.gmail.com");
 		account1.setGroupname("google");
+		account1.setUsername("gmailuser");
+		account1.setPassword("Gmail@123");
 
 		account2 = new Account();
 		account2.setMaster(master);
 		account2.setGroupname("google");
+		account2.setUrl("https://www.drive.com");
+		account2.setUsername("driveuser");
+		account2.setPassword("Drive@123");
 
-		groupAccounts.add(account1);
-		groupAccounts.add(account2);
+		accounts = new ArrayList<>();
+		accounts.add(account1);
+		accounts.add(account2);
 
-		accountDto = new AccountDto();
-		accountDto.setGroupname("google");
+		emptyAccounts = new ArrayList<>();
 
-		invalidAccountDto = new AccountDto();
-		invalidAccountDto.setGroupname("yahoo");
-	}
-
-	@Test
-	void getGroupListTest() {
-		when(accountRepository.findByGroupnameAndMaster("google", master)).thenReturn(groupAccounts);
-		when(accountRepository.findByGroupnameAndMaster("google", master1)).thenReturn(emptyAccounts);
-		try {
-			assertEquals(groupAccounts, groupService.getGroupList(accountDto.getGroupname()));
-			assertEquals(emptyAccounts, groupService.getGroupList(invalidAccountDto.getGroupname()));
-		} catch (GroupNotFoundException ex) {
-
-		}
-	}
-
-	@Test
-	void updateGroupnameTest() {
-		when(accountRepository.findByGroupnameAndMaster("google", master)).thenReturn(groupAccounts);
-		when(accountRepository.findByGroupnameAndMaster("google", master1)).thenReturn(emptyAccounts);
-		try {
-			assertEquals(true, groupService.updateGroupname("google", "googlegroup"));
-			assertEquals(false, groupService.updateGroupname("yahoo", "yahoogroup"));
-		} catch (GroupNotFoundException ex) {
-
-		}
 	}
 
 	@Test
 	void checkIfGroupExistsTest() {
-		when(accountRepository.findByGroupnameAndMaster("google", master)).thenReturn(groupAccounts);
-		when(accountRepository.findByGroupnameAndMaster("google", master1)).thenReturn(emptyAccounts);
-		try {
-			assertEquals(true, groupService.checkIfGroupExists("google"));
-			assertEquals(false, groupService.checkIfGroupExists("yahoo"));
-		} catch (GroupNotFoundException ex) {
+		when(accountRepo.findByGroupnameAndMaster("google", master)).thenReturn(accounts);
+		assertTrue(service.checkIfGroupExists("google"));
+	}
 
-		}
+	@Test
+	void checkIfGroupExistsErrorTest() {
+		when(accountRepo.findByGroupnameAndMaster("yahoo", master)).thenReturn(emptyAccounts);
+		Throwable exception = assertThrows(GroupNotFoundException.class, () -> service.checkIfGroupExists("yahoo"));
+		assertEquals("yahoo Group not Found", exception.getMessage());
 	}
 
 	@Test
 	void deleteGroupTest() {
-		when(accountRepository.findByGroupnameAndMaster("google", master)).thenReturn(groupAccounts);
-		when(accountRepository.findByGroupnameAndMaster("google", master1)).thenReturn(emptyAccounts);
-		try {
-			assertEquals(true, groupService.deleteGroup(accountDto.getGroupname()));
-			assertEquals(false, groupService.deleteGroup(invalidAccountDto.getGroupname()));
-		} catch (GroupNotFoundException ex) {
+		when(accountRepo.findByGroupnameAndMaster("google", master)).thenReturn(accounts);
+		assertTrue(service.deleteGroup("google"));
+	}
 
-		}
+	@Test
+	void deleteGroupErrorTest() {
+		when(accountRepo.findByGroupnameAndMaster("yahoo", master)).thenReturn(emptyAccounts);
+		Throwable exception = assertThrows(GroupNotFoundException.class, () -> service.deleteGroup("yahoo"));
+		assertEquals("yahoo Group not Found", exception.getMessage());
+	}
+
+	@Test
+	void updateGroupnameTest() {
+		when(accountRepo.findByGroupnameAndMaster("google", master)).thenReturn(accounts);
+		assertTrue(service.updateGroupname("google", "googlegroup"));
+	}
+
+	@Test
+	void updateGroupnameErrorTest() {
+		when(accountRepo.findByGroupnameAndMaster("yahoo", master)).thenReturn(emptyAccounts);
+		Throwable exception = assertThrows(GroupNotFoundException.class,
+				() -> service.updateGroupname("yahoo", "yahoogroup"));
+		assertEquals("yahoo Group not Found", exception.getMessage());
+	}
+
+	@Test
+	void getGroupListTest() {
+		when(accountRepo.findByGroupnameAndMaster("google", master)).thenReturn(accounts);
+		assertEquals(accounts, service.getGroupList("google"));
+	}
+
+	@Test
+	void getGroupListErrorTest() {
+		when(accountRepo.findByGroupnameAndMaster("yahoo", master)).thenReturn(emptyAccounts);
+		Throwable exception = assertThrows(GroupNotFoundException.class,
+				() -> service.updateGroupname("yahoo", "yahoogroup"));
+		assertEquals("yahoo Group not Found", exception.getMessage());
 	}
 
 }

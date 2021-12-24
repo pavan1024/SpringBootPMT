@@ -1,4 +1,4 @@
-package com.epam.pmt;
+package com.epam.pmt.config;
 
 import java.util.ArrayList;
 

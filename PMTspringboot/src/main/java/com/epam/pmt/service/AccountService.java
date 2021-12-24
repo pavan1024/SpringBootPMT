@@ -16,8 +16,8 @@ import com.epam.pmt.exception.URLNotValidException;
 import com.epam.pmt.repo.AccountRepository;
 import com.epam.pmt.repo.MasterRepository;
 import com.epam.pmt.util.MasterProvider;
-import com.epam.pmt.util.Security;
-import com.epam.pmt.util.Validation;
+import com.epam.pmt.util.SecurityUtil;
+import com.epam.pmt.util.ValidationUtil;
 
 @Service
 public class AccountService {
@@ -27,9 +27,9 @@ public class AccountService {
 	@Autowired
 	MasterRepository masterRepository;
 	@Autowired
-	Validation validation;
+	ValidationUtil validationUtil;
 	@Autowired
-	Security security;
+	SecurityUtil securityUtil;
 	@Autowired
 	ModelMapper mapper;
 
@@ -37,10 +37,10 @@ public class AccountService {
 
 	public boolean createAccount(AccountDto accountDto) throws URLNotValidException, PasswordNotValidException {
 		boolean status = false;
-		if (validation.isValidURL(accountDto.getUrl())) {
-			if (validation.isValidPassword(accountDto.getPassword())) {
+		if (validationUtil.isValidURL(accountDto.getUrl())) {
+			if (validationUtil.isValidPassword(accountDto.getPassword())) {
 				Account account = mapper.map(accountDto, Account.class);
-				account.setPassword(security.encrypt(accountDto.getPassword()));
+				account.setPassword(securityUtil.encrypt(accountDto.getPassword()));
 				account.setMaster(master);
 				accountRepository.save(account);
 				status = true;
@@ -59,7 +59,7 @@ public class AccountService {
 		Account account = accountRepository.findByUrlAndMaster(url, master);
 		Optional<Account> optionalAccount = Optional.ofNullable(account);
 		if (checkUrl(url) && optionalAccount.isPresent()) {
-			password = security.decrypt(account.getPassword());
+			password = securityUtil.decrypt(account.getPassword());
 		}
 		return password;
 	}
@@ -103,8 +103,8 @@ public class AccountService {
 		boolean status = false;
 		Account account = accountRepository.findByUrlAndMaster(url, master);
 		if (checkUrl(url)) {
-			if (validation.isValidPassword(newPassword)) {
-				account.setPassword(security.encrypt(newPassword));
+			if (validationUtil.isValidPassword(newPassword)) {
+				account.setPassword(securityUtil.encrypt(newPassword));
 				accountRepository.save(account);
 				status = true;
 			} else {
@@ -119,7 +119,7 @@ public class AccountService {
 
 	public List<Account> getAll() {
 		List<Account> accounts = accountRepository.findByMaster(master);
-		accounts.stream().forEach(i -> i.setPassword(security.decrypt(i.getPassword())));
+		accounts.stream().forEach(i -> i.setPassword(securityUtil.decrypt(i.getPassword())));
 		return accounts;
 	}
 

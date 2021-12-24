@@ -1,4 +1,4 @@
-package com.epam.pmt.restcontrollertest;
+package com.epam.pmt.restcontroller;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -21,7 +21,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import com.epam.pmt.entities.Account;
 import com.epam.pmt.entities.Master;
-import com.epam.pmt.restcontroller.AccountController;
 import com.epam.pmt.service.AccountService;
 
 @WebMvcTest(AccountController.class)
