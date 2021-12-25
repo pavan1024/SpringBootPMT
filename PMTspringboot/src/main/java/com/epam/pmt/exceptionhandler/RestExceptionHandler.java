@@ -1,4 +1,4 @@
-package com.epam.pmt.exception;
+package com.epam.pmt.exceptionhandler;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -8,6 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.epam.pmt.exception.GroupNotFoundException;
+import com.epam.pmt.exception.PasswordNotValidException;
+import com.epam.pmt.exception.URLNotFoundException;
+import com.epam.pmt.exception.URLNotValidException;
+import com.epam.pmt.exception.UserNotFoundException;
+
 @RestControllerAdvice
 public class RestExceptionHandler {
 	String accountService = "accountService";
@@ -15,7 +21,7 @@ public class RestExceptionHandler {
 	String timestamp = "timestamp";
 	String error = "error";
 	String status = "status";
-
+	
 	@ExceptionHandler(value = URLNotValidException.class)
 	public Map<String, String> handleURLNotValidException(URLNotValidException ex) {
 		Map<String, String> response = new HashMap<>();

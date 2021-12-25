@@ -27,7 +27,7 @@ class MasterControllerTest {
 	@Test
 	void masterLoginTest() throws Exception {
 		when(masterService.login(any())).thenReturn(true);
-		MvcResult result = mockMvc.perform(post("/master/login?username=master111&password=Master@123"))
+		MvcResult result = mockMvc.perform(post("/masters/login?username=master111&password=Master@123"))
 				.andExpect(status().isAccepted()).andReturn();
 		String response = result.getResponse().getContentAsString();
 		assertEquals("Login Successful", response);
@@ -36,7 +36,7 @@ class MasterControllerTest {
 	@Test
 	void masterLoginErrorTest() throws Exception {
 		when(masterService.login(any())).thenReturn(false);
-		MvcResult result = mockMvc.perform(post("/master/login?username=master111&password=Master@123"))
+		MvcResult result = mockMvc.perform(post("/masters/login?username=master111&password=Master@123"))
 				.andExpect(status().isNotFound()).andReturn();
 		String response = result.getResponse().getContentAsString();
 		assertEquals("Login Unsuccessful", response);
@@ -45,7 +45,7 @@ class MasterControllerTest {
 	@Test
 	void masterRegisterTest() throws Exception {
 		when(masterService.registerAccount(any())).thenReturn(true);
-		MvcResult result = mockMvc.perform(post("/master/register?username=master111&password=Master@123"))
+		MvcResult result = mockMvc.perform(post("/masters/register?username=master111&password=Master@123"))
 				.andExpect(status().isAccepted()).andReturn();
 		String response = result.getResponse().getContentAsString();
 		assertEquals("Account Registered Successfully", response);
@@ -54,7 +54,7 @@ class MasterControllerTest {
 	@Test
 	void masterLRegisterErrorTest() throws Exception {
 		when(masterService.registerAccount(any())).thenReturn(false);
-		MvcResult result = mockMvc.perform(post("/master/register?username=master111&password=Master@123"))
+		MvcResult result = mockMvc.perform(post("/masters/register?username=master111&password=Master@123"))
 				.andExpect(status().isNotFound()).andReturn();
 		String response = result.getResponse().getContentAsString();
 		assertEquals("Account Not Registered", response);

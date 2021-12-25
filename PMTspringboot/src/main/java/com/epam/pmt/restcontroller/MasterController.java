@@ -17,7 +17,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@RequestMapping("/master")
+@RequestMapping("/masters")
 @Api("Operations to Master in pmt app")
 public class MasterController {
 	@Autowired
