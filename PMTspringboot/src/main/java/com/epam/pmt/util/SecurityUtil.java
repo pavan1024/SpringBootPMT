@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SecurityUtil {
-	public String encrypt(String plainPwd) {
-		String b64encoded = Base64.getEncoder().encodeToString(plainPwd.getBytes());
+	public String encrypt(String plainText) {
+		String b64encoded = Base64.getEncoder().encodeToString(plainText.getBytes());
 		String reverse = new StringBuilder(b64encoded).reverse().toString();
 		StringBuilder temp = new StringBuilder();
 		final int OFFSET = 4;
@@ -17,11 +17,11 @@ public class SecurityUtil {
 		return temp.toString();
 	}
 
-	public String decrypt(String encryptedPwd) {
+	public String decrypt(String encryptedText) {
 		StringBuilder temp = new StringBuilder();
 		final int OFFSET = 4;
-		for (int i = 0; i < encryptedPwd.length(); i++) {
-			temp.append((char) (encryptedPwd.charAt(i) - OFFSET));
+		for (int i = 0; i < encryptedText.length(); i++) {
+			temp.append((char) (encryptedText.charAt(i) - OFFSET));
 		}
 		String reversed = new StringBuilder(temp.toString()).reverse().toString();
 		return new String(Base64.getDecoder().decode(reversed));

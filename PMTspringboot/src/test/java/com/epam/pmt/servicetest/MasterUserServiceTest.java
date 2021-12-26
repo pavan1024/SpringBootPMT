@@ -31,9 +31,7 @@ class MasterUserServiceTest {
 	MasterUserService masterUserService;
 
 	Master master;
-	Master master1 = null;
 	List<Master> masterAccounts;
-	List<Master> emptyAccounts = null;
 
 	@BeforeEach
 	public void setUp() {

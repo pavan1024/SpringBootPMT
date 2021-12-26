@@ -45,9 +45,7 @@ class AccountServiceTest {
 
 	List<Account> accounts;
 	Account account;
-	Account emptyAccount = null;
 	Master master;
-	Master master1 = null;
 
 	String plainText;
 	String encryptedText;
