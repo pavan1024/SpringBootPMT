@@ -6,9 +6,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
-class SecurityUtilTest {
+class SecurityUtilImplTest {
 
-	SecurityUtil securityUtil = new SecurityUtil();
+	SecurityUtilImpl securityUtilImpl = new SecurityUtilImpl();
 	String plainText;
 	String encryptedText;
 	String decryptedText;
@@ -16,17 +16,17 @@ class SecurityUtilTest {
 	@BeforeEach
 	void setUp() {
 		plainText = "password";
-		encryptedText = securityUtil.encrypt(plainText);
-		decryptedText = securityUtil.decrypt(encryptedText);
+		encryptedText = securityUtilImpl.encrypt(plainText);
+		decryptedText = securityUtilImpl.decrypt(encryptedText);
 	}
 
 	@Test
 	void encryptTest() {
-		assertEquals(encryptedText, securityUtil.encrypt(plainText));
+		assertEquals(encryptedText, securityUtilImpl.encrypt(plainText));
 	}
 
 	@Test
 	void decryptTest() {
-		assertEquals(decryptedText, securityUtil.decrypt(encryptedText));
+		assertEquals(decryptedText, securityUtilImpl.decrypt(encryptedText));
 	}
 }

@@ -5,9 +5,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
-class ValidationUtilTest {
+class ValidationUtilImplTest {
 
-	ValidationUtil validationUtil = new ValidationUtil();;
+	ValidationUtilImpl validationUtilImpl = new ValidationUtilImpl();;
 	String validUrl;
 	String inValidUrl;
 	String validPassword;
@@ -24,13 +24,13 @@ class ValidationUtilTest {
 
 	@Test
 	void validUrlTest() {
-		assertEquals(true, validationUtil.isValidURL(validUrl));
-		assertEquals(false, validationUtil.isValidURL(inValidUrl));
+		assertEquals(true, validationUtilImpl.isValidURL(validUrl));
+		assertEquals(false, validationUtilImpl.isValidURL(inValidUrl));
 	}
 
 	@Test
 	void inValidUrlTest() {
-		assertEquals(true, validationUtil.isValidPassword(validPassword));
-		assertEquals(false, validationUtil.isValidPassword(inValidPassword));
+		assertEquals(true, validationUtilImpl.isValidPassword(validPassword));
+		assertEquals(false, validationUtilImpl.isValidPassword(inValidPassword));
 	}
 }

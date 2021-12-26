@@ -10,7 +10,7 @@ import com.epam.pmt.exception.URLNotFoundException;
 import com.epam.pmt.exception.URLNotValidException;
 import com.epam.pmt.exception.UserNotFoundException;
 
-@ControllerAdvice
+@ControllerAdvice("com.epam.pmt.mvccontroller")
 public class MvcExceptionHandler {
 	String errorMessage = "errorMessage";
 	String error = "error";
