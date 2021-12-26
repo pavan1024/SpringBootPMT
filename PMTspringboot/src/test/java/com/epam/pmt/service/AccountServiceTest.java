@@ -20,7 +20,6 @@ import com.epam.pmt.exception.PasswordNotValidException;
 import com.epam.pmt.exception.URLNotFoundException;
 import com.epam.pmt.exception.URLNotValidException;
 import com.epam.pmt.repo.AccountRepository;
-import com.epam.pmt.service.AccountService;
 import com.epam.pmt.util.MasterProvider;
 import com.epam.pmt.util.SecurityUtil;
 import com.epam.pmt.util.ValidationUtil;

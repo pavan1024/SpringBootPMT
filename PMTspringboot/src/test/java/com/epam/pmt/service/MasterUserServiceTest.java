@@ -16,7 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.epam.pmt.dto.MasterDto;
 import com.epam.pmt.entities.Master;
 import com.epam.pmt.repo.MasterRepository;
-import com.epam.pmt.service.MasterUserService;
 import com.epam.pmt.util.MasterProvider;
 
 @SpringBootTest

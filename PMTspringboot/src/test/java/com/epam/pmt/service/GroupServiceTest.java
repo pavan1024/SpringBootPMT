@@ -16,7 +16,6 @@ import com.epam.pmt.entities.Account;
 import com.epam.pmt.entities.Master;
 import com.epam.pmt.exception.GroupNotFoundException;
 import com.epam.pmt.repo.AccountRepository;
-import com.epam.pmt.service.GroupService;
 import com.epam.pmt.util.MasterProvider;
 import com.epam.pmt.util.SecurityUtil;
 
