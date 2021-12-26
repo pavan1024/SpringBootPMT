@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 class SecurityUtilTest {
 
-	SecurityUtil securityUtil = new SecurityUtil();
+	SecurityUtilImpl securityUtil = new SecurityUtilImpl();
 	String plainText;
 	String encryptedText;
 	String decryptedText;

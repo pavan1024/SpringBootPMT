@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 class ValidationUtilTest {
 
-	ValidationUtil validationUtil = new ValidationUtil();;
+	ValidationUtilImpl validationUtil = new ValidationUtilImpl();;
 	String validUrl;
 	String inValidUrl;
 	String validPassword;
