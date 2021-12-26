@@ -1,4 +1,4 @@
-package com.epam.pmt.servicetest;
+package com.epam.pmt.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -20,7 +20,6 @@ import com.epam.pmt.exception.PasswordNotValidException;
 import com.epam.pmt.exception.URLNotFoundException;
 import com.epam.pmt.exception.URLNotValidException;
 import com.epam.pmt.repo.AccountRepository;
-import com.epam.pmt.service.AccountService;
 import com.epam.pmt.util.MasterProvider;
 import com.epam.pmt.util.SecurityUtil;
 import com.epam.pmt.util.ValidationUtil;
