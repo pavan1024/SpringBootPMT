@@ -16,8 +16,8 @@ import com.epam.pmt.exception.URLNotValidException;
 import com.epam.pmt.repo.AccountRepository;
 import com.epam.pmt.repo.MasterRepository;
 import com.epam.pmt.util.MasterProvider;
-import com.epam.pmt.util.Security;
-import com.epam.pmt.util.Validation;
+import com.epam.pmt.util.SecurityUtil;
+import com.epam.pmt.util.ValidationUtil;
 
 @Service
 public class AccountService {
@@ -27,22 +27,20 @@ public class AccountService {
 	@Autowired
 	MasterRepository masterRepository;
 	@Autowired
-	Validation validation;
+	ValidationUtil validationUtil;
 	@Autowired
-	Security security;
+	SecurityUtil securityUtil;
 	@Autowired
 	ModelMapper mapper;
-	
 
 	Master master = MasterProvider.getMaster();
-	
 
 	public boolean createAccount(AccountDto accountDto) throws URLNotValidException, PasswordNotValidException {
 		boolean status = false;
-		if (validation.isValidURL(accountDto.getUrl())) {
-			if (validation.isValidPassword(accountDto.getPassword())) {
-				Account account = mapper.map(accountDto,Account.class);
-				account.setPassword(security.encrypt(accountDto.getPassword()));
+		if (validationUtil.isValidURL(accountDto.getUrl())) {
+			if (validationUtil.isValidPassword(accountDto.getPassword())) {
+				Account account = mapper.map(accountDto, Account.class);
+				account.setPassword(securityUtil.encrypt(accountDto.getPassword()));
 				account.setMaster(master);
 				accountRepository.save(account);
 				status = true;
@@ -56,12 +54,12 @@ public class AccountService {
 		return status;
 	}
 
-	public String readPassword(AccountDto accountDto) throws URLNotFoundException {
+	public String readPassword(String url) throws URLNotFoundException {
 		String password = "";
-		Account account = accountRepository.findByUrlAndMaster(accountDto.getUrl(), master);
+		Account account = accountRepository.findByUrlAndMaster(url, master);
 		Optional<Account> optionalAccount = Optional.ofNullable(account);
-		if (checkUrl(accountDto.getUrl()) && optionalAccount.isPresent() ) {
-			password = security.decrypt(account.getPassword());
+		if (checkUrl(url) && optionalAccount.isPresent()) {
+			password = securityUtil.decrypt(account.getPassword());
 		}
 		return password;
 	}
@@ -78,21 +76,21 @@ public class AccountService {
 		return status;
 	}
 
-	public boolean deleteAccount(AccountDto accountDto) throws URLNotFoundException {
+	public boolean deleteAccount(String url) throws URLNotFoundException {
 		boolean status = false;
-		Account account = accountRepository.findByUrlAndMaster(accountDto.getUrl(), master);
-		if (checkUrl(accountDto.getUrl())) {
+		Account account = accountRepository.findByUrlAndMaster(url, master);
+		if (checkUrl(url)) {
 			accountRepository.delete(account);
 			status = true;
 		}
 		return status;
 	}
 
-	public boolean updateUsername(AccountDto accountDto) throws URLNotFoundException {
+	public boolean updateUsername(String url, String newUsername) throws URLNotFoundException {
 		boolean status = false;
-		Account account = accountRepository.findByUrlAndMaster(accountDto.getUrl(), master);
-		if (checkUrl(accountDto.getUrl())) {
-			account.setUsername(accountDto.getUsername());
+		Account account = accountRepository.findByUrlAndMaster(url, master);
+		if (checkUrl(url)) {
+			account.setUsername(newUsername);
 			accountRepository.save(account);
 			status = true;
 		}
@@ -100,13 +98,13 @@ public class AccountService {
 
 	}
 
-	public boolean updatePassword(AccountDto accountDto)
+	public boolean updatePassword(String url, String newPassword)
 			throws URLNotFoundException, PasswordNotValidException {
 		boolean status = false;
-		Account account = accountRepository.findByUrlAndMaster(accountDto.getUrl(), master);
-		if (checkUrl(accountDto.getUrl())) {
-			if (validation.isValidPassword(accountDto.getPassword())) {
-				account.setPassword(security.encrypt(accountDto.getPassword()));
+		Account account = accountRepository.findByUrlAndMaster(url, master);
+		if (checkUrl(url)) {
+			if (validationUtil.isValidPassword(newPassword)) {
+				account.setPassword(securityUtil.encrypt(newPassword));
 				accountRepository.save(account);
 				status = true;
 			} else {
@@ -121,7 +119,7 @@ public class AccountService {
 
 	public List<Account> getAll() {
 		List<Account> accounts = accountRepository.findByMaster(master);
-		accounts.stream().forEach(i -> i.setPassword(security.decrypt(i.getPassword())));
+		accounts.stream().forEach(i -> i.setPassword(securityUtil.decrypt(i.getPassword())));
 		return accounts;
 	}
 

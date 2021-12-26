@@ -1,4 +1,4 @@
-package com.epam.pmt.controller;
+package com.epam.pmt.mvccontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +13,7 @@ import com.epam.pmt.service.MasterUserService;
 
 @Controller
 @RequestMapping("master")
-public class MasterController {
+public class MasterMvcController {
 	@Autowired
 	MasterUserService masterUserService;
 
@@ -28,15 +28,10 @@ public class MasterController {
 	}
 
 	@PostMapping("login")
-	public ModelAndView login(MasterDto masterDto) {
+	public ModelAndView login(MasterDto masterDto) throws UserNotFoundException {
 		ModelAndView mv = new ModelAndView();
-		try {
-			if (masterUserService.login(masterDto)) {
-				mv.setViewName("menu");
-			}
-		} catch (UserNotFoundException ex) {
-			mv.addObject("errorMessage", ex.getMessage());
-			mv.setViewName("loginError");
+		if (masterUserService.login(masterDto)) {
+			mv.setViewName("menu");
 		}
 		return mv;
 	}
@@ -49,13 +44,8 @@ public class MasterController {
 	@PostMapping("register")
 	public ModelAndView register(MasterDto masterDto) {
 		ModelAndView mv = new ModelAndView();
-		try {
-			if (masterUserService.registerAccount(masterDto)) {
-				mv.setViewName("register");
-			}
-		} catch (Exception ex) {
-			mv.addObject("errorMessage", ex.getMessage());
-			mv.setViewName("error");
+		if (masterUserService.registerAccount(masterDto)) {
+			mv.setViewName("register");
 		}
 		return mv;
 	}

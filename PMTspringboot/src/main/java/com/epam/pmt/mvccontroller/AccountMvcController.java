@@ -1,4 +1,4 @@
-package com.epam.pmt.controller;
+package com.epam.pmt.mvccontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +15,7 @@ import com.epam.pmt.service.AccountService;
 
 @Controller
 @RequestMapping("account")
-public class AccountController {
+public class AccountMvcController {
 	@Autowired
 	AccountService accountService;
 	String errormsg = "errorMessage";
@@ -32,15 +32,10 @@ public class AccountController {
 	}
 
 	@PostMapping("addAccount")
-	public ModelAndView addAccount(AccountDto accountDto) {
+	public ModelAndView addAccount(AccountDto accountDto) throws URLNotValidException, PasswordNotValidException {
 		ModelAndView mv = new ModelAndView();
-		try {
-			if (accountService.createAccount(accountDto)) {
-				mv.setViewName("addAccount");
-			}
-		} catch (URLNotValidException | PasswordNotValidException ex) {
-			mv.addObject(errormsg, ex.getMessage());
-			mv.setViewName(error);
+		if (accountService.createAccount(accountDto)) {
+			mv.setViewName("addAccount");
 		}
 		return mv;
 	}
@@ -51,17 +46,12 @@ public class AccountController {
 	}
 
 	@PostMapping("displayPassword")
-	public ModelAndView displayPassword(AccountDto accountDto) {
+	public ModelAndView displayPassword(String url) throws URLNotFoundException {
 		ModelAndView mv = new ModelAndView();
-		try {
-			String password = accountService.readPassword(accountDto);
-			if (!password.equals("")) {
-				mv.addObject("password", password);
-				mv.setViewName("displayPassword");
-			}
-		} catch (URLNotFoundException ex) {
-			mv.addObject(errormsg, ex.getMessage());
-			mv.setViewName(error);
+		String password = accountService.readPassword(url);
+		if (!password.equals("")) {
+			mv.addObject("password", password);
+			mv.setViewName("displayPassword");
 		}
 		return mv;
 	}
@@ -72,15 +62,10 @@ public class AccountController {
 	}
 
 	@PostMapping("deleteAccount")
-	public ModelAndView deleteAccount(AccountDto accountDto) {
+	public ModelAndView deleteAccount(String url) throws URLNotFoundException {
 		ModelAndView mv = new ModelAndView();
-		try {
-			if (accountService.deleteAccount(accountDto)) {
-				mv.setViewName("deleteAccount");
-			}
-		} catch (URLNotFoundException ex) {
-			mv.addObject(errormsg, ex.getMessage());
-			mv.setViewName(error);
+		if (accountService.deleteAccount(url)) {
+			mv.setViewName("deleteAccount");
 		}
 		return mv;
 	}
@@ -88,14 +73,8 @@ public class AccountController {
 	@GetMapping("viewAll")
 	public ModelAndView viewAll() {
 		ModelAndView mv = new ModelAndView();
-		try {
 			mv.setViewName("viewAll");
 			mv.addObject("accounts", accountService.getAll());
-
-		} catch (Exception ex) {
-			mv.addObject(errormsg, ex.getMessage());
-			mv.setViewName(error);
-		}
 		return mv;
 	}
 
@@ -110,15 +89,10 @@ public class AccountController {
 	}
 
 	@PostMapping("updateAccountUsername")
-	public ModelAndView updateAccountUsername(AccountDto accountDto) {
+	public ModelAndView updateAccountUsername(String url, String newUsername) throws URLNotFoundException {
 		ModelAndView mv = new ModelAndView();
-		try {
-			if (accountService.updateUsername(accountDto)) {
-				mv.setViewName("updateAccountUsername");
-			}
-		} catch (URLNotFoundException ex) {
-			mv.addObject(errormsg, ex.getMessage());
-			mv.setViewName(error);
+		if (accountService.updateUsername(url, newUsername)) {
+			mv.setViewName("updateAccountUsername");
 		}
 		return mv;
 	}
@@ -129,17 +103,13 @@ public class AccountController {
 	}
 
 	@PostMapping("updateAccountPassword")
-	public ModelAndView updateAccountPassword(AccountDto accountDto) {
+	public ModelAndView updateAccountPassword(String url, String newPassword)
+			throws URLNotFoundException, PasswordNotValidException {
 		ModelAndView mv = new ModelAndView();
-		try {
-			if (accountService.updatePassword(accountDto) ) {
-				mv.setViewName("updateAccountPassword");
-			}
-		} catch (URLNotFoundException | PasswordNotValidException ex) {
-			mv.addObject(errormsg, ex.getMessage());
-			mv.setViewName(error);
+		if (accountService.updatePassword(url, newPassword)) {
+			mv.setViewName("updateAccountPassword");
 		}
 		return mv;
 	}
-
+	
 }

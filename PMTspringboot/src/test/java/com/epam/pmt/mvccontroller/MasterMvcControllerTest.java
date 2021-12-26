@@ -1,4 +1,4 @@
-package com.epam.pmt.controllertest;
+package com.epam.pmt.mvccontroller;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -8,21 +8,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.epam.pmt.controller.MasterController;
 import com.epam.pmt.dto.MasterDto;
 import com.epam.pmt.service.MasterUserService;
 
-@WebMvcTest(MasterController.class)
-@ContextConfiguration(classes = { MasterController.class })
-class MasterControllerTest {
-
+@WebMvcTest(MasterMvcController.class)
+class MasterMvcControllerTest {
 	@Autowired
 	private MockMvc mockMvc;
 	@MockBean
@@ -60,5 +54,4 @@ class MasterControllerTest {
 		when(masterService.registerAccount(master)).thenReturn(true);
 		mockMvc.perform(post("/master/register")).andExpect(view().name("master/register")).andExpect(status().isOk());
 	}
-
 }

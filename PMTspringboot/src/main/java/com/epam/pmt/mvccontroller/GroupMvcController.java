@@ -1,4 +1,4 @@
-package com.epam.pmt.controller;
+package com.epam.pmt.mvccontroller;
 
 import java.util.List;
 
@@ -9,14 +9,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.epam.pmt.dto.AccountDto;
 import com.epam.pmt.entities.Account;
 import com.epam.pmt.exception.GroupNotFoundException;
 import com.epam.pmt.service.GroupService;
 
 @Controller
 @RequestMapping("group")
-public class GroupController {
+public class GroupMvcController {
 	@Autowired
 	GroupService groupService;
 	String errormsg = "errorMessage";
@@ -33,15 +32,10 @@ public class GroupController {
 	}
 
 	@PostMapping("deleteGroup")
-	public ModelAndView deleteGroup(AccountDto accountDto) {
+	public ModelAndView deleteGroup(String groupname) throws GroupNotFoundException {
 		ModelAndView mv = new ModelAndView();
-		try {
-			if (groupService.deleteGroup(accountDto)) {
-				mv.setViewName("deleteGroup");
-			}
-		} catch (GroupNotFoundException ex) {
-			mv.addObject(errormsg, ex.getMessage());
-			mv.setViewName(error);
+		if (groupService.deleteGroup(groupname)) {
+			mv.setViewName("deleteGroup");
 		}
 		return mv;
 	}
@@ -52,17 +46,11 @@ public class GroupController {
 	}
 
 	@PostMapping("displayByGroup")
-	public ModelAndView displaybyGroup(AccountDto accountDto) {
+	public ModelAndView displaybyGroup(String groupname) throws GroupNotFoundException {
 		ModelAndView mv = new ModelAndView();
-		try {
-			List<Account> groupAccounts = groupService.getGroupList(accountDto);
-			mv.addObject("accounts", groupAccounts);
-			mv.setViewName("displayByGroup");
-
-		} catch (GroupNotFoundException ex) {
-			mv.addObject(errormsg, ex.getMessage());
-			mv.setViewName(error);
-		}
+		List<Account> groupAccounts = groupService.getGroupList(groupname);
+		mv.addObject("accounts", groupAccounts);
+		mv.setViewName("displayByGroup");
 		return mv;
 	}
 
@@ -72,16 +60,10 @@ public class GroupController {
 	}
 
 	@PostMapping("updateGroupname")
-	public ModelAndView displaybyGroup(String currentGroupname, String newGroupname) {
+	public ModelAndView displaybyGroup(String currentGroupname, String newGroupname) throws GroupNotFoundException {
 		ModelAndView mv = new ModelAndView();
-		try {
-			groupService.updateGroupname(currentGroupname, newGroupname);
-			mv.setViewName("updateGroupname");
-
-		} catch (GroupNotFoundException ex) {
-			mv.addObject(errormsg, ex.getMessage());
-			mv.setViewName(error);
-		}
+		groupService.updateGroupname(currentGroupname, newGroupname);
+		mv.setViewName("updateGroupname");
 		return mv;
 	}
 

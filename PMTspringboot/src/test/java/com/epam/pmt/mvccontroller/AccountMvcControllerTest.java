@@ -1,4 +1,6 @@
-package com.epam.pmt.controllertest;
+package com.epam.pmt.mvccontroller;
+
+
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -15,48 +17,44 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.epam.pmt.controller.AccountController;
 import com.epam.pmt.dto.AccountDto;
 import com.epam.pmt.entities.Account;
 import com.epam.pmt.service.AccountService;
 
-@WebMvcTest(AccountController.class)
-@ContextConfiguration(classes = { AccountController.class })
-class AccountControllerTest {
-
+@WebMvcTest(AccountMvcController.class)
+class AccountMvcControllerTest {
+	
 	@Autowired
 	private MockMvc mockMvc;
 	@MockBean
 	AccountService accountService;
-	@MockBean
+	
 	AccountDto accountDto;
-
+	
 	@BeforeEach
 	void setUp() {
 		accountDto = new AccountDto();
-		accountDto.setUrl("https://www.yahoo.com");
-		accountDto.setUsername("username");
-		accountDto.setPassword("Password@123");
-		accountDto.setGroupname("yahoo");
+		accountDto.setUrl("https://www.abcd.com");
+		accountDto.setUsername("abcduser");
+		accountDto.setPassword("Abcd@123");
+		accountDto.setGroupname("abcd");
+		
 	}
-
+	
 	@Test
 	void addAccountFormTest() throws Exception {
 		mockMvc.perform(get("/account/addAccountForm")).andExpect(view().name("addAccountForm"))
 				.andExpect(status().isOk());
 	}
-
+	
 	@Test
 	void addAccountTest() throws Exception {
 		when(accountService.createAccount(accountDto)).thenReturn(true);
-		mockMvc.perform(post("/account/addAccount")).andExpect(model().size(1))
-		.andExpect(model().hasNoErrors()).andExpect(view().name("account/addAccount"))
-		.andExpect(status().isOk());
+		mockMvc.perform(post("/account/addAccount")).andExpect(view().name("account/addAccount")).andExpect(status().isOk());
 	}
-
+	
 	@Test
 	void menuTest() throws Exception {
 		mockMvc.perform(get("/account/menu")).andExpect(view().name("menu")).andExpect(status().isOk());
@@ -67,7 +65,7 @@ class AccountControllerTest {
 		mockMvc.perform(get("/account/displayPasswordForm")).andExpect(view().name("displayPasswordForm"))
 				.andExpect(status().isOk());
 	}
-
+	
 //	@Test
 //	void displayPasswordTest() throws Exception {
 //		when(accountService.readPassword(accountDto)).thenReturn("Facebook@123");
@@ -84,7 +82,7 @@ class AccountControllerTest {
 
 	@Test
 	void deleteAccountTest() throws Exception {
-		when(accountService.deleteAccount(accountDto)).thenReturn(true);
+		when(accountService.deleteAccount("https://www.abcd.com")).thenReturn(true);
 		mockMvc.perform(post("/account/deleteAccount")).andExpect(view().name("account/deleteAccount"))
 				.andExpect(status().isOk());
 	}
@@ -111,7 +109,7 @@ class AccountControllerTest {
 
 	@Test
 	void updateAccountUsernameTest() throws Exception {
-		when(accountService.updateUsername(accountDto)).thenReturn(true);
+		when(accountService.updateUsername("https://www.abcd.com","abcdusername")).thenReturn(true);
 		mockMvc.perform(post("/account/updateAccountUsername")).andExpect(view().name("account/updateAccountUsername"))
 				.andExpect(status().isOk());
 	}
@@ -124,10 +122,24 @@ class AccountControllerTest {
 
 	@Test
 	void updateAccountPasswordTest() throws Exception {
-		when(accountService.updatePassword(accountDto)).thenReturn(true);
-		when(accountService.updatePassword(accountDto)).thenReturn(true);
+		when(accountService.updatePassword("https://www.abcd.com","Abcd@123")).thenReturn(true);
 		mockMvc.perform(post("/account/updateAccountPassword")).andExpect(view().name("account/updateAccountPassword"))
 				.andExpect(status().isOk());
 	}
-
+	
+	
+	
 }
+//@Test
+//void addAccountTest1() throws Exception {
+//	AccountDto accountDto = new AccountDto();
+//	accountDto.setUrl("https://wwww.abcd.com");
+//	accountDto.setUsername("abcduser");
+//	accountDto.setPassword("Abcd@123");
+//	accountDto.setGroupname("abcd");
+//	ModelMapper mapper = new ModelMapper();
+//	when(accountService.createAccount(any())).thenReturn(true);
+//	mockMvc.perform(post("/accounts")
+//			.accept(MediaType.TEXT_PLAIN_VALUE).content(mapper.writeValueAsString(accountDto)).contentType(MediaType.APPLICATION_JSON_VALUE)).
+//			andExpect(status().isCreated()).andExpect(content().bytes("Employee insert successfully.".getBytes()));
+//}

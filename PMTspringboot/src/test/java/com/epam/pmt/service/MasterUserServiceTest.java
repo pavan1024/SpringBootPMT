@@ -1,4 +1,4 @@
-package com.epam.pmt.servicetest;
+package com.epam.pmt.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -31,9 +31,7 @@ class MasterUserServiceTest {
 	MasterUserService masterUserService;
 
 	Master master;
-	Master master1 = null;
 	List<Master> masterAccounts;
-	List<Master> emptyAccounts = null;
 
 	@BeforeEach
 	public void setUp() {

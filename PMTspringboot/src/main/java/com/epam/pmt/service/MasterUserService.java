@@ -30,7 +30,7 @@ public class MasterUserService {
 
 	}
 
-	public boolean login(MasterDto masterDto) throws UserNotFoundException{
+	public boolean login(MasterDto masterDto) throws UserNotFoundException {
 		boolean status = false;
 		List<Master> masterAccounts = ((Collection<Master>) masterRepository.findAll()).stream()
 				.filter(i -> i.getUsername().equals(masterDto.getUsername())).collect(Collectors.toList());
@@ -38,8 +38,7 @@ public class MasterUserService {
 			if (masterAccounts.get(0).getPassword().equals(masterDto.getPassword())) {
 				MasterProvider.setMaster(masterDto.getUsername(), masterDto.getPassword());
 				status = true;
-			}
-			else {
+			} else {
 				throw new UserNotFoundException("Invalid Username or Password ");
 			}
 		} catch (IndexOutOfBoundsException e) {

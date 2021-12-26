@@ -5,7 +5,7 @@ import java.util.Base64;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Security {
+public class SecurityUtil {
 	public String encrypt(String plainPwd) {
 		String b64encoded = Base64.getEncoder().encodeToString(plainPwd.getBytes());
 		String reverse = new StringBuilder(b64encoded).reverse().toString();

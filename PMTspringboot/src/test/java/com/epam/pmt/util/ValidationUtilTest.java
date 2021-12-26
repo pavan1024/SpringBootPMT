@@ -1,14 +1,13 @@
-package com.epam.pmt.servicetest;
+package com.epam.pmt.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.epam.pmt.util.Validation;
 
-class ValidationTest {
+class ValidationUtilTest {
 
-	Validation validation = new Validation();;
+	ValidationUtil validationUtil = new ValidationUtil();;
 	String validUrl;
 	String inValidUrl;
 	String validPassword;
@@ -25,13 +24,13 @@ class ValidationTest {
 
 	@Test
 	void validUrlTest() {
-		assertEquals(true, validation.isValidURL(validUrl));
-		assertEquals(false, validation.isValidURL(inValidUrl));
+		assertEquals(true, validationUtil.isValidURL(validUrl));
+		assertEquals(false, validationUtil.isValidURL(inValidUrl));
 	}
 
 	@Test
 	void inValidUrlTest() {
-		assertEquals(true, validation.isValidPassword(validPassword));
-		assertEquals(false, validation.isValidPassword(inValidPassword));
+		assertEquals(true, validationUtil.isValidPassword(validPassword));
+		assertEquals(false, validationUtil.isValidPassword(inValidPassword));
 	}
 }
