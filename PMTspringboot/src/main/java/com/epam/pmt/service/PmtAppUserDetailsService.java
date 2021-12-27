@@ -16,13 +16,13 @@ import com.epam.pmt.entities.AuthGroup;
 
 
 @Service
-public class StudentAppUserDetailsService implements UserDetailsService {
+public class PmtAppUserDetailsService implements UserDetailsService {
 
 	private final UserRepository repository;
 	
 	private final AuthGroupRepository authGroupRepository;
 
-	public StudentAppUserDetailsService(UserRepository userRepository,AuthGroupRepository authGroupRepository) {
+	public PmtAppUserDetailsService(UserRepository userRepository,AuthGroupRepository authGroupRepository) {
 		super();
 		this.repository = userRepository;
 		this.authGroupRepository = authGroupRepository;

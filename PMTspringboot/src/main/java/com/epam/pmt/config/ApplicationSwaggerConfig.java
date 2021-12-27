@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -21,7 +22,7 @@ public class ApplicationSwaggerConfig {
 		return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.any()).build()
 				.apiInfo(getDocumentInfo());
 	}
-
+	
 	public ApiInfo getDocumentInfo() {
 		return new ApiInfo("PMT Service API", "API for Password Management Tool", "1.0",
 				"Terms of Service",

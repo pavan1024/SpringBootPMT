@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.epam.pmt.service.StudentAppUserDetailsService;
+import com.epam.pmt.service.PmtAppUserDetailsService;
 import com.epam.pmt.util.JwtUtil;
 
 
@@ -24,7 +24,7 @@ import com.epam.pmt.util.JwtUtil;
 public class JwtRequestFilter extends OncePerRequestFilter {
 
 	@Autowired
-	private StudentAppUserDetailsService userDetailsService;
+	private PmtAppUserDetailsService userDetailsService;
 
 	@Autowired
 	private JwtUtil jwtUtil;

@@ -16,9 +16,6 @@ import com.epam.pmt.entities.User;
 
 public class UserPrincipal implements UserDetails {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private User user;
 	private List<AuthGroup> authGroups;
@@ -57,9 +54,6 @@ public class UserPrincipal implements UserDetails {
 				grantedAuthorities.add(new SimpleGrantedAuthority(group.getAuthGroup()));
 			});
 		}
-		
-		System.out.println(grantedAuthorities);
-		
 		return grantedAuthorities;
 	}
 

@@ -1,4 +1,4 @@
-package com.epam.pmt.restcontroller;
+package com.epam.pmt.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.epam.pmt.dto.AuthenticationRequest;
 import com.epam.pmt.dto.AuthenticationResponse;
-import com.epam.pmt.service.StudentAppUserDetailsService;
+import com.epam.pmt.service.PmtAppUserDetailsService;
 import com.epam.pmt.util.JwtUtil;
 
 
@@ -21,7 +21,7 @@ import com.epam.pmt.util.JwtUtil;
 public class AuthApiController {
 
 	@Autowired
-	private StudentAppUserDetailsService service;
+	private PmtAppUserDetailsService service;
 
 	@Autowired
 	private AuthenticationManager authenticationManager;

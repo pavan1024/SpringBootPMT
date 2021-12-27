@@ -1,4 +1,4 @@
-package com.epam.pmt.restcontroller;
+package com.epam.pmt.controller;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.junit.jupiter.api.Assertions.*;

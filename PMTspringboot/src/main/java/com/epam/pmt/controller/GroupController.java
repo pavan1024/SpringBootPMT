@@ -1,10 +1,11 @@
-package com.epam.pmt.restcontroller;
+package com.epam.pmt.controller;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -32,6 +33,7 @@ public class GroupController {
 	@PostMapping
 	@ApiOperation(value = "View List of Group Accounts", response = List.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "successfully retrieved group list") })
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<List<Account>> fetchAllGroupAccounts(String groupname) throws GroupNotFoundException {
 		return new ResponseEntity<>(groupService.getGroupList(groupname), HttpStatus.OK);
 	}
@@ -39,6 +41,7 @@ public class GroupController {
 	@PutMapping
 	@ApiOperation(value = "Update Groupname", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Groupname Updated Successfully") })
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<String> updateGroupname(String currentGroupname, String newGroupname)
 			throws GroupNotFoundException {
 		String status = "";
@@ -56,6 +59,7 @@ public class GroupController {
 	@DeleteMapping
 	@ApiOperation(value = "Delete Group", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Groupname Deleted Successfully") })
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<String> deleteGroup(String groupname) throws URLNotFoundException {
 		String status = "";
 		HttpStatus statusCode = null;

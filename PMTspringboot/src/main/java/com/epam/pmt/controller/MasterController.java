@@ -1,8 +1,9 @@
-package com.epam.pmt.restcontroller;
+package com.epam.pmt.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +27,7 @@ public class MasterController {
 	@PostMapping("/login")
 	@ApiOperation(value = "Login", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Login Successful") })
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<String> login(MasterDto masterDto) throws UserNotFoundException {
 		String status = "";
 		HttpStatus statusCode = null;
@@ -43,6 +45,7 @@ public class MasterController {
 	@PostMapping("/register")
 	@ApiOperation(value = "Register", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Account Registered Successfully") })
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<String> register(MasterDto masterDto) {
 		String status = "";
 		HttpStatus statusCode = null;

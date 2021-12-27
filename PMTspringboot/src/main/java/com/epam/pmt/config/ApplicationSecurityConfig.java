@@ -17,7 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.epam.pmt.filter.JwtRequestFilter;
-import com.epam.pmt.service.StudentAppUserDetailsService;
+import com.epam.pmt.service.PmtAppUserDetailsService;
 
 
 @Configuration
@@ -26,7 +26,7 @@ import com.epam.pmt.service.StudentAppUserDetailsService;
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	private StudentAppUserDetailsService studentAppUserDetailsService;
+	private PmtAppUserDetailsService pmtAppUserDetailsService;
 
 	@Autowired
 	private JwtRequestFilter requestFilter;
@@ -34,7 +34,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public DaoAuthenticationProvider getAuthenticationProvider() {
 		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-		provider.setUserDetailsService(studentAppUserDetailsService);
+		provider.setUserDetailsService(pmtAppUserDetailsService);
 		provider.setPasswordEncoder(new BCryptPasswordEncoder());
 		provider.setAuthoritiesMapper(getAuthoritiesMapper());
 		return provider;

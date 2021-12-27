@@ -1,10 +1,11 @@
-package com.epam.pmt.restcontroller;
+package com.epam.pmt.controller;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,6 +36,7 @@ public class AccountController {
 	@GetMapping
 	@ApiOperation(value = "View List of Accounts", response = List.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "successfully retrieved list") })
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<List<Account>> fetchAllAccounts() {
 		return new ResponseEntity<>(accountService.getAll(), HttpStatus.OK);
 	}
@@ -42,6 +44,7 @@ public class AccountController {
 	@PostMapping
 	@ApiOperation(value = "Add Account", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Account Added Successfully") })
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<String> addAccount(AccountDto accountDto)
 			throws URLNotValidException, PasswordNotValidException {
 		String status = "";
@@ -59,6 +62,7 @@ public class AccountController {
 	@GetMapping("/readpassword")
 	@ApiOperation(value = "View Password", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "successfully retrieved password") })
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<String> readPassword(String url) throws URLNotFoundException {
 		String password = "";
 		HttpStatus statusCode = null;
@@ -74,6 +78,7 @@ public class AccountController {
 	@PutMapping("/updateusername")
 	@ApiOperation(value = "Update Username", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Account Username Updated Successfully") })
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<String> updateUsername(String url, String newUsername)
 			throws URLNotFoundException, PasswordNotValidException {
 		String status = "";
@@ -91,6 +96,7 @@ public class AccountController {
 	@PutMapping("/updatepassword")
 	@ApiOperation(value = "Update Password", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Account Password Updated Successfully") })
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<String> updatePassword(String url, String newPassword)
 			throws URLNotFoundException, PasswordNotValidException {
 		String status = "";
@@ -108,6 +114,7 @@ public class AccountController {
 	@DeleteMapping
 	@ApiOperation(value = "Delete Account", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Account Deleted Successfully") })
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<String> delete(String url) throws URLNotFoundException {
 		String status = "";
 		HttpStatus statusCode = null;
