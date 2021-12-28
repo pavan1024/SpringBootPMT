@@ -33,7 +33,7 @@ public class RestExceptionHandler {
 	}
 
 	@ExceptionHandler(value = PasswordNotValidException.class)
-	public Map<String, String> handleURLNotValidException(PasswordNotValidException ex) {
+	public Map<String, String> handlePasswordNotValidException(PasswordNotValidException ex) {
 		Map<String, String> response = new HashMap<>();
 		response.put(accountService, accounts);
 		response.put(timestamp, new Date().toString());
