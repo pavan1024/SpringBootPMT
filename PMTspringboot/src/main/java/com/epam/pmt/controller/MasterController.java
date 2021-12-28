@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +19,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@RequestMapping("/masters")
+@RequestMapping("/master")
 @Api("Operations to Master in pmt app")
 public class MasterController {
 	@Autowired
@@ -28,7 +29,7 @@ public class MasterController {
 	@ApiOperation(value = "Login", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Login Successful") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<String> login(MasterDto masterDto) throws UserNotFoundException {
+	public ResponseEntity<String> login(@RequestBody MasterDto masterDto) throws UserNotFoundException {
 		String status = "";
 		HttpStatus statusCode = null;
 		if (masterService.login(masterDto)) {
@@ -46,7 +47,7 @@ public class MasterController {
 	@ApiOperation(value = "Register", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Account Registered Successfully") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<String> register(MasterDto masterDto) {
+	public ResponseEntity<String> register(@RequestBody MasterDto masterDto) {
 		String status = "";
 		HttpStatus statusCode = null;
 		if (masterService.registerAccount(masterDto)) {
