@@ -1,8 +1,8 @@
 package com.epam.pmt.restcontroller;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -12,15 +12,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+
+import com.epam.pmt.dto.AccountDto;
 import com.epam.pmt.entities.Account;
 import com.epam.pmt.entities.Master;
 import com.epam.pmt.service.AccountService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebMvcTest(AccountController.class)
 class AccountControllerTest {
@@ -28,22 +33,38 @@ class AccountControllerTest {
 	private MockMvc mockMvc;
 	@MockBean
 	AccountService accountService;
+	
+	ObjectMapper mapper;
+	AccountDto accountDto;
+	
+	@BeforeEach
+	void setUp() {
+		mapper = new ObjectMapper();
+		accountDto =new AccountDto();
+		accountDto.setUrl("https://www.google.com");
+		accountDto.setUsername("googleuser");
+		accountDto.setPassword("Google@123");
+		accountDto.setGroupname("google");
+	}
 
 	@Test
-	void addAccountTest() throws Exception {
+	void addAccountTest() throws Exception {		
 		when(accountService.createAccount(any())).thenReturn(true);
 		MvcResult result = mockMvc
-				.perform(post("/accounts?groupname=abcd&username=abcduser&password=Abcd@123&url=https://www.abcd.com"))
+				.perform(post("/accounts/").contentType(MediaType.APPLICATION_JSON)
+						.content(mapper.writeValueAsString(accountDto)).accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isAccepted()).andReturn();
 		String response = result.getResponse().getContentAsString();
 		assertEquals("Account Added Successfully", response);
+		
 	}
 
 	@Test
 	void addAccountErrorTest() throws Exception {
 		when(accountService.createAccount(any())).thenReturn(false);
 		MvcResult result = mockMvc
-				.perform(post("/accounts?groupname=abcd&username=abcduser&password=Abcd@123&url=www.abcd.com"))
+				.perform(post("/accounts/").contentType(MediaType.APPLICATION_JSON)
+						.content(mapper.writeValueAsString(accountDto)).accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isNotFound()).andReturn();
 		String response = result.getResponse().getContentAsString();
 		assertEquals("Account Creation Unsuccessful", response);

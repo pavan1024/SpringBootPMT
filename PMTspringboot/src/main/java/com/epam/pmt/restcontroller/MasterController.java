@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,7 +27,7 @@ public class MasterController {
 	@PostMapping("/login")
 	@ApiOperation(value = "Login", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Login Successful") })
-	public ResponseEntity<String> login(MasterDto masterDto) throws UserNotFoundException {
+	public ResponseEntity<String> login(@RequestBody MasterDto masterDto) throws UserNotFoundException {
 		String status = "";
 		HttpStatus statusCode = null;
 		if (masterService.login(masterDto)) {
@@ -43,7 +44,7 @@ public class MasterController {
 	@PostMapping("/register")
 	@ApiOperation(value = "Register", response = String.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Account Registered Successfully") })
-	public ResponseEntity<String> register(MasterDto masterDto) {
+	public ResponseEntity<String> register(@RequestBody MasterDto masterDto) {
 		String status = "";
 		HttpStatus statusCode = null;
 		if (masterService.registerAccount(masterDto)) {
