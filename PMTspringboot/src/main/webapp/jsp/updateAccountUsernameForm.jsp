@@ -30,7 +30,7 @@ body {
 		<form name="updateUsername" action="updateAccountUsername"
 			method="post">
 			Url : <input type="text" name="url"> <br>
-			<br> New Username : <input type="text" name="username">
+			<br> New Username : <input type="text" name="newUsername">
 			<br>
 			<br> <input type="submit" value="Update Username"> <br>
 			<br> <a href="submenu">Back</a>
