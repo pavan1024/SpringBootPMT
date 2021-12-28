@@ -30,7 +30,7 @@ body {
 		<form name="updatePassword" action="updateAccountPassword"
 			method="post">
 			Url : <input type="text" name="url"> <br>
-			<br> New Password : <input type="password" name="password">
+			<br> New Password : <input type="password" name="newPassword">
 			<br>
 			<br> <input type="submit" value="Update Password"> <br>
 			<br> <a href="submenu">Back</a>
