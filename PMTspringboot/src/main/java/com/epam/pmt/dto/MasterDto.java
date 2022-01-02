@@ -1,18 +1,14 @@
 package com.epam.pmt.dto;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
+@Getter
+@Setter
 public class MasterDto {
 
-	@Getter
-	@Setter
 	String username;
 
-	@Getter
-	@Setter
 	String password;
 
 }

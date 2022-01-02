@@ -17,6 +17,7 @@ public class ValidationUtilImpl implements ValidationUtil {
 		Matcher matcher = pattern.matcher(password);
 		return matcher.matches();
 	}
+
 	@Override
 	public boolean isValidURL(String url) {
 		try {

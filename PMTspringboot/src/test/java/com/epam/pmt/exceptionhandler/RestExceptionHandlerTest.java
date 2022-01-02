@@ -68,6 +68,7 @@ class RestExceptionHandlerTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
+		mapper = new ObjectMapper();
 		mockMvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
 		AuthenticationRequest request = new AuthenticationRequest();
 		request.setUsername("pavan");
@@ -80,7 +81,7 @@ class RestExceptionHandlerTest {
 		String response = result.getResponse().getContentAsString();
 		token = response.substring(8, response.length() - 2);
 		
-		mapper = new ObjectMapper();
+		
 		accountDto = new AccountDto();
 		accountDto.setUrl("abcd.com");
 		accountDto.setUsername("abcduser");
@@ -110,33 +111,4 @@ class RestExceptionHandlerTest {
 		assertEquals("sample group Not Found",data.get("error"));
 	}
 	
-//	@Test
-//	void handleUserNotFoundExceptionTest() throws Exception{
-//		when(masterService.login(any())).thenThrow(new UserNotFoundException("sample group Not Found"));
-//		MvcResult result = mockMvc.perform(post("/master/login").header("Authorization", "Bearer " + token))
-//				.andExpect(status().isBadRequest()).andReturn();
-//		String response = result.getResponse().getContentAsString();
-//		HashMap<String ,String> data = this.mapFromJson(response, HashMap.class);
-//		assertEquals("sample group Not Found",data.get("error"));
-//	}
-//
-//	@Test
-//	void handleURLNotValidExceptionTest() throws Exception{
-//		when(accountService.createAccount(any())).thenThrow(new URLNotValidException("Url must start with https://"));
-//		MvcResult result = mockMvc.perform(post("/accounts/").header("Authorization", "Bearer " + token))
-//				.andExpect(status().isBadRequest()).andReturn();
-//		String response = result.getResponse().getContentAsString();
-//		HashMap<String ,String> data = this.mapFromJson(response, HashMap.class);
-//		assertEquals("Url must start with https://",data.get("error"));
-//	}
-//
-//	@Test
-//	void handlePasswordNotValidExceptionTest() throws Exception{
-//		when(accountService.createAccount(accountDto)).thenThrow(new PasswordNotValidException("invlaid password"));
-//		MvcResult result = mockMvc.perform(post("/accounts/").header("Authorization", "Bearer " + token))
-//				.andExpect(status().isBadRequest()).andReturn();
-//		String response = result.getResponse().getContentAsString();
-//		HashMap<String ,String> data = this.mapFromJson(response, HashMap.class);
-//		assertEquals("invlaid password",data.get("error"));
-//	}
 }

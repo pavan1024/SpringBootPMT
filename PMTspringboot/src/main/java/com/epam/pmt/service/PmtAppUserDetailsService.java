@@ -13,16 +13,14 @@ import com.epam.pmt.repo.UserRepository;
 import com.epam.pmt.dto.UserPrincipal;
 import com.epam.pmt.entities.AuthGroup;
 
-
-
 @Service
 public class PmtAppUserDetailsService implements UserDetailsService {
 
 	private final UserRepository repository;
-	
+
 	private final AuthGroupRepository authGroupRepository;
 
-	public PmtAppUserDetailsService(UserRepository userRepository,AuthGroupRepository authGroupRepository) {
+	public PmtAppUserDetailsService(UserRepository userRepository, AuthGroupRepository authGroupRepository) {
 		super();
 		this.repository = userRepository;
 		this.authGroupRepository = authGroupRepository;
@@ -35,10 +33,10 @@ public class PmtAppUserDetailsService implements UserDetailsService {
 		if (user == null) {
 			throw new UsernameNotFoundException("Cannot find username : " + username);
 		}
-		
-		List<AuthGroup> authGroups =  authGroupRepository.findByUsername(username);
-		
-		return new UserPrincipal(user,authGroups);
+
+		List<AuthGroup> authGroups = authGroupRepository.findByUsername(username);
+
+		return new UserPrincipal(user, authGroups);
 	}
 
 }

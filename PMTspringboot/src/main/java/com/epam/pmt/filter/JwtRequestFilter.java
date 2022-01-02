@@ -18,8 +18,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.epam.pmt.service.PmtAppUserDetailsService;
 import com.epam.pmt.util.JwtUtil;
 
-
-
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
@@ -34,9 +32,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 
 		final String authorizationHeader = request.getHeader("Authorization");
-
 		String username = null;
-
 		String jwt = null;
 
 		if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
@@ -49,14 +45,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			if (jwtUtil.validateToken(jwt, userDetails)) {
 				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
 						userDetails, null, userDetails.getAuthorities());
-
 				usernamePasswordAuthenticationToken
 						.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
 				SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 			}
 		}
-		
+
 		filterChain.doFilter(request, response);
 
 	}

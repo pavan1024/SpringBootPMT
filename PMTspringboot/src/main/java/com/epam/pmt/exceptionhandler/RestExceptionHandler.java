@@ -21,7 +21,7 @@ public class RestExceptionHandler {
 	String timestamp = "timestamp";
 	String error = "error";
 	String status = "status";
-	
+
 	@ExceptionHandler(value = URLNotValidException.class)
 	public Map<String, String> handleURLNotValidException(URLNotValidException ex) {
 		Map<String, String> response = new HashMap<>();

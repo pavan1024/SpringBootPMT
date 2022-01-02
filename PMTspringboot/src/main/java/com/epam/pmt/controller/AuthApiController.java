@@ -15,8 +15,6 @@ import com.epam.pmt.dto.AuthenticationResponse;
 import com.epam.pmt.service.PmtAppUserDetailsService;
 import com.epam.pmt.util.JwtUtil;
 
-
-
 @RestController
 public class AuthApiController {
 
@@ -25,24 +23,25 @@ public class AuthApiController {
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
-	
+
 	@Autowired
 	private JwtUtil jwtUtil;
-	
+
 	@PostMapping("/authenticate")
 	public ResponseEntity<?> doRequestAuthenticate(@RequestBody AuthenticationRequest request) {
 
 		try {
-		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-		}catch(BadCredentialsException be) {
+			authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+		} catch (BadCredentialsException be) {
 			throw new BadCredentialsException("Invalid username and password");
 		}
-		
+
 		final UserDetails userDetails = service.loadUserByUsername(request.getUsername());
-		
+
 		final String jwt = jwtUtil.generateToken(userDetails);
-		
+
 		return ResponseEntity.ok(new AuthenticationResponse(jwt));
- 	}
+	}
 
 }

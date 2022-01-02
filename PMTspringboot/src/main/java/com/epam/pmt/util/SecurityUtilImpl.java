@@ -5,7 +5,7 @@ import java.util.Base64;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SecurityUtilImpl implements SecurityUtil{
+public class SecurityUtilImpl implements SecurityUtil {
 	@Override
 	public String encrypt(String plainText) {
 		String b64encoded = Base64.getEncoder().encodeToString(plainText.getBytes());
@@ -17,7 +17,7 @@ public class SecurityUtilImpl implements SecurityUtil{
 		}
 		return temp.toString();
 	}
-	
+
 	@Override
 	public String decrypt(String encryptedText) {
 		StringBuilder temp = new StringBuilder();

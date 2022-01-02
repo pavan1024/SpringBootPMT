@@ -13,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.epam.pmt.entities.AuthGroup;
 import com.epam.pmt.entities.User;
 
-
 public class UserPrincipal implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
@@ -46,9 +45,9 @@ public class UserPrincipal implements UserDetails {
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 
 		Optional<List<AuthGroup>> optionalAuthGroups = Optional.of(authGroups);
-		
+
 		Set<SimpleGrantedAuthority> grantedAuthorities = new HashSet<>();
-		
+
 		if (optionalAuthGroups.isPresent()) {
 			authGroups.forEach(group -> {
 				grantedAuthorities.add(new SimpleGrantedAuthority(group.getAuthGroup()));
