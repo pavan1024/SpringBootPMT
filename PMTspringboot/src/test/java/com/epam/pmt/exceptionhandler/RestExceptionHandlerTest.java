@@ -111,4 +111,39 @@ class RestExceptionHandlerTest {
 		assertEquals("sample group Not Found",data.get("error"));
 	}
 	
+	@Test
+	void handleURLNotValidExceptionTest() throws Exception{
+		when(accountService.createAccount(any())).thenThrow(new URLNotValidException("URL must start with https://"));
+		MvcResult result = mockMvc
+				.perform(post("/accounts/").contentType(MediaType.APPLICATION_JSON).header("Authorization", "Bearer " + token)
+						.content(mapper.writeValueAsString(accountDto)).accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk()).andReturn();
+		String response = result.getResponse().getContentAsString();
+		HashMap<String ,String> data = this.mapFromJson(response, HashMap.class);
+		assertEquals("URL must start with https://",data.get("error"));
+	}
+	
+	@Test
+	void handlePasswordNotValidExceptionTest() throws Exception{
+		when(accountService.createAccount(any())).thenThrow(new PasswordNotValidException("password must contain more than or equal to 8 chars"));
+		MvcResult result = mockMvc
+				.perform(post("/accounts/").contentType(MediaType.APPLICATION_JSON).header("Authorization", "Bearer " + token)
+						.content(mapper.writeValueAsString(accountDto)).accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk()).andReturn();
+		String response = result.getResponse().getContentAsString();
+		HashMap<String ,String> data = this.mapFromJson(response, HashMap.class);
+		assertEquals("password must contain more than or equal to 8 chars",data.get("error"));
+	}
+	@Test
+	void handleUserNotFoundExceptionTest() throws Exception{
+		when(masterService.login(any())).thenThrow(new UserNotFoundException("invalid username or password"));
+		MvcResult result = mockMvc
+				.perform(post("/master/login").contentType(MediaType.APPLICATION_JSON).header("Authorization", "Bearer " + token)
+						.content(mapper.writeValueAsString(accountDto)).accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk()).andReturn();
+		String response = result.getResponse().getContentAsString();
+		HashMap<String ,String> data = this.mapFromJson(response, HashMap.class);
+		assertEquals("invalid username or password",data.get("error"));
+	}
+	
 }
