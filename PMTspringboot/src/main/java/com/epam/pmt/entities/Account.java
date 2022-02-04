@@ -15,33 +15,24 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "Accounts")
-@NoArgsConstructor
+@Getter
+@Setter
 public class Account {
 
 	@Id
-	@Getter
-	@Setter
 	private String url;
 
 	@Column
-	@Getter
-	@Setter
 	private String username;
 
 	@Column
-	@Getter
-	@Setter
 	private String password;
 
 	@Column
-	@Getter
-	@Setter
 	private String groupname;
 
 	@ManyToOne
 	@JoinColumn(name = "master_id")
-	@Getter
-	@Setter
 	@JsonIgnore
 	private Master master;
 

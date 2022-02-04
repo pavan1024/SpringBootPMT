@@ -29,18 +29,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebMvcTest(AccountController.class)
 class AccountControllerTest {
+
 	@Autowired
 	private MockMvc mockMvc;
+
 	@MockBean
 	AccountService accountService;
-	
+
 	ObjectMapper mapper;
 	AccountDto accountDto;
-	
+
 	@BeforeEach
 	void setUp() {
 		mapper = new ObjectMapper();
-		accountDto =new AccountDto();
+		accountDto = new AccountDto();
 		accountDto.setUrl("https://www.google.com");
 		accountDto.setUsername("googleuser");
 		accountDto.setPassword("Google@123");
@@ -48,7 +50,7 @@ class AccountControllerTest {
 	}
 
 	@Test
-	void addAccountTest() throws Exception {		
+	void addAccountTest() throws Exception {
 		when(accountService.createAccount(any())).thenReturn(true);
 		MvcResult result = mockMvc
 				.perform(post("/accounts/").contentType(MediaType.APPLICATION_JSON)
@@ -56,7 +58,7 @@ class AccountControllerTest {
 				.andExpect(status().isAccepted()).andReturn();
 		String response = result.getResponse().getContentAsString();
 		assertEquals("Account Added Successfully", response);
-		
+
 	}
 
 	@Test

@@ -16,16 +16,14 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "MasterAccounts")
+@Getter
+@Setter
 public class Master {
 
 	@Id
-	@Getter
-	@Setter
 	private String username;
 
 	@Column
-	@Getter
-	@Setter
 	private String password;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "master")
