@@ -89,7 +89,7 @@ class RestExceptionHandlerTest {
 	void handleGroupNotFoundExceptionTest() throws Exception {
 		when(groupService.checkIfGroupExists("sample")).thenThrow(new GroupNotFoundException("sample group Not Found"));
 		when(groupService.getGroupList("sample")).thenThrow(new GroupNotFoundException("sample group Not Found"));
-		MvcResult result = mockMvc.perform(post("/groups/?groupname=sample")).andExpect(status().isOk()).andReturn();
+		MvcResult result = mockMvc.perform(get("/groups/?groupname=sample")).andExpect(status().isOk()).andReturn();
 		String response = result.getResponse().getContentAsString();
 		HashMap<String, String> data = this.mapFromJson(response, HashMap.class);
 		assertEquals("sample group Not Found", data.get("error"));

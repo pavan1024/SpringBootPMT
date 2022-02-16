@@ -3,6 +3,7 @@ package com.epam.pmt.restcontroller;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -83,7 +84,7 @@ class GroupControllerTest {
 		account.setMaster(master);
 		accounts.add(account);
 		when(groupService.getGroupList("abcd")).thenReturn(accounts);
-		mockMvc.perform(post("/groups/?groupname=abcd")).andExpect(status().isOk()).andReturn();
+		mockMvc.perform(get("/groups/?groupname=abcd")).andExpect(status().isOk()).andReturn();
 	}
 
 }
