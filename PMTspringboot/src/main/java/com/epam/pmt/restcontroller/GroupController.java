@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
@@ -29,7 +30,7 @@ public class GroupController {
 	@Autowired
 	private GroupService groupService;
 
-	@PostMapping
+	@GetMapping
 	@ApiOperation(value = "View List of Group Accounts", response = List.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "successfully retrieved group list") })
 	public ResponseEntity<List<Account>> fetchAllGroupAccounts(String groupname) throws GroupNotFoundException {
